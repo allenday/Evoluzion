@@ -1,0 +1,19 @@
+
+sex.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+sexMale
+  rotate: false
+  xy: 1, 13
+  size: 63, 63
+  orig: 63, 63
+  offset: 0, 0
+  index: 1
+sexFemale
+  rotate: false
+  xy: 66, 1
+  size: 51, 75
+  orig: 51, 75
+  offset: 0, 0
+  index: 2

@@ -1,0 +1,110 @@
+
+objetos.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+boxN0
+  rotate: false
+  xy: 1, 53
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+boxYES
+  rotate: false
+  xy: 67, 53
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+org
+  rotate: false
+  xy: 1, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 7
+org
+  rotate: false
+  xy: 133, 67
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 2
+org
+  rotate: false
+  xy: 53, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 4
+org
+  rotate: false
+  xy: 185, 67
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 8
+org
+  rotate: false
+  xy: 237, 67
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 9
+org
+  rotate: false
+  xy: 289, 67
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 3
+org
+  rotate: false
+  xy: 341, 67
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 0
+org
+  rotate: false
+  xy: 393, 67
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 10
+org
+  rotate: false
+  xy: 445, 67
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 1
+org
+  rotate: false
+  xy: 105, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 5
+org
+  rotate: false
+  xy: 157, 15
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 12
+org
+  rotate: false
+  xy: 209, 15
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 11
+org
+  rotate: false
+  xy: 261, 15
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 6

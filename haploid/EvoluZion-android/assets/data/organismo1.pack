@@ -1,0 +1,131 @@
+
+organismo1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+auraATB
+  rotate: false
+  xy: 1, 10
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 18
+Org
+  rotate: false
+  xy: 24, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 5
+Org
+  rotate: false
+  xy: 46, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 1
+Org
+  rotate: false
+  xy: 68, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 2
+Org
+  rotate: false
+  xy: 90, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 3
+Org
+  rotate: false
+  xy: 112, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 12
+Org
+  rotate: false
+  xy: 134, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 7
+Org
+  rotate: false
+  xy: 156, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 6
+Org
+  rotate: false
+  xy: 178, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 4
+Org
+  rotate: false
+  xy: 200, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 9
+Org
+  rotate: false
+  xy: 222, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 8
+Org
+  rotate: false
+  xy: 244, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 11
+Org
+  rotate: false
+  xy: 266, 11
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: 10
+transferido
+  rotate: false
+  xy: 1, 1
+  size: 15, 7
+  orig: 15, 7
+  offset: 0, 0
+  index: 15
+sentidos
+  rotate: false
+  xy: 288, 12
+  size: 20, 19
+  orig: 20, 19
+  offset: 0, 0
+  index: 14
+predador
+  rotate: false
+  xy: 310, 14
+  size: 20, 17
+  orig: 20, 17
+  offset: 0, 0
+  index: 13
+masa
+  rotate: false
+  xy: 332, 21
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 17
+energia
+  rotate: false
+  xy: 344, 21
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: 16

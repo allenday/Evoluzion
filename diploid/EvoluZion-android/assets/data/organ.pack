@@ -1,0 +1,103 @@
+
+organ.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+org
+  rotate: false
+  xy: 1, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 7
+org
+  rotate: false
+  xy: 53, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 2
+org
+  rotate: false
+  xy: 105, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 4
+org
+  rotate: false
+  xy: 157, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 8
+org
+  rotate: false
+  xy: 209, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 9
+org
+  rotate: false
+  xy: 261, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 13
+org
+  rotate: false
+  xy: 313, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 3
+org
+  rotate: false
+  xy: 365, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 0
+org
+  rotate: false
+  xy: 417, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 10
+org
+  rotate: false
+  xy: 469, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 1
+org
+  rotate: false
+  xy: 521, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 5
+org
+  rotate: false
+  xy: 573, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 12
+org
+  rotate: false
+  xy: 625, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 11
+org
+  rotate: false
+  xy: 677, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: 6
