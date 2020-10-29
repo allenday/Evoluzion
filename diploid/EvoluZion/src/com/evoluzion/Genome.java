@@ -20,110 +20,108 @@ package com.evoluzion;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Genoma {
+public class Genome {
 
-	Mundo m;
-	Organismo or;
-	StringBuffer ancho, alto;
+	World world;
+	StringBuffer width, height;
 	StringBuffer speed;
 	StringBuffer color;
-	StringBuffer predador;
-	StringBuffer radioConsiente, sentir, cazar, escapar;
-	StringBuffer tasaMutacion;
-	StringBuffer longevidad;
-	StringBuffer toleranciaTemp;
-	StringBuffer resistenciaATB;
-	StringBuffer feromona;
+	StringBuffer predator;
+	StringBuffer radius, sense, hunt, escape;
+	StringBuffer mutationRate;
+	StringBuffer longevity;
+	StringBuffer toleranceTemp;
+	StringBuffer resistanceATB;
+	StringBuffer pheromone;
 	StringBuffer parteNoGen;
 
 	char base;
 	char amino;
-	int promotor;
-	int suma, suma2;
-	StringBuffer proteina;
+	int promoter;
+	int sum;
+	StringBuffer protein;
 	String codon;
 	int atgPos;
 	int tataPos;
-	boolean bool;
 
-	public Genoma(Mundo m, int toxRes, int anch, int alt, int sense,
-			int optTem, int pred) {
+	public Genome(World world, int toxRes, int width, int height, int sense,
+				  int optimalTemp, int pred) {
 
-		this.m = m;
+		this.world = world;
 
-		proteina = new StringBuffer();
+		protein = new StringBuffer();
 
 		if (toxRes == 0) {
-			resistenciaATB = new StringBuffer(
+			resistanceATB = new StringBuffer(
 					"aaatataaaaggtctagcaatgtccctgggcgcgaccggcgaaaatgaatttcagtattataccattgaacgtattattcagggctgcattattggcgataaaaaagtgggcaaaaccaccattattcgtcgtctgtcctgcctgatgaataccctgtcctaagtcacttatcattgccaactcgcaaattggatttacgcagagcatcgtgaagggcttctggaccgttgtggagcggttttggaaagcctt");
 		}
 		if (toxRes == 1) {
-			resistenciaATB = new StringBuffer(
+			resistanceATB = new StringBuffer(
 					"aaatataaaaggtctagcaatgtccctgggcgcgaccggcgaaaatgaatttcagtattataccattgaacgtattattccgggctgcattattggcgataaaaaagtgggcaaaaccaccattattcgtcgtctgtcctgcctgatgaataccctgtcctaagtcacttatcattgccaactcgcaaattggatttacgcagagcatcgtgaagggcttctggaccgttgtggagcggttttggaaagcctt");
 		}
 		// MSLGAT[GE]NEFQYYTIER[II]QGCIIGDKKVGKTTIIRRLSCLMNTLS*
 		// ......[GAP]G..{2,12}[IMLV][IMLV]....
 
-		if (anch == 0) {
-			ancho = new StringBuffer(
+		if (width == 0) {
+			this.width = new StringBuffer(
 					"aaaatataaaaggtctagcagtggtgggcgtgtttggctgctccaaaaaaccaaattataccgcgatgctgtccgataccgtgaatgtggcgtcccgtattgaaaccgcgacccgtcgtgtgggcgtgtttggctgctccaaaaaaccgaattaaaccgcgattctgtccgataccctgaatctggcgtcccgtattcataccgcgacctaacagttccgaatactcaccgtctgtcagctcttgg");
 		}
-		if (anch == 1) {
-			ancho = new StringBuffer(
+		if (width == 1) {
+			this.width = new StringBuffer(
 					"aaatataaaaggtctagcaatggtgggcgtgtttggctgctccaaaaaaccaaattataccgcgattctgtccgataccgtgaatgtggcgtcccgtattgaaaccgcgacccgtcgtgtgggcgtgtttggctgctccaaaaaaccgaattaaaccgcgattctgtccgataccctgaatctggcgtcccgtattgataccgcgacctaacagttccgaatactcaccgtctgtcagctcttgg");
 		}
-		if (anch == 2) {
-			ancho = new StringBuffer(
+		if (width == 2) {
+			this.width = new StringBuffer(
 					"aaatataaaaggtctagcaatggtgggtgtgtttggctgctccaaaaaaccaaattataccgcgattctgtccgataccgtgaatgtggcgtcacgtattgaaaccgcgacccgtcgtgtgggcgagtttggctgctccaaaaaaccgaatttaaccgcgattctgtgcgataccctgaatctggcgtcccgtattgataccgcgacctaacagttccgaatactcaccgtctgtcagctcttgg");
 		}
 		// MVGVFGCSKKPNYTAILSDTVNVASRIETAT[RR]VGVFGCSKKPNYTAI[L]SDTVNVASRIETAT*
 		// ..[RKH][R]......S[KRH]..
-		if (alt == 0) {
-			alto = new StringBuffer(
+		if (height == 0) {
+			this.height = new StringBuffer(
 					"aaaatataaaaggtctagcagtggtgggcgtgtttggctgctccaaaaaaccaaattataccgcgatgctgtccgataccgtgaatgtggcgtcccgtattgaaaccgcgacccgtcgtgtgggcgtgtttggctgctccaaaaaaccgaattaaaccgcgattctgtccgataccctgaatctggcgtcccgtattcataccgcgacctaacagttccgaatactcaccgtctgtcagctcttgg");
 		}
-		if (alt == 1) {
-			alto = new StringBuffer(
+		if (height == 1) {
+			this.height = new StringBuffer(
 					"aaatataaaaggtctagcaatggtgggcgtgtttggctgctccaaaaaaccaaattataccgcgattctgtccgataccgtgaatgtggcgtcccgtattgaaaccgcgacccgtcgtgtgggcgtgtttggctgctccaaaaaaccgaattaaaccgcgattctgtccgataccctgaatctggcgtcccgtattgataccgcgacctaacagttccgaatactcaccgtctgtcagctcttgg");
 		}
-		if (alt == 2) {
-			alto = new StringBuffer(
+		if (height == 2) {
+			this.height = new StringBuffer(
 					"aaatataaaaggtctagcaatggtgggtgtgtttggctgctccaaaaaaccaaattataccgcgattctgtccgataccgtgaatgtggcgtcacgtattgaaaccgcgacccgtcgtgtgggcgagtttggctgctccaaaaaaccgaatttaaccgcgattctgtgcgataccctgaatctggcgtcccgtattgataccgcgacctaacagttccgaatactcaccgtctgtcagctcttgg");
 		}
 		// MVGVFGCSKKPNYTAILSDTVNVASRIETAT[RR]VGVFGCSKKPNYTAI[L]SDTVNVASRIETAT*
 
 		if (sense == 0) {
-			sentir = new StringBuffer(
+			this.sense = new StringBuffer(
 					"aaatataaaaggtctagcaatgctgtccgataaactgccgctgacccatctgctgaaactgctggaacagttttttgaaattgtgtgcgatgaaaccgaaaaacattccggcaaataaggatttaattattaaaatacttgagcaccacaatgattcggagattgctttgctcagatggtacattctgaaagtgtgtatcaagtttggagatctgtccaatccatgcaggccaatagaaataagcacac");
 		}
 		if (sense == 1) {
-			sentir = new StringBuffer(
+			this.sense = new StringBuffer(
 					"aaatataaaaggtctagcaatgctgtccgataaaatgccgctgacccatctgctgaaactgctggaacagtttattgaaattgtgtgcgatgaaaccgaaaaacattccggcaaataaggatttaattattaaaatacttgagcaccacaatgattcggagattgctttgctcagatggtacattctgaaagtgtgtatcaagtttggagatctgtccaatccatgcaggccaatagaaataagcacac");
 		}
 		// MLSDK[M]PLTHLLKLLEQFF[EI]VCDETEKHSGK*"
 		// "[M].{4,13}[IV][EV]"
 
-		if (optTem == 0) {
-			toleranciaTemp = new StringBuffer(
+		if (optimalTemp == 0) {
+			toleranceTemp = new StringBuffer(
 					"aaatataaaaggtctagccatgctgtccaccgtgtattgctccctgatttccgaatccccgaaacatccgtttctgtgcgtgtctaaagcgatgcgtcagtataacgaatccgattattcccgtctgattaccgaacagccgcgtcagtaatgggtttgaatgtatgctataagtatttgctgcgtggaaagctaatggacctactccctcagcttatccatttcacccacaagagcactgagtccgaatac");
 		}
-		if (optTem == 1) {
-			toleranciaTemp = new StringBuffer(
+		if (optimalTemp == 1) {
+			toleranceTemp = new StringBuffer(
 					"aaatataaaaggtctagcaatgctgtccaccgtgtattgctccctgatttccgaatccccgaaacatccgtttctgtgcgtgtataaagcgatgcgtcagtataaagaatccgattattcccgtctgattaccgaacagccgcgtcagtaatgggtttgaatgtatgctataagtatttgctgcgtggaaagctaatggagatactccctcagcttatccatttcacccacaagagcactgagtccgaatac");
 		}
-		if (optTem == 2) {
-			toleranciaTemp = new StringBuffer(
+		if (optimalTemp == 2) {
+			toleranceTemp = new StringBuffer(
 					"aaatataaaaagtctagcaatgctgtccaccgtgtattgctacctgatttccgaatccccgaaacatccgtttctgtgcgtgtataaagcgatgcgtcagtataaagagtccgattattcccgtctgattaccgaatagccgcgtcagtaatgggtttgaatgtatgctataagtatttgctgcgtggaaagctaatggagatactccctcagcttatccatttcacccacaagagcactgagtccgaatac");
 		}
 		// MLSTVYCSLISESPKHPFLCVYKAMRQYKESDYSRLITEQPRQ*
 		// ...[VYS]..........[HPF].......
 
 		if (pred == 0) {
-			predador = new StringBuffer(
+			predator = new StringBuffer(
 					"aaatataaaaggtctagcaatgctgtccgataaaatgccgctgacccatctgctgaaactgctggaacagttttttgaaattgtgtgcgatgaaaccgaaaaacattccggcaaataagatcttggccacacagggatcgacaatctcttctgtattaatacggagaatgccttagccctcctctacaacgacgaggcgcccttagagcatgcccatgcaacgctgtcatggcacatcatcacac");
 		}
 		if (pred == 1) {
-			predador = new StringBuffer(
+			predator = new StringBuffer(
 					"aaatataaaaggtctagcaatgctgtccgataaaatgccgctgacccatctggtgaaactgctggaacagttttttgaaattgtgtgcgatgaaaccgaaaaacattccggcaaataagatcttggccacacatggatcgacaatctcttctgtattaatacagagaatgccttagcgcttctctacaacgacgaggcgcccttagagcatgcccatgcaacgctgtcatggcacatcatcacac");
 		}
 		// MLSDK[M]PLTHL[LK]LLEQFFEIVCDETEKHSGK*"
@@ -131,15 +129,15 @@ public class Genoma {
 
 	}
 
-	public Genoma(Mundo m, int speedG, int cazarG, int escape, int radio,
-			int fero, int parteNo, int relleno) {// int relleno lo agrego para
-													// que no me de error por
-													// tener dos metodos
-													// duplicados
+	public Genome(World world, int speedG, int huntG, int escape, int radius,
+				  int phero, int parteNo, int fill) {// int fill lo agrego para
+		// que no me de error por
+		// tener dos metodos
+		// duplicados
 
-		this.m = m;
+		this.world = world;
 
-		proteina = new StringBuffer();
+		protein = new StringBuffer();
 
 		if (speedG == 0) {
 			speed = new StringBuffer(
@@ -159,55 +157,55 @@ public class Genoma {
 		}// MRQYKESDYS[RLI]TEQPR[Q][A]LIRPVDFLALLFGSLCHDLGHTGIDNLFCI*
 		// .[RKH][LMI][LMI].....Q[AG]........
 
-		if (cazarG == 0) {
-			cazar = new StringBuffer(
+		if (huntG == 0) {
+			hunt = new StringBuffer(
 					"aaatatgaaaggtctagcaatgatttccaccgaagcgaaagaatccgaactggcgtcctatctttatccggcgctgttcgaaaccgtgatggataattccgatgaacatcgtagccagggccatgcgctgctgattaatgattccgaagcgaatcgtgcgacctttaccgaatccatgtaaggaattaattattaaaatacttgagcaccacaatgattcggacattgctttgctcagatggtacattc");
 		}
-		if (cazarG == 1) {
-			cazar = new StringBuffer(
+		if (huntG == 1) {
+			hunt = new StringBuffer(
 					"aaatataaaaggtctagcaatgatttccaccgaagcgaaagaatccgaactggcgtcctatcgttatccggcgctgtccgaaaccgtgatggataattccgatgaacatcgtacccagggccatccgctgctgatttatgattccgaagcgaatcgtgcgtcctttaccgaatccatgtaaggatttaattattaaaatacttgagccccacaatgattcggagattgctttgctcagatggtacattc");
 		}
 		// MISTEAKESELASYRY[PAL]SETVMDNSDEHRTQG[HPL]LINDSEANRATFTESM*"
 		// ..[PAG][A][L].{4,10}[HKR]...
 
 		if (escape == 0) {
-			escapar = new StringBuffer(
+			this.escape = new StringBuffer(
 					"aaatataaaaggtctagcaatggaaattgcgattcagatgctgaccgaaaaaaccatgctgtataaagaagcgctgttttgctataccgtgccggaagtgattcaggaaattgatcgttccctggataattccctgaaatcctaaggtatgcagtggccctgatgaacgagttctggtcactgggtgaccttatgctagagtgtggtctggagccagacaagatcaagacccgtccacagaaaggtgaag");
 		}
 		if (escape == 1) {
-			escapar = new StringBuffer(
+			this.escape = new StringBuffer(
 					"aaatataaaaggtctagcaatgaacattgcgattcagatgctgaccgtaaaaaccatgctgtataaagaagcgctgttttgctataccgtgccggaagtgattcaggaaattgatcgttgcctggataattccctgaaatcctaaggtatgcagtggccctgatgaacgagttctggtgacttggtgaccttatggtagagtgtggtctcgagccagacaagatcaagacccgtccatagaaaggtgaag");
 		}
 
 		// MEIAI[Q]MLTEKTMLYKEAL[FC]YTVPEVIQEIDRSLDNSLKS*"
 		// .....[QE].{2,15}[RKH][C]......
 
-		if (radio == 0) {
-			radioConsiente = new StringBuffer(
+		if (radius == 0) {
+			this.radius = new StringBuffer(
 					"aaatataaaaggtctagcaatggaagcgctgaaatcccatgcgaccgtgcgttttgcgatcattatgttttgcgatatttaaggctttacctccctgtccgataaaatgccgctgtcccatctcctgtaacgcaaattggatttacgcagagcatcgtgaagggcttctggaccgttgtggagcggttttggaaagccttggcaggtgtagagtttagcgacatacaagcgaatctaaatgcaaccgtcg");
 		}
-		if (radio == 1) {
-			radioConsiente = new StringBuffer(
+		if (radius == 1) {
+			this.radius = new StringBuffer(
 					"aaatataaaaggtctagcaatggaagcgctgaaatcccatgcgaccgtgcgttttgcgaccattatgttttgcgatattaaaggctttacctccctgtccgataaaatgccgctgacccatctgctgtaacgcaaattggatttacgcagagcatcgtgaagggcttctggaccgttgtggagcggttttggaaagccttggcaggtgtagagtttagcgacttacaagcgaatctaaatgcaaccgtcg");
 		}
-		if (radio == 2) {
-			radioConsiente = new StringBuffer(
+		if (radius == 2) {
+			this.radius = new StringBuffer(
 					"aaatataaaaggtctagcaatggaagcgctgaaatcccatgcgaccgtgcgttttgcgaccattatgttttgcgatattaaaggctttacctccctgtccgataaaatgccgctgacccatctgctgttacgcaaattggatttacgcagagcatcgtgaagggcttctggaccgttgtggagcggttttggaaagccttggcaggtgtagagtttagcgacttacaagcgaatctaaatgcaaccgtcg");
 		}
 
 		// MEALKSHATVRF[A]TI[MF]CDIKGFTSLSDKMPLTHLL*
 		// ..[APTS]..[MILV]F
 
-		if (fero == 0) {
-			feromona = new StringBuffer(
+		if (phero == 0) {
+			pheromone = new StringBuffer(
 					"tggccagtcctaatcacgagtatctcttcaagcttttggtcattggagactctggagtgggcaaatccgctcttcttctgcgcctgtgtgataagatctttaatgcgtcgtacattacgacgataggtgtagacttcaaggtcaaatcgctaaatataaaggacaacactgttaaattacaaatatgggacacggccggccaagagaagttccggaccattacttctacgtactaccggtga");
 		}
-		if (fero == 1) {
-			feromona = new StringBuffer(
+		if (phero == 1) {
+			pheromone = new StringBuffer(
 					"aaatataaaaggtctagcaatggccagtcctaatcacgagtatctattcaagcttttggtcattggagactctggagtgggcaaatccgctcttcttctgcgcctgtgtgataagatctttaatgcgtagtacattacgacgataggtgtagacttcaaggtcaaatcgctaaatataaaggacaacactgttaaattacaaatatgggacacggccggccaagagaagttccggaccattacttctacgtactaccggtga");
 		}
-		if (fero == 2) {
-			feromona = new StringBuffer(
+		if (phero == 2) {
+			pheromone = new StringBuffer(
 					"aaatataaaaggtctagcaatggccagtcctaatcacgagtatctcttcaagcttttggtcattggagactctggagtgggcaaatccgctcttcttctgcgcctgtgtgataagatctttaatgcgtcgtacattacgacgataggtgtagacttcaaggtcaaatcgctaaatataaaggacaacactgttaaattacaaatatgggacacggccggccaagagaagttccggaccattacttctacgtactaccggtga");
 		}
 
@@ -232,191 +230,189 @@ public class Genoma {
 
 	}
 
-	public Genoma(Mundo m, int tasMut, int longe, int col) {
+	public Genome(World world, int mutationRate, int longevity, int color) {
 
-		this.m = m;
+		this.world = world;
 
-		proteina = new StringBuffer();
+		protein = new StringBuffer();
 
-		if (tasMut == 0) {
-			tasaMutacion = new StringBuffer(
+		if (mutationRate == 0) {
+			this.mutationRate = new StringBuffer(
 					"aaatataaaaggtctagcaatggatgaaaatgaaaaacaggaacgtctgctgatgtccctgctgccgcgtaatgtggcgatggaaatgtaagaagattttctgaaaccgccggaacgtacttttcataaaatttatattcagtaaataacacatattatagactcgaccaatctggagaacttgtacttactcttcagcagcgcattctccaggctgtgttaaacatagcggtcatacgcaccttggaata");
 		}
-		if (tasMut == 1) {
-			tasaMutacion = new StringBuffer(
+		if (mutationRate == 1) {
+			this.mutationRate = new StringBuffer(
 					"aaatataaaaggtctagcaatggatgaaaatgaaaaacaggaacgtctgctgatgtccctgctgccgcgtaatgtggcgatggaaatgaaagaagattttctgaaaccgccggaacgtatttttcataaaatttatattcagtaaataacacatattatagactcgaccaatctggagaacttgtacttactcttcagcagcgcattctccaggctgtgttaaacatagcggtcatacgcaccttggaata");
 		}
-		if (tasMut == 2) {
-			tasaMutacion = new StringBuffer(
+		if (mutationRate == 2) {
+			this.mutationRate = new StringBuffer(
 					"aaatataaaaggtctagcaatggatgaaaatgaaaaacaggaacgtctgctgatgtccctgctgccgcgtaatgtggcgatggaaatgaaagaagattttctgaaaccgccggaacgtatttttcataaaatttatattcagtatataacacatattatagactcgaccaatctggagaacttgtacttactcttcagcagcgcattctccaggctgtgttaaacatagcggtcatacgcaccttggaata");
 		}
 
 		// MDENEKQERLL[M]S[LL]PRN[V]AMEMKEDFLKPPERIFHKIYIQ*
 		// .M.[LMIV][LMI]...[VLI]..
-		if (longe == 0) {
-			longevidad = new StringBuffer(
+		if (longevity == 0) {
+			this.longevity = new StringBuffer(
 					"aaatataaaaggtctagcaatgtccaatccgcgtaatatggatctgtattatcagtcctattcccaggtgggcgtgatgtttgcgtccattccgaattttaattaattttatattgaactgtatggcaataatatgggcgtggaataaaaagctgaagaagaccatcgtggatggcctgcctgactattcgccagttgcagcagattgcgagcccacatatcaaagcgtgtggaagcaactaaatgagagta");
 		}
-		if (longe == 1) {
-			longevidad = new StringBuffer(
+		if (longevity == 1) {
+			this.longevity = new StringBuffer(
 					"aaatataaaaggtctagcaatgtccaatccgcgtaatatggatctgtattatcagtcctattcccaggtgggcgtgatgtttgcgtccattccgaattttaatgatttttatattgaactggatggcaataatatgggcgtggaataaaaagctgaagaagaccatcgtggatggcctgcctgactattcgccagttgcagcagattgcgagcccacatatcaaagcgtgtggaagcaactaaatgagagta");
 		}
-		if (longe == 2) {
-			longevidad = new StringBuffer(
+		if (longevity == 2) {
+			this.longevity = new StringBuffer(
 					"aaatataaaaggtctagcaatgtccaatccgcgtaatatggatctgtattatcagtcctattcccaggtgggcgtgatgtttgcgaccattccgaattttaatgatttttatattgaactggatggcaataatatgggcgtggaatataaagctgaagaagaccatcgtggatggcctgcctgactattcgccagttgcagctgattgcgagcccacatatcaaagcgtgtggaagcaactaaatgagagta");
 		}
-		if (longe == 3) {
-			longevidad = new StringBuffer(
+		if (longevity == 3) {
+			this.longevity = new StringBuffer(
 					"aaatataaaaggtctagcaatgtccaattcgcgtaatatggatctgtattatcagtcctattcccaggtgggcgtgatgtttggtccattccgaattttaatgatttttatattgaactggatggcaataatatgggcgtggaataaaaagctgaagaagaccatcgtggatggcctgcctgactattcgccagttgcagcagattgcgagcccacatatcaaagcgtgtggaagcaactaaatgagagta");
 		}
 
 		// MMSNPRNM[DL]YYQSYS[Q]VGVM[F]ASIPNFNDFYIELDGNNMGVE*
 		// .....[DN][LMIV]......[QE]....[FY]
 
-		if (col == 0) {
-			color = new StringBuffer(
+		if (color == 0) {
+			this.color = new StringBuffer(
 					"aaatatataaggtctagcaatgctgctgcgtattctgcagctgacccagtttaccgaatttattacccagtccgcgtatttttataccattccgccggtggcggtggtgatcatgattctgcgttccatgtatcgtcgtctgattctgattttttcccagaatgtggaagaaatttggtccttttgcaatcgtaccacctcctgcatgaccacctaatcgatgtcagtgccatgaatacatatac");
 		}// a0
-		if (col == 1) {
-			color = new StringBuffer(
+		if (color == 1) {
+			this.color = new StringBuffer(
 					"aaatataaagggtctagcaaagctgctgcgtattctgcagctgacccagtttaccgaatttattacccagtccgcgtatttttataccattccgccggtggcggtggtgattatgattctgcgttccatgtatcgtcgtctgattctgattttttcccagaatgtggaagaaatttggtccttttgcaatcgtaccacctcctgcatgaccacctaatcgatgtcagtgccatgaatacatatcc");
 		}// a256
-		if (col == 2) {
-			color = new StringBuffer(
+		if (color == 2) {
+			this.color = new StringBuffer(
 					"aaatataatgggtctagcaatgctgctgcgtattctgcagctgacccagtttaccgaatttattacccagtccgcgtgttttcataccattccgccggtggcggtggtgattatgattctgcgttccatgtatcgtcgtctgattctgattttttcccagaatgtggaataaatttggtccttttgcaatcgtaccacctcctgcatgaccacctaatcgatgtcagtgccatgaatacatatac");
 		}// a452
-		if (col == 3) {
-			color = new StringBuffer(
+		if (color == 3) {
+			this.color = new StringBuffer(
 					"aaatataaaaggtctagcaatgctgctgcgtattctgcagctgacccagtttaccgaatatattacccagtccgcgtatttttataccattccgccggtggcggtggtgattatgattctgcgttccatgtatcgtcgtctgattctgattttttcccagaatgtggaagaaatttggtccttttgcaatcgtaccacctcctgcatgactacctaatagttgtcagtgccatgaatacatatac");
 		}// a588
-		if (col == 4) {
-			color = new StringBuffer(
+		if (color == 4) {
+			this.color = new StringBuffer(
 					"aaatataaaagttctagcaatgctgctgcgtattctgcagctgacccaatttaacgaatttattacccagtccgcgtatttttataccattccgccggtggcggtggtgattatgattctgcgttccatgtatcgtcgtctgattctgattttttcccagaatgtggaagaaatttggtccttttgcaatcgtaccacctcctgcatgaccacccaatcgatgtcggtgccatgaatacatatac");
 		}// a700
 		// MLLRILQLTQFTEFITQSAYF[YT]IPPVAVVIMILRSMYRRL[ILI]FSQNVEEIWSFCNRTTSCMTT*
 
 	}
 
-	public Genoma(Mundo m) {
-		this.m = m;
-	}
+	public StringBuffer collectGenome(World world) {
+		StringBuffer line = new StringBuffer();
 
-	public StringBuffer colectarGenoma(Mundo m) {
+		if (world.collectResistance) {
+			line.append(resistanceATB);
+		}
+		if (world.collectWidth) {
+			line.append(width);
+		}
+		if (world.collectHeight) {
+			line.append(height);
+		}
+		if (world.collectSpeed) {
+			line.append(speed);
+		}
+		if (world.collectSense) {
+			line.append(sense);
+		}
+		if (world.collectPredator) {
+			line.append(predator);
+		}
+		if (world.collectMutationRate) {
+			line.append(mutationRate);
+		}
+		if (world.collectHunt) {
+			line.append(hunt);
+		}
+		if (world.collectEscape) {
+			line.append(escape);
+		}
+		if (world.collectRadius) {
+			line.append(radius);
+		}
+		if (world.collectPheromone) {
+			line.append(pheromone);
+		}
+		if (world.colectarParteNoGen) {
+			line.append(parteNoGen);
+		}
+		if (world.collectLongevity) {
+			line.append(longevity);
+		}
+		if (world.collectTemp) {
+			line.append(toleranceTemp);
+		}
+		if (world.collectColor) {
+			line.append(color);
+		}
+		line.append("\n");
 
-		StringBuffer linea = new StringBuffer();
-		if (m.colectarResistencia == true) {
-			linea.append(resistenciaATB + "\n");
-		}
-		if (m.colectarancho == true) {
-			linea.append(ancho + "\n");
-		}
-		if (m.colectaralto == true) {
-			linea.append(alto + "\n");
-		}
-		if (m.colectSpeed == true) {
-			linea.append(speed + "\n");
-		}
-		if (m.colectSentir == true) {
-			linea.append(sentir + "\n");
-		}
-		if (m.colectPredador == true) {
-			linea.append(predador + "\n");
-		}
-		if (m.colectarTasaMut == true) {
-			linea.append(tasaMutacion + "\n");
-		}
-		if (m.colectCazar == true) {
-			linea.append(cazar + "\n");
-		}
-		if (m.colectEscapar == true) {
-			linea.append(escapar + "\n");
-		}
-		if (m.colectRadioconsiente == true) {
-			linea.append(radioConsiente + "\n");
-		}
-		if (m.colectarFeromona == true) {
-			linea.append(feromona + "\n");
-		}
-		if (m.colectarParteNoGen == true) {
-			linea.append(parteNoGen + "\n");
-		}
-		if (m.colectarLongevidad == true) {
-			linea.append(longevidad + "\n");
-		}
-		if (m.colectarTemp == true) {
-			linea.append(toleranciaTemp + "\n");
-		}
-		if (m.colectColor == true) {
-			linea.append(color + "\n");
-		}
-
-		return linea;
+		return line;
 
 	}
 
-	public StringBuffer colectarProteoma(Mundo m) {
+	public StringBuffer collectProteome(World world) {
 
-		StringBuffer linea = new StringBuffer();
+		StringBuffer line = new StringBuffer();
 
-		if (m.colectarResistencia == true) {
-			linea.append(traducir(resistenciaATB) + "\n");
+		if (world.collectResistance) {
+			line.append(translateProtein(resistanceATB));
 		}
-		if (m.colectarancho == true) {
-			linea.append(traducir(ancho) + "\n");
+		if (world.collectWidth) {
+			line.append(translateProtein(width));
 		}
-		if (m.colectaralto == true) {
-			linea.append(traducir(alto) + "\n");
+		if (world.collectHeight) {
+			line.append(translateProtein(height));
 		}
-		if (m.colectSpeed == true) {
-			linea.append(traducir(speed) + "\n");
+		if (world.collectSpeed) {
+			line.append(translateProtein(speed));
 		}
-		if (m.colectSentir == true) {
-			linea.append(traducir(sentir) + "\n");
+		if (world.collectSense) {
+			line.append(translateProtein(sense));
 		}
-		if (m.colectPredador == true) {
-			linea.append(traducir(predador) + "\n");
+		if (world.collectPredator) {
+			line.append(translateProtein(predator));
 		}
-		if (m.colectarTasaMut == true) {
-			linea.append(traducir(tasaMutacion) + "\n");
+		if (world.collectMutationRate) {
+			line.append(translateProtein(mutationRate));
 		}
-		if (m.colectCazar == true) {
-			linea.append(traducir(cazar) + "\n");
+		if (world.collectHunt) {
+			line.append(translateProtein(hunt));
 		}
-		if (m.colectEscapar == true) {
-			linea.append(traducir(escapar) + "\n");
+		if (world.collectEscape) {
+			line.append(translateProtein(escape));
 		}
-		if (m.colectRadioconsiente == true) {
-			linea.append(traducir(radioConsiente) + "\n");
+		if (world.collectRadius) {
+			line.append(translateProtein(radius));
 		}
-		if (m.colectarFeromona == true) {
-			linea.append(traducir(feromona) + "\n");
+		if (world.collectPheromone) {
+			line.append(translateProtein(pheromone));
 		}
-		if (m.colectarParteNoGen == true) {
-			linea.append(traducir(parteNoGen) + "\n");
+		if (world.colectarParteNoGen) {
+			line.append(translateProtein(parteNoGen));
 		}
-		if (m.colectarLongevidad == true) {
-			linea.append(traducir(longevidad) + "\n");
+		if (world.collectLongevity) {
+			line.append(translateProtein(longevity));
 		}
-		if (m.colectarTemp == true) {
-			linea.append(traducir(toleranciaTemp) + "\n");
-		}
-
-		if (m.colectColor == true) {
-			linea.append(traducir(color) + "\n");
+		if (world.collectTemp) {
+			line.append(translateProtein(toleranceTemp));
 		}
 
-		return linea;
+		if (world.collectColor) {
+			line.append(translateProtein(color));
+		}
+		line.append("\n");
+
+		return line;
 	}
 
-	public int valorPromotor(StringBuffer srt) {
+	public int promoterValue(StringBuffer sb) {
 
-		promotor = 0;
+		promoter = 0;
 
 		// detectar promotor TATA
 
 		tataPos = -1;
 		Pattern p = Pattern.compile("[acgt][at]t[at]a[at][ag]....[at]");
-		Matcher m = p.matcher(srt);
+		Matcher m = p.matcher(sb);
 		if (m.find()) {
 			tataPos = m.start();
 		}
@@ -425,170 +421,128 @@ public class Genoma {
 		if (tataPos != -1 && tataPos < 12) {
 
 			for (int e = tataPos; e < tataPos + 12; e++) {
-
 				// obtenemos la letra de una posicion determinada
-				base = srt.charAt(e);
-				suma = 0;
-				if (base == 'a') {
-					suma = 1;
-				}
-				if (base == 'c') {
-					suma = 0;
-				}
-				if (base == 'g') {
-					suma = 0;
-				}
-				if (base == 't') {
-					suma = 1;
+				base = sb.charAt(e);
+				sum = 0;
+				switch (base) {
+					case 'a':
+						sum = 1;
+					case 'c':
+						sum = 0;
+					case 'g':
+						sum = 0;
+					case 't':
+						sum = 1;
 				}
 
-				promotor = promotor + suma;
+				promoter = promoter + sum;
 
 			}
 		}
 
-		if (promotor < 0) {
-			promotor = 0;
+		if (promoter < 0) {
+			promoter = 0;
 		}
 
-		return promotor;
+		return promoter;
 	}
 
-	public int puntajeAminoAcidos(char c) {
-
-		int protV = 0;
-
-		if (c == 'C') {
-			protV = 0;
+	public int scoreAA(char c) {
+		switch (c) {
+			case 'C':
+				return 0;
+			case 'S':
+				return 1;
+			case 'T':
+				return 2;
+			case 'P':
+				return 3;
+			case 'A':
+				return 4;
+			case 'G':
+				return 5;
+			case 'N':
+				return 6;
+			case 'D':
+				return 7;
+			case 'E':
+				return 8;
+			case 'Q':
+				return 9;
+			case 'H':
+				return 10;
+			case 'R':
+				return 11;
+			case 'K':
+				return 12;
+			case 'M':
+				return 13;
+			case 'I':
+				return 14;
+			case 'L':
+				return 15;
+			case 'V':
+				return 16;
+			case 'F':
+				return 17;
+			case 'Y':
+				return 18;
+			case 'W':
+				return 19;
 		}
-
-		if (c == 'S') {
-			protV = 1;
-		}
-		if (c == 'T') {
-			protV = 2;
-		}
-		if (c == 'P') {
-			protV = 3;
-		}
-		if (c == 'A') {
-			protV = 4;
-		}
-		if (c == 'G') {
-			protV = 5;
-		}
-
-		if (c == 'N') {
-			protV = 6;
-		}
-		if (c == 'D') {
-			protV = 7;
-		}
-		if (c == 'E') {
-			protV = 8;
-		}
-		if (c == 'Q') {
-			protV = 9;
-		}
-
-		if (c == 'H') {
-			protV = 10;
-		}
-		if (c == 'R') {
-			protV = 11;
-		}
-		if (c == 'K') {
-			protV = 12;
-		}
-
-		if (c == 'M') {
-			protV = 13;
-		}
-		if (c == 'I') {
-			protV = 14;
-		}
-		if (c == 'L') {
-			protV = 15;
-		}
-		if (c == 'V') {
-			protV = 16;
-		}
-
-		if (c == 'F') {
-			protV = 17;
-		}
-		if (c == 'Y') {
-			protV = 18;
-		}
-
-		if (c == 'W') {
-			protV = 19;
-		}
-
-		return protV;
-
+		return -1;
 	}
 
-	public float traducirMagnitud(Organismo or, StringBuffer strB, String str) {
+	public float translateMagnitude(StringBuffer strB, String str) {
 
-		promotor = valorPromotor(strB);// valor del promotor
-		suma = 0;
-		proteina = traducir(strB);// secuencia de la proteina
+		promoter = promoterValue(strB);// valor del promotor
+		sum = 0;
+		protein = translateProtein(strB);// secuencia de la proteina
 
 		Pattern p = Pattern.compile(str);// tiene que encontrar esta condición
-		Matcher m = p.matcher(proteina);
+		Matcher m = p.matcher(protein);
 		if (m.find()) {// detectar la secuencia conservada
 
 			// si esta está, obtener el valor de la proteina
-
-			for (int i = 0; i < proteina.length(); i++) {
-				amino = proteina.charAt(i);
-
-				suma = suma + puntajeAminoAcidos(amino);
-
+			for (int i = 0; i < protein.length(); i++) {
 				// System.out.println("promotor "+ promotor+ "suma"+ suma);
+				sum += protein.charAt(i);
 			}
 		}
 
-		return (float) promotor * suma;
+		return (float) promoter * sum;
 	}
 
-	public boolean traducirBoolean(StringBuffer strb, String str) {
-		bool = false;
-
-		int promotor = valorPromotor(strb);// valor del promotor
+	public boolean translateBoolean(StringBuffer strb, String str) {
+		int promoter = promoterValue(strb);// valor del promoter
 		// float protV=0;
-		proteina = traducir(strb);// secuencia de la proteina
+		protein = translateProtein(strb);// secuencia de la proteina
 
 		Pattern p = Pattern.compile(str);// si encuentra esta condicion se hace
-											// predador
-		Matcher m = p.matcher(proteina);
+		// predador
+		Matcher m = p.matcher(protein);
 		if (m.find()) {
-
-			bool = true;
+			return true;
+		} else if (promoter == 0) {
+			return false;
+		} else {
+			return false;
 		}
-
-		if (promotor == 0) {
-			bool = false;
-		}
-		;
-		return bool;
-
 	}
 
-	public float traducirColor(Organismo org, String str1, String str2) {
+	public float translateColor(String str1, String str2) {
 
 		float r = 0;
 		float g = 0;
 		float b = 0;
 
-		float promotor = valorPromotor(color);// valor del promotor
+		float promoter = promoterValue(color);// valor del promotor
 
-		proteina = traducir(color);// secuencia de la proteina
+		protein = translateProtein(color);// secuencia de la proteina
 
-		int a = proteina.indexOf(str1);// detectar la secuencia conservada
-		int a2 = proteina.indexOf(str2);// detectar la segunda secuencia
-										// conservada
+		int a = protein.indexOf(str1);// detectar la secuencia conservada
+		int a2 = protein.indexOf(str2);// detectar la segunda secuencia
+		// conservada
 
 		if (a == -1) {
 			r = 255;
@@ -609,9 +563,9 @@ public class Genoma {
 
 			for (int i = 0; i < a; i++) {
 
-				amino = proteina.charAt(i);
+				amino = protein.charAt(i);
 
-				r = r + puntajeAminoAcidos(amino);
+				r = r + scoreAA(amino);
 			}
 		}
 
@@ -620,33 +574,31 @@ public class Genoma {
 
 			for (int i = a; i < a2; i++) {
 
-				amino = proteina.charAt(i);
+				amino = protein.charAt(i);
 
-				g = g + puntajeAminoAcidos(amino);
+				g = g + scoreAA(amino);
 			}
 		}
 
 		// obtener el color azul
 		if (a != -1 && a2 != -1 && a < a2) {
 
-			for (int i = a2; i < proteina.length(); i++) {
+			for (int i = a2; i < protein.length(); i++) {
 
-				amino = proteina.charAt(i);
+				amino = protein.charAt(i);
 
-				b = b + puntajeAminoAcidos(amino);
+				b = b + scoreAA(amino);
 			}
 		}
 
-		if (promotor == 0) {
+		if (promoter == 0) {
 			r = 0;
 			g = 0;
 			b = 0;
-		}
-		;
-		if (promotor > 0) {
-			r = promotor * r;
-			g = promotor * g;
-			b = promotor * b;
+		} else if (promoter > 0) {
+			r = promoter * r;
+			g = promoter * g;
+			b = promoter * b;
 		}
 
 		if (r > 255) {
@@ -662,9 +614,9 @@ public class Genoma {
 		return (r + g + b);
 	}
 
-	public StringBuffer traducir(StringBuffer str) {// lee el adn y asigna
-													// valores numericos a los
-													// paramentros del organismo
+	public StringBuffer translateProtein(StringBuffer str) {// lee el adn y asigna
+		// valores numericos a los
+		// paramentros del organismo
 
 		// detectar promotor TATA
 
@@ -673,7 +625,6 @@ public class Genoma {
 		Matcher m = p.matcher(str);
 		if (m.find()) {
 			tataPos = m.start();
-
 		}
 
 		// detectar ATG
@@ -686,95 +637,210 @@ public class Genoma {
 
 		}
 
-		proteina.delete(0, proteina.length());
-		// obtenemos la secuencia de la proteina
+		protein.delete(0, protein.length());
 
 		if (tataPos != -1 && atgPos != -1 && tataPos < atgPos && tataPos < 12) {
 
 			for (int e = atgPos; e <= str.length() - 3; e = e + 3) {
-
 				codon = str.substring(e, e + 3);
+				String aa = "";
+				switch (codon) {
+					case "aaa":
+						aa = "K";
+						break;
+					case "aat":
+						aa = "N";
+						break;
+					case "aac":
+						aa = "N";
+						break;
+					case "aag":
+						aa = "K";
+						break;
+					case "ata":
+						aa = "I";
+						break;
+					case "att":
+						aa = "I";
+						break;
+					case "atc":
+						aa = "I";
+						break;
+					case "atg":
+						aa = "M";
+						break;
+					case "aca":
+						aa = "T";
+						break;
+					case "act":
+						aa = "T";
+						break;
+					case "acc":
+						aa = "T";
+						break;
+					case "acg":
+						aa = "T";
+						break;
+					case "aga":
+						aa = "R";
+						break;
+					case "agt":
+						aa = "S";
+						break;
+					case "agc":
+						aa = "S";
+						break;
+					case "agg":
+						aa = "R";
+						break;
 
-				if (codon.equals("atg")) {
-					proteina.append("M");
-				}
-				if (codon.equals("aga") || codon.equals("agg")
-						|| codon.equals("cga") || codon.equals("cgc")
-						|| codon.equals("cgg") || codon.equals("cgt")) {
-					proteina.append("R");
-				}
-				if (codon.equals("gca") || codon.equals("gcc")
-						|| codon.equals("gcg") || codon.equals("gct")) {
-					proteina.append("A");
-				}
-				if (codon.equals("aat") || codon.equals("aac")) {
-					proteina.append("N");
-				}
-				if (codon.equals("gat") || codon.equals("gac")) {
-					proteina.append("D");
-				}
-				if (codon.equals("tgt") || codon.equals("tgc")) {
-					proteina.append("C");
-				}
-				if (codon.equals("caa") || codon.equals("cag")) {
-					proteina.append("Q");
-				}
-				if (codon.equals("gaa") || codon.equals("gag")) {
-					proteina.append("E");
-				}
-				if (codon.equals("gga") || codon.equals("ggc")
-						|| codon.equals("ggg") || codon.equals("ggt")) {
-					proteina.append("G");
-				}
-				if (codon.equals("cat") || codon.equals("cac")) {
-					proteina.append("H");
-				}
-				if (codon.equals("ata") || codon.equals("att")
-						|| codon.equals("atc")) {
-					proteina.append("I");
-				}
-				if (codon.equals("tta") || codon.equals("ttg")
-						|| codon.equals("ctt") || codon.equals("ctc")
-						|| codon.equals("cta") || codon.equals("ctg")) {
-					proteina.append("L");
-				}
-				if (codon.equals("aaa") || codon.equals("aag")) {
-					proteina.append("K");
-				}
-				if (codon.equals("ttt") || codon.equals("ttc")) {
-					proteina.append("F");
-				}
-				if (codon.equals("tct") || codon.equals("tcc")
-						|| codon.equals("tca") || codon.equals("tcg")
-						|| codon.equals("agt") || codon.equals("agc")) {
-					proteina.append("S");
-				}
-				if (codon.equals("act") || codon.equals("acg")
-						|| codon.equals("acc") || codon.equals("aca")) {
-					proteina.append("T");
-				}
-				if (codon.equals("tgg")) {
-					proteina.append("W");
-				}
-				if (codon.equals("tat") || codon.equals("tac")) {
-					proteina.append("Y");
-				}
-				if (codon.equals("gta") || codon.equals("gtc")
-						|| codon.equals("gtg") || codon.equals("gtt")) {
-					proteina.append("V");
-				}
-				if (codon.equals("cca") || codon.equals("ccc")
-						|| codon.equals("ccg") || codon.equals("cct")) {
-					proteina.append("P");
-				}
-				if (codon.equals("taa") || codon.equals("tag")
-						|| codon.equals("tga")) {
-					e = str.length();
-				}
+					case "taa":
+						return protein;
+					case "tat":
+						aa = "Y";
+						break;
+					case "tac":
+						aa = "Y";
+						break;
+					case "tag":
+						return protein;
+					case "tta":
+						aa = "L";
+						break;
+					case "ttt":
+						aa = "F";
+						break;
+					case "ttc":
+						aa = "F";
+						break;
+					case "ttg":
+						aa = "L";
+						break;
+					case "tca":
+						aa = "S";
+						break;
+					case "tct":
+						aa = "S";
+						break;
+					case "tcc":
+						aa = "S";
+						break;
+					case "tcg":
+						aa = "S";
+						break;
+					case "tga":
+						return protein;
+					case "tgt":
+						aa = "C";
+						break;
+					case "tgc":
+						aa = "C";
+						break;
+					case "tgg":
+						aa = "W";
+						break;
 
+					case "caa":
+						aa = "Q";
+						break;
+					case "cat":
+						aa = "H";
+						break;
+					case "cac":
+						aa = "H";
+						break;
+					case "cag":
+						aa = "Q";
+						break;
+					case "cta":
+						aa = "L";
+						break;
+					case "ctt":
+						aa = "L";
+						break;
+					case "ctc":
+						aa = "L";
+						break;
+					case "ctg":
+						aa = "L";
+						break;
+					case "cca":
+						aa = "P";
+						break;
+					case "cct":
+						aa = "P";
+						break;
+					case "ccc":
+						aa = "P";
+						break;
+					case "ccg":
+						aa = "P";
+						break;
+					case "cga":
+						aa = "R";
+						break;
+					case "cgt":
+						aa = "R";
+						break;
+					case "cgc":
+						aa = "R";
+						break;
+					case "cgg":
+						aa = "R";
+						break;
+
+					case "gaa":
+						aa = "E";
+						break;
+					case "gat":
+						aa = "D";
+						break;
+					case "gac":
+						aa = "D";
+						break;
+					case "gag":
+						aa = "E";
+						break;
+					case "gta":
+						aa = "V";
+						break;
+					case "gtt":
+						aa = "V";
+						break;
+					case "gtc":
+						aa = "V";
+						break;
+					case "gtg":
+						aa = "V";
+						break;
+					case "gca":
+						aa = "A";
+						break;
+					case "gct":
+						aa = "A";
+						break;
+					case "gcc":
+						aa = "A";
+						break;
+					case "gcg":
+						aa = "A";
+						break;
+					case "gga":
+						aa = "G";
+						break;
+					case "ggt":
+						aa = "G";
+						break;
+					case "ggc":
+						aa = "G";
+						break;
+					case "ggg":
+						aa = "G";
+						break;
+				}
+				protein.append(aa);
 			}
 		}
-
-		return proteina;
+		return protein;
 	}
 }

@@ -27,54 +27,54 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Qenergia {
+public class Qenergy {
 
-	Mundo m;
+	World m;
 
-	private Sprite imagen;
-	double masa;
-	float ancho = 7;
-	float alto = 7;
+	private final Sprite image;
+	double mass;
+	float width = 7;
+	float height = 7;
 	int speed;
-	Vector2 posicion;
-	Vector2 direccion;
-	Rectangle borde;
+	Vector2 position;
+	Vector2 direction;
+	Rectangle border;
 	boolean visible = true;
 
-	public Qenergia(Vector2 posicion, boolean mover, int masa, Mundo m) {
+	public Qenergy(Vector2 position, boolean move, int mass, World m) {
 
 		this.m = m;
-		this.masa = masa;
-		this.posicion = posicion;
-		direccion = new Vector2();
+		this.mass = mass;
+		this.position = position;
+		direction = new Vector2();
 
-		ancho =  (ancho / m.zoom);
-		alto =  (alto / m.zoom);
+		width = (width / m.zoom);
+		height = (height / m.zoom);
 
 		speed = 30;
-		borde = new Rectangle();
+		border = new Rectangle();
 
-		borde.height = (float) alto;
-		borde.width = (float) ancho;
+		border.height = height;
+		border.width = width;
 
-		borde.x = posicion.x;
-		borde.y = posicion.y;
+		border.x = position.x;
+		border.y = position.y;
 
-		if (mover == true) {
-			direccion.y = -1;
+		if (move == true) {
+			direction.y = -1;
 		}
-		direccion.x = 0;
+		direction.x = 0;
 
-		imagen = new Sprite(m.textura_organismos.getRegions().get(23));
-		imagen.setPosition(this.posicion.x, this.posicion.y);
-		imagen.setSize(ancho, alto);
+		image = new Sprite(m.organismTexture.getRegions().get(23));
+		image.setPosition(this.position.x, this.position.y);
+		image.setSize(width, height);
 
 	}
 
 	public void verObjeto(SpriteBatch sb) {
 		if (visible == true) {
 			sb.begin();
-			imagen.draw(sb);
+			image.draw(sb);
 			sb.end();
 		}
 
@@ -85,7 +85,7 @@ public class Qenergia {
 		if (visible == true) {
 			sr.setColor(Color.RED);
 
-			sr.filledCircle(posicion.x, posicion.y, ancho);
+			sr.filledCircle(position.x, position.y, width);
 
 		}
 	}
@@ -95,55 +95,55 @@ public class Qenergia {
 		sr.begin(ShapeType.Rectangle);
 
 		sr.setColor(Color.CYAN);
-		sr.rect(borde.x, borde.y, borde.width, borde.height);
+		sr.rect(border.x, border.y, border.width, border.height);
 		sr.end();
 
 	}
 
 	public void update() {
 
-		posicion.add(Gdx.graphics.getDeltaTime() * (direccion.x) * speed,
-				Gdx.graphics.getDeltaTime() * (direccion.y) * speed);
+		position.add(Gdx.graphics.getDeltaTime() * (direction.x) * speed,
+				Gdx.graphics.getDeltaTime() * (direction.y) * speed);
 
-		imagen.setPosition(posicion.x, posicion.y);
-		borde.x = posicion.x;
-		borde.y = posicion.y;
+		image.setPosition(position.x, position.y);
+		border.x = position.x;
+		border.y = position.y;
 
-		if (posicion.y < 0) {
+		if (position.y < 0) {
 			reset1();
 		}
-		if (posicion.y > m.alto - 50 && direccion.y == 0) {
+		if (position.y > m.alto - 50 && direction.y == 0) {
 			reset1();
 		}
-		if (posicion.x < 0 || posicion.x > m.ancho) {
+		if (position.x < 0 || position.x > m.ancho) {
 			reset2();
 		}
 
 	}
 
 	public void reset1() {
-		if (direccion.y != 0) {
-			posicion.y = m.alto;
+		if (direction.y != 0) {
+			position.y = m.alto;
 		}
-		if (direccion.y == 0) {
-			posicion.y = (float) (Math.random() * m.alto);
+		if (direction.y == 0) {
+			position.y = (float) (Math.random() * m.alto);
 		}
 	}
 
 	public void reset2() {
 
-		if (posicion.x < m.ancho / 2) {
-			posicion.x = (float) (Math.random() * m.ancho / 2);
+		if (position.x < m.ancho / 2) {
+			position.x = (float) (Math.random() * m.ancho / 2);
 		}
-		if (posicion.x > m.ancho / 2) {
-			posicion.x = (float) Math.random() * (ancho - (ancho / 2)) + ancho
+		if (position.x > m.ancho / 2) {
+			position.x = (float) Math.random() * (width - (width / 2)) + width
 					/ 2;
 		}
 	}
 
 	public void reset3() {
 
-		posicion.x = m.ancho / 2;
+		position.x = m.ancho / 2;
 	}
 
 }

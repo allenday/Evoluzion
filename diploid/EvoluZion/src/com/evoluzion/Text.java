@@ -17,9 +17,9 @@
 
 package com.evoluzion;
 
-public class Texto {
+public class Text {
 
-	MenuInicio mi;
+	StartMenu mi;
 	// texto del Menu inicio
 
 	String errorEscribir = "error al escribir el archivo evo_star.conf";
@@ -62,20 +62,20 @@ public class Texto {
 	String moverLaMasa = "Mover la Masa";
 	String cargarArchivo = "Cargar Archivo: ";
 	String color = "Color";
-	String tamano = "Tamaño";
+	String size = "Tamaño";
 	String alto = "alto";
 	String ancho = "ancho";
 	String cantidad = "Cantidad";
 	String velocidad = "Velocidad";
 	String alas = "Alas";
-	String sentidos = "Antenas";
-	String buscarComida = "Ojos azules";
-	String escapar = "Escapar";
+	String senses = "Antenas";
+	String searchFood = "Ojos azules";
+	String escape = "Escapar";
 	String alcanceVisual = "Alcance Visual";
 	String genPredador = "Gen Predador";
 	String fidelidadADNpol = "Fid. ADNpol";
 	String longevidad = "Longevidad";
-	String temOptima = "Temp. Óptima";
+	String optimalTemp = "Temp. Óptima";
 	String ResATB = "R.Tox";
 	String feromona = "Feromona";
 	String fer = "Fero";
@@ -120,13 +120,13 @@ public class Texto {
 	String losCambiosReiniciar = "Algunos cambios se completarán luego de reiniciar";
 
 	String sexo = "sexo";
-	String macho = "macho";
-	String hembra = "hembra";
-	String ventanalellenda = "Seleccione el genotipo deseado para su organismo y oprima OK \n\n >";
+	String male = "macho";
+	String female = "hembra";
+	String legendWindow = "Seleccione el genotipo deseado para su organismo y oprima OK \n\n >";
 	String verdadero = "verdadero";
 	String falso = "falso";
-	String genotipo = "Genotipo";
-	String cancelar = "Cancelar";
+	String genotype = "Genotipo";
+	String cancel = "Cancelar";
 	String modificar = "modificar";
 	String cepa = "cepa";
 	String predador = "predator";
@@ -137,22 +137,22 @@ public class Texto {
 	String expresadosEnUnidades = " expresados en unidades de recombinación o centiMorgan.";
 	String genesLigados = " 0 = genes ligados; 50 o más = genes no ligados. Los machos solo tienen una copia de cromosoma 3 (C3)";
 
-	String blanco = "blanco";
-	String verde = "verde";
+	String white = "blanco";
+	String green = "verde";
 	String celeste = "celeste";
 	String naranja = "naranja";
-	String azul = "azul";
-	String pequeño = "pequeño";
-	String mediano = "mediano";
-	String grande = "grande";
+	String blue = "azul";
+	String small = "pequeño";
+	String medium = "mediano";
+	String large = "grande";
 	String panelDer = "Panel derecho";
 	String panelIz = "Panel izquierdo";
 	String verFrontera = "Crear Frontera";
 	String frontera = "Frontera";
 	String verMachoHembra = "Ver M/H";
-	String nada = "Nada";
+	String none = "Nada";
 	String normal = "Normal";
-	String fuerte = "Fuerte";
+	String strong = "Fuerte";
 	String todo = "Todo";
 	String nada2 = "Nada";
 
@@ -201,11 +201,11 @@ public class Texto {
 
 	String verGenotipo = "Ver Genotipo";
 
-	public Texto() {
+	public Text() {
 
 	}
 
-	public void setEspanol() {
+	public void setSpanish() {
 
 		errorEscribir = "error al escribir el archivo evo_star.conf";
 		errorLectura = "error en la lectura del archivo evo_star.conf \n se usará la configuración por defecto";
@@ -247,20 +247,20 @@ public class Texto {
 		moverLaMasa = "Mover la Masa";
 		cargarArchivo = "Cargar Archivo: ";
 		color = "Color";
-		tamano = "Tamaño";
+		size = "Tamaño";
 		alto = "alto";
 		ancho = "ancho";
 		cantidad = "Cantidad";
 		velocidad = "Velocidad";
 		alas = "Alas";
-		sentidos = "Antenas";
-		buscarComida = "Ojos azules";
-		escapar = "Ojos amarillos";
+		senses = "Antenas";
+		searchFood = "Ojos azules";
+		escape = "Ojos amarillos";
 		alcanceVisual = "Alcance Visual";
 		genPredador = "Gen Predador";
 		fidelidadADNpol = "Fid. ADNpol";
 		longevidad = "Longevidad";
-		temOptima = "Temp. Óptima";
+		optimalTemp = "Temp. Óptima";
 		ResATB = "R.Tox";
 		feromona = "Feromona";
 		fer = "Fero";
@@ -302,13 +302,13 @@ public class Texto {
 		losCambiosReiniciar = "Algunos cambios se completarán luego de reiniciar";
 
 		sexo = "sexo";
-		macho = "macho";
-		hembra = "hembra";
-		ventanalellenda = "Seleccione el genotipo deseado para su organismo y oprima OK \n\n >";
+		male = "macho";
+		female = "hembra";
+		legendWindow = "Seleccione el genotipo deseado para su organismo y oprima OK \n\n >";
 		verdadero = "verdadero";
 		falso = "falso";
-		genotipo = "Genotipo";
-		cancelar = "Cancelar";
+		genotype = "Genotipo";
+		cancel = "Cancelar";
 		modificar = "modificar";
 		cepa = "cepa";
 		predador = "predador";
@@ -319,22 +319,22 @@ public class Texto {
 		expresadosEnUnidades = " expresados en unidades de recombinación o centiMorgan.";
 		genesLigados = " 0 = genes ligados; 50 o más = genes no ligados. Los machos solo tienen una copia de cromosoma 3 (C3)";
 
-		blanco = "blanco";
-		verde = "verde";
+		white = "blanco";
+		green = "verde";
 		celeste = "celeste";
 		naranja = "naranja";
-		azul = "azul";
-		pequeño = "pequeño";
-		mediano = "mediano";
-		grande = "grande";
+		blue = "azul";
+		small = "pequeño";
+		medium = "mediano";
+		large = "grande";
 		panelDer = "Panel derecho";
 		panelIz = "Panel izquierdo";
 		verFrontera = "Crear frontera";
 		frontera = "Frontera";
 		verMachoHembra = "Ver M/H";
-		nada = "Nada";
+		none = "Nada";
 		normal = "Normal";
-		fuerte = "Fuerte";
+		strong = "Fuerte";
 		todo = "Todo";
 		nada2 = "Nada";
 
@@ -382,7 +382,7 @@ public class Texto {
 
 	}
 
-	public void setIngles() {
+	public void setEnglish() {
 
 		errorEscribir = "Error writing file evo_star.conf";
 		errorLectura = "error reading the file evo_star.conf \n the original configuration will be used";
@@ -424,20 +424,20 @@ public class Texto {
 		moverLaMasa = "Moving the Mass";
 		cargarArchivo = "Load File: ";
 		color = "Color";
-		tamano = "Size";
+		size = "Size";
 		alto = "high";
 		ancho = "width";
 		cantidad = "Quantity";
 		velocidad = "Speed";
 		alas = "Wings";
-		sentidos = "Antennas";
-		buscarComida = "Blue eyes";
-		escapar = "Yellow eyes";
+		senses = "Antennas";
+		searchFood = "Blue eyes";
+		escape = "Yellow eyes";
 		alcanceVisual = "Visual Range";
 		genPredador = "Predator gen";
 		fidelidadADNpol = "DNApol fielity";
 		longevidad = "Lifespan";
-		temOptima = "Optimal temp.";
+		optimalTemp = "Optimal temp.";
 		ResATB = "Tox.R";
 		feromona = "Pheromone";
 		fer = "Pher";
@@ -479,13 +479,13 @@ public class Texto {
 		losCambiosReiniciar = "Some changes will be completed after restart";
 
 		sexo = "sex";
-		macho = "male";
-		hembra = "female";
-		ventanalellenda = "Select the desired genotype of your organism and press OK \n\n >";
+		male = "male";
+		female = "female";
+		legendWindow = "Select the desired genotype of your organism and press OK \n\n >";
 		verdadero = "true";
 		falso = "false";
-		genotipo = "Genotype";
-		cancelar = "Cancel";
+		genotype = "Genotype";
+		cancel = "Cancel";
 		modificar = "modify";
 		cepa = "strain";
 		predador = "predator";
@@ -497,22 +497,22 @@ public class Texto {
 		expresadosEnUnidades = " expressed in units of recombination or centiMorgan.";
 		genesLigados = " 0= Linked genes; 50 or more = Unlinked genes. Males have only one copy of chromosome 3 (C3). ";
 
-		blanco = "white";
-		verde = "green";
+		white = "white";
+		green = "green";
 		celeste = "light blue";
 		naranja = "orange";
-		azul = "blue";
-		pequeño = "small";
-		mediano = "medium";
-		grande = "large";
+		blue = "blue";
+		small = "small";
+		medium = "medium";
+		large = "large";
 		panelDer = "Right panel";
 		panelIz = "       Left panel";
 		verFrontera = "Create border";
 		frontera = "Border";
 		verMachoHembra = "See M/F";
-		nada = "Nothing";
+		none = "Nothing";
 		normal = "Normal";
-		fuerte = "Strong";
+		strong = "Strong";
 		todo = "All";
 		nada2 = "None";
 

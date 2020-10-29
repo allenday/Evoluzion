@@ -5,20 +5,20 @@ import com.badlogic.gdx.utils.Array;
 
 public class Quadtree {
 
-	private int MAX_OBJECTS = 10;
-	private int MAX_LEVELS = 5;
+	private final int MAX_OBJECTS = 10;
+	private final int MAX_LEVELS = 5;
 
-	private int level;
-	Array<Organismo> objects;
-	private Rectangle bounds;
-	private Quadtree[] nodes;
+	private final int level;
+	Array<Organism> objects;
+	private final Rectangle bounds;
+	private final Quadtree[] nodes;
 
 	/*
 	 * Constructor
 	 */
 	public Quadtree(int pLevel, Rectangle pBounds) {
 		level = pLevel;
-		objects = new Array<Organismo>();
+		objects = new Array<Organism>();
 		bounds = pBounds;
 		nodes = new Quadtree[4];
 	}
@@ -96,9 +96,9 @@ public class Quadtree {
 	 * Insert the object into the quadtree. If the node exceeds the capacity, it
 	 * will split and add all objects to their corresponding nodes.
 	 */
-	public void insert(Organismo pRect) {
+	public void insert(Organism pRect) {
 		if (nodes[0] != null) {
-			int index = getIndex(pRect.borde);
+			int index = getIndex(pRect.border);
 
 			if (index != -1) {
 				nodes[index].insert(pRect);
@@ -129,9 +129,9 @@ public class Quadtree {
 	/*
 	 * Return all objects that could collide with the given object
 	 */
-	public Array<Organismo> retrieve(Array<Organismo> returnObjects,
-			Organismo pRect) {
-		int index = getIndex(pRect.borde);
+	public Array<Organism> retrieve(Array<Organism> returnObjects,
+									Organism pRect) {
+		int index = getIndex(pRect.border);
 		if (index != -1 && nodes[0] != null) {
 			nodes[index].retrieve(returnObjects, pRect);
 		}

@@ -38,28 +38,29 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class Mundo implements Serializable {
+public class World implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	protected Evoluzion ev;// clase prinsipal
-	MenuInicio mi; // menu inicio
-	Texto tx;
-	
+	StartMenu mi; // menu inicio
+	Text tx;
+
 	//Virus virus = new Virus(20,20,10,95); 
-		
-	Array<Senergia> ase, ase1, ase2, ase3, ase4, ase5, ase6, ase7, ase8, ase9,
+
+	Array<Senergy> ase, ase1, ase2, ase3, ase4, ase5, ase6, ase7, ase8, ase9,
 			ase10; // lista de energia verde
-	Array<Qenergia> aqe, aqe1, aqe2, aqe3, aqe4, aqe5, aqe6, aqe7, aqe8, aqe9,
+	Array<Qenergy> aqe, aqe1, aqe2, aqe3, aqe4, aqe5, aqe6, aqe7, aqe8, aqe9,
 			aqe10; // lista de energia roja (biomasa)
-	Array<Organismo> aorg; // lista de organismos
-	Array<Organismo> aEspesies, aEspesiesTotales; // listas de organismos
-													// colectados segun especies
-	Array<Alelo> aAlelos;
-	Array<Fenotipo> aFenotipos;
-	Array<Genotipo> aGenotipos;
+	Array<Organism> organisms; // lista de organismos
+	Array<Organism> aEspesies, aEspesiesTotales; // listas de organismos
+	// colectados segun especies
+	Array<Allele> aAlelos;
+	Array<Phenotype> aFenotipos;
+	Array<Genotype> aGenotipos;
+	A
 
 	float ancho, alto, ratio; // dimenciones de la pantalla
 	//
@@ -68,15 +69,15 @@ public class Mundo implements Serializable {
 	float medSpeed; // se usa para el calcula de velosidad media
 	double temperatura = 25;
 	double medTem;
-	float eficiencia = 1;
+	float efficiency = 1;
 	// suma de toda la masa libre
 
-	int dias, horas, minutos, minutos2, minutos3, segundos, segundos2,
-			segundos3, segundos4, segundos5, segundos6; // anota el paso del
-														// tiempo
+	int dias, horas, minutos, minutes2, minutos3, seconds, segundos2,
+			segundos3, seconds4, segundos5, segundos6; // anota el paso del
+	// tiempo
 	long edad, delta, delta2, delta3, tiempo; // mide diferencia de tiempo entre
-												// una accion y la siguiente
-	int tiempoMaximo = 0;
+	// una accion y la siguiente
+	int maxTime = 0;
 	double Masatotal, MasatotalL, MasatotalR;
 	int tiempoMuestreo;
 	int tiempoCatastrofe;
@@ -121,34 +122,34 @@ public class Mundo implements Serializable {
 	int numero = 0; // es usado por metodos que cuentan cosas
 	int id = 0; // es usado por metodos que cuentan cosas
 	int cantidad = 0;// es usado por metodos que cuentan cosas
-	
+
 	int numeroI = 0; // es usado por los metodos que usan calculos
 	int numeroD = 0; // es usado por los metodos que usan calculos
-	
+
 	int numEspI = 0; // es usado por los metodos que usan calculos
 	int numEspD = 0; // es usado por los metodos que usan calculos
-	
-	
+
+
 	int horizontalTransferRate;
 
 	boolean verFrontera = false;
-	boolean verMachoHembra = false;
+	boolean viewMaleFemale = false;
 	boolean parar = false;
 
-	boolean colectarancho = false;
-	boolean colectaralto = false;
-	boolean colectSpeed = false;
-	boolean colectColor = false;
-	boolean colectSentir = false;
-	boolean colectPredador = false;
-	boolean colectCazar = false;
-	boolean colectEscapar = false;
-	boolean colectRadioconsiente = false;
-	boolean colectarTasaMut = false;
-	boolean colectarLongevidad = false;
-	boolean colectarTemp = false;
-	boolean colectarResistencia = false;
-	boolean colectarFeromona = false;
+	boolean collectWidth = false;
+	boolean collectHeight = false;
+	boolean collectSpeed = false;
+	boolean collectColor = false;
+	boolean collectSense = false;
+	boolean collectPredator = false;
+	boolean collectHunt = false;
+	boolean collectEscape = false;
+	boolean collectRadius = false;
+	boolean collectMutationRate = false;
+	boolean collectLongevity = false;
+	boolean collectTemp = false;
+	boolean collectResistance = false;
+	boolean collectPheromone = false;
 	boolean colectarParteNoGen = false;
 
 	boolean mutarColor = true;
@@ -174,11 +175,11 @@ public class Mundo implements Serializable {
 	StringBuffer ceroIz, ceroIz2; // agrega un cero a la izquierda
 	String nombre;
 
-	TextureAtlas textuRA_ENER, textura_ORG, textura_organismos, textura_sex; // contine
-																				// las
-																				// imagenes
+	TextureAtlas textuRA_ENER, textura_ORG, organismTexture, textura_sex; // contine
+	// las
+	// imagenes
 	Texture auraATB, transferido, textura_feromona;
-	Archivar f_datos, f_genes, f_arbol, f_proteoma, f_poblacion, f_mutantes,
+	Archive f_datos, f_genes, f_arbol, f_proteoma, f_poblacion, f_mutantes,
 			f_alelos, f_fenotipos, f_genotipos, f_alelos2; // para archivar
 	NumberFormat format = new DecimalFormat("0.00");
 	NumberFormat format2 = new DecimalFormat("0");
@@ -186,11 +187,11 @@ public class Mundo implements Serializable {
 
 	Rectangle frontera;
 
-	public Mundo(Evoluzion ev, String ruta, String nombre, String poblacion,
-			int numOrg, int numSen, int numQen, int Senergia, int Qbiomasa,
-			int numSenR, int numQenR, int SenergiaR, int QbiomasaR,
-			boolean cargarPoblacion, boolean moverMasa, boolean verFrontera,
-			boolean verMachoHembra, String genesPedidos, int ingles) {
+	public World(Evoluzion ev, String ruta, String nombre, String poblacion,
+				 int numOrg, int numSen, int numQen, int Senergia, int Qbiomasa,
+				 int numSenR, int numQenR, int SenergiaR, int QbiomasaR,
+				 boolean cargarPoblacion, boolean moverMasa, boolean verFrontera,
+				 boolean viewMaleFemale, String genesPedidos, int ingles) {
 		this.ev = ev;
 
 		this.numOrg = numOrg;
@@ -206,23 +207,23 @@ public class Mundo implements Serializable {
 		this.cargarPoblacion = cargarPoblacion;
 		this.moverMasa = moverMasa;
 		this.verFrontera = verFrontera;
-		this.verMachoHembra = verMachoHembra;
+		this.viewMaleFemale = viewMaleFemale;
 		this.nombre = nombre;
 		this.ruta = ruta;
 		this.poblacion = poblacion;
 		this.ingles = ingles;
 
-		tx = new Texto();
+		tx = new Text();
 		if (ingles == 1) {
-			tx.setIngles();
+			tx.setEnglish();
 		}
 		if (ingles == -1) {
-			tx.setEspanol();
+			tx.setSpanish();
 		}
 
 		orgNombre = new StringBuffer("a");
-		ceroIz = new StringBuffer("");
-		ceroIz2 = new StringBuffer("");
+		ceroIz = new StringBuffer();
+		ceroIz2 = new StringBuffer();
 
 		// quaddtree
 
@@ -233,38 +234,38 @@ public class Mundo implements Serializable {
 		alto = Gdx.graphics.getHeight();
 
 		// listas
-		ase = new Array<Senergia>();
-		ase1 = new Array<Senergia>();
-		ase2 = new Array<Senergia>();
-		ase3 = new Array<Senergia>();
-		ase4 = new Array<Senergia>();
-		ase5 = new Array<Senergia>();
-		ase6 = new Array<Senergia>();
-		ase7 = new Array<Senergia>();
-		ase8 = new Array<Senergia>();
-		ase9 = new Array<Senergia>();
-		ase10 = new Array<Senergia>();
-		aqe = new Array<Qenergia>();
-		aqe1 = new Array<Qenergia>();
-		aqe2 = new Array<Qenergia>();
-		aqe3 = new Array<Qenergia>();
-		aqe4 = new Array<Qenergia>();
-		aqe5 = new Array<Qenergia>();
-		aqe6 = new Array<Qenergia>();
-		aqe7 = new Array<Qenergia>();
-		aqe8 = new Array<Qenergia>();
-		aqe9 = new Array<Qenergia>();
-		aqe10 = new Array<Qenergia>();
+		ase = new Array<Senergy>();
+		ase1 = new Array<Senergy>();
+		ase2 = new Array<Senergy>();
+		ase3 = new Array<Senergy>();
+		ase4 = new Array<Senergy>();
+		ase5 = new Array<Senergy>();
+		ase6 = new Array<Senergy>();
+		ase7 = new Array<Senergy>();
+		ase8 = new Array<Senergy>();
+		ase9 = new Array<Senergy>();
+		ase10 = new Array<Senergy>();
+		aqe = new Array<Qenergy>();
+		aqe1 = new Array<Qenergy>();
+		aqe2 = new Array<Qenergy>();
+		aqe3 = new Array<Qenergy>();
+		aqe4 = new Array<Qenergy>();
+		aqe5 = new Array<Qenergy>();
+		aqe6 = new Array<Qenergy>();
+		aqe7 = new Array<Qenergy>();
+		aqe8 = new Array<Qenergy>();
+		aqe9 = new Array<Qenergy>();
+		aqe10 = new Array<Qenergy>();
 
-		aorg = new Array<Organismo>();
+		organisms = new Array<Organism>();
 
-		aEspesies = new Array<Organismo>();
+		aEspesies = new Array<Organism>();
 
-		aEspesiesTotales = new Array<Organismo>();
+		aEspesiesTotales = new Array<Organism>();
 
-		aAlelos = new Array<Alelo>();
-		aFenotipos = new Array<Fenotipo>();
-		aGenotipos = new Array<Genotipo>();
+		aAlelos = new Array<Allele>();
+		aFenotipos = new Array<Phenotype>();
+		aGenotipos = new Array<Genotype>();
 
 		// set time to 0
 		setDelta();
@@ -274,8 +275,8 @@ public class Mundo implements Serializable {
 
 		linea = new StringBuffer();// used to write text in files
 
-		textura_organismos = new TextureAtlas("data/organismo.pack");
-		
+		organismTexture = new TextureAtlas("data/organismo.pack");
+
 
 		frontera = new Rectangle();
 		frontera.x = (ancho / 2) - 10;
@@ -298,7 +299,7 @@ public class Mundo implements Serializable {
 				y = y - 20;
 			}
 
-			Senergia se = new Senergia(pos, this);
+			Senergy se = new Senergy(pos, this);
 			se.energia = this.Senergia;
 			ase.add(se);
 		}
@@ -317,7 +318,7 @@ public class Mundo implements Serializable {
 				y = y - 20;
 			}
 
-			Senergia se = new Senergia(pos, this);
+			Senergy se = new Senergy(pos, this);
 			se.energia = this.SenergiaR;
 			ase.add(se);
 
@@ -391,7 +392,7 @@ public class Mundo implements Serializable {
 			Vector2 pos = new Vector2((float) Math.random() * ancho / 2,
 					(float) Math.random() * alto);
 
-			aqe.add(new Qenergia(pos, moverMasa, Qbiomasa, this));
+			aqe.add(new Qenergy(pos, moverMasa, Qbiomasa, this));
 		}
 
 		// agregar materia del lado Derecho
@@ -402,7 +403,7 @@ public class Mundo implements Serializable {
 					* (ancho - (ancho / 2)) + ancho / 2, (float) Math.random()
 					* alto);
 
-			aqe.add(new Qenergia(pos, moverMasa, this.QbiomasaR, this));
+			aqe.add(new Qenergy(pos, moverMasa, this.QbiomasaR, this));
 		}
 
 		// agregar materia invisible para usarla en el balanse de masa
@@ -412,7 +413,7 @@ public class Mundo implements Serializable {
 			Vector2 pos = new Vector2((float) Math.random() * ancho / 2,
 					(float) Math.random() * alto);
 
-			Qenergia qe = new Qenergia(pos, moverMasa, Qbiomasa, this);
+			Qenergy qe = new Qenergy(pos, moverMasa, Qbiomasa, this);
 			qe.visible = false;
 			aqe.add(qe);
 		}
@@ -423,7 +424,7 @@ public class Mundo implements Serializable {
 					* (ancho - (ancho / 2)) + ancho / 2, (float) Math.random()
 					* alto);
 
-			Qenergia qe = new Qenergia(pos, moverMasa, QbiomasaR, this);
+			Qenergy qe = new Qenergy(pos, moverMasa, QbiomasaR, this);
 			qe.visible = false;
 			aqe.add(qe);
 		}
@@ -490,14 +491,14 @@ public class Mundo implements Serializable {
 
 		// colecta la primera especie en la lista
 
-		for (Organismo or : aorg) {
+		for (Organism or : organisms) {
 
 			boolean igual = false;
 
-			id = or.identificador;
-			for (Organismo or2 : aEspesies) {
+			id = or.identifier;
+			for (Organism or2 : aEspesies) {
 
-				if (id == or2.identificador) {
+				if (id == or2.identifier) {
 					igual = true;
 				}
 
@@ -508,14 +509,14 @@ public class Mundo implements Serializable {
 
 		}
 
-		for (Organismo or : aorg) {
+		for (Organism or : organisms) {
 
 			boolean igual = false;
-			id = or.identificador;
+			id = or.identifier;
 
-			for (Organismo or2 : aEspesiesTotales) {
+			for (Organism or2 : aEspesiesTotales) {
 
-				if (id == or2.identificador) {
+				if (id == or2.identifier) {
 					igual = true;
 				}
 
@@ -527,16 +528,16 @@ public class Mundo implements Serializable {
 		}
 
 		// manejamos los archivos
-		f_datos = new Archivar();
-		f_genes = new Archivar();
-		f_proteoma = new Archivar();
-		f_arbol = new Archivar();
-		f_poblacion = new Archivar();
-		f_mutantes = new Archivar();
-		f_alelos = new Archivar();
-		f_fenotipos = new Archivar();
-		f_genotipos = new Archivar();
-		f_alelos2 = new Archivar();
+		f_datos = new Archive();
+		f_genes = new Archive();
+		f_proteoma = new Archive();
+		f_arbol = new Archive();
+		f_poblacion = new Archive();
+		f_mutantes = new Archive();
+		f_alelos = new Archive();
+		f_fenotipos = new Archive();
+		f_genotipos = new Archive();
+		f_alelos2 = new Archive();
 
 	}
 
@@ -576,70 +577,69 @@ public class Mundo implements Serializable {
 				dir.y = dir.y - 10;
 			}
 
-			Organismo or = new Organismo(sex, new Genoma(this, tosRes, anch,
-					alt, senses, optTem, pred), new Genoma(this, tosRes, anch,
-					alt, senses, optTem, pred), new Genoma(this, speed, cazar,
-					escape, radio, fer, parteNoGen, relleno), new Genoma(this,
+			Organism or = new Organism(sex, new Genome(this, tosRes, anch,
+					alt, senses, optTem, pred), new Genome(this, tosRes, anch,
+					alt, senses, optTem, pred), new Genome(this, speed, cazar,
+					escape, radio, fer, parteNoGen, relleno), new Genome(this,
 					speed, cazar, escape, radio, fer, parteNoGen, relleno),
-					new Genoma(this, dnaPol, longe, col), new Genoma(this,
-							dnaPol, longe, col), pos, orgNombre, this);
-			or.direccion = dir;
-			
-			or.infectado =true;
-			
-			aorg.add(or);
+					new Genome(this, dnaPol, longe, col), new Genome(this,
+					dnaPol, longe, col), pos, orgNombre, this);
+			or.direction = dir;
+
+			or.infected = true;
+
+			organisms.add(or);
 
 		}
-		double o = BiomasaTotal(aorg) / Qbiomasa;
+		double o = BiomasaTotal(organisms) / Qbiomasa;
 
 		for (int i = 0; i < o; i++) {
 
-			Qenergia qe = aqe.get(i);
+			Qenergy qe = aqe.get(i);
 			qe.visible = false;
 
 		}
 
-		Masatotal = MateriaLibre() + BiomasaTotal(aorg);
+		Masatotal = MateriaLibre() + BiomasaTotal(organisms);
 
-		MasatotalL = MateriaLibreL() + BiomasaTotalI(aorg);
+		MasatotalL = MateriaLibreL() + BiomasaTotalI(organisms);
 
-		MasatotalR = MateriaLibreR() + BiomasaTotalD(aorg);
-		
-		cantidadOrganismosI(aorg);
-		cantidadOrganismosD(aorg);
-		cantidadEspeciesI(aorg);
-		cantidadEspeciesD(aorg);
-		
-		
+		MasatotalR = MateriaLibreR() + BiomasaTotalD(organisms);
+
+		cantidadOrganismosI(organisms);
+		cantidadOrganismosD(organisms);
+		cantidadEspeciesI(organisms);
+		cantidadEspeciesD(organisms);
+
 
 	}
 
-	public int cantidadOrganismos(Array<Organismo> aor) {
+	public int cantidadOrganismos(Array<Organism> aor) {
 
 		return aor.size;
 	}
-	
-	
-	public void cantidadOrganismosI(Array<Organismo> aor) {  
+
+
+	public void cantidadOrganismosI(Array<Organism> aor) {
 
 		int num = 0;
-		
+
 		for (int i = 0; i < aor.size; i++) {
 
 			if (aor.get(i).posicion.x < ancho / 2) {
 				num = num + 1;
 			}
-		//	System.out.println("dentro del loop"+ num);//return numeroI;
-			
+			//	System.out.println("dentro del loop"+ num);//return numeroI;
+
 		}
 		numeroI = num;
 		//System.out.println("dentro del metodo"+ numeroI);//return numeroI;
 	}
 
 	//caluculos
-	
-	
-	public void cantidadOrganismosD(Array<Organismo> aor) {
+
+
+	public void cantidadOrganismosD(Array<Organism> aor) {
 		int num = 0;
 		for (int i = 0; i < aor.size; i++) {
 
@@ -650,8 +650,8 @@ public class Mundo implements Serializable {
 		numeroD = num;
 		//return numeroD;
 	}
-	
-	public void cantidadEspeciesI(Array<Organismo> aor) {
+
+	public void cantidadEspeciesI(Array<Organism> aor) {
 		int num = 0;
 		for (int i = 0; i < aor.size; i++) {
 
@@ -662,8 +662,8 @@ public class Mundo implements Serializable {
 		numEspI = num;
 		//return numeroD;
 	}
-	
-	public void cantidadEspeciesD(Array<Organismo> aor) {
+
+	public void cantidadEspeciesD(Array<Organism> aor) {
 		int num = 0;
 		for (int i = 0; i < aor.size; i++) {
 
@@ -674,23 +674,21 @@ public class Mundo implements Serializable {
 		numEspD = num;
 		//return numeroD;
 	}
-		
-	
-	
 
-	public void borrarOrganismo(Organismo or) {
 
-		aorg.removeValue(or, true);
+	public void borrarOrganismo(Organism or) {
+
+		organisms.removeValue(or, true);
 
 		or = null;
 
-		aorg.shrink();
+		organisms.shrink();
 
 	}
 
 	// cuenta la cantidad de machos
 
-	public int cantidadMachos(Array<Organismo> aor) {
+	public int cantidadMachos(Array<Organism> aor) {
 
 		numero = aor.size;
 		int machos = 0;
@@ -706,7 +704,7 @@ public class Mundo implements Serializable {
 
 	}
 
-	public int cantidadMachosI(Array<Organismo> aor) {
+	public int cantidadMachosI(Array<Organism> aor) {
 
 		numero = aor.size;
 		int machos = 0;
@@ -722,7 +720,7 @@ public class Mundo implements Serializable {
 
 	}
 
-	public int cantidadMachosD(Array<Organismo> aor) {
+	public int cantidadMachosD(Array<Organism> aor) {
 
 		numero = aor.size;
 		int machos = 0;
@@ -738,7 +736,7 @@ public class Mundo implements Serializable {
 
 	}
 
-	public int cantidadHembras(Array<Organismo> aor) {
+	public int cantidadHembras(Array<Organism> aor) {
 
 		numero = aor.size;
 		int hembras = 0;
@@ -754,7 +752,7 @@ public class Mundo implements Serializable {
 
 	}
 
-	public int cantidadHembrasI(Array<Organismo> aor) {
+	public int cantidadHembrasI(Array<Organism> aor) {
 
 		numero = aor.size;
 		int hembras = 0;
@@ -770,7 +768,7 @@ public class Mundo implements Serializable {
 
 	}
 
-	public int cantidadHembrasD(Array<Organismo> aor) {
+	public int cantidadHembrasD(Array<Organism> aor) {
 
 		numero = aor.size;
 		int hembras = 0;
@@ -786,7 +784,7 @@ public class Mundo implements Serializable {
 
 	}
 
-	public double temOptimaMedia(Array<Organismo> aor) {
+	public double temOptimaMedia(Array<Organism> aor) {
 		medTem = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -801,7 +799,7 @@ public class Mundo implements Serializable {
 		return medTem / numero;
 	}
 
-	public double temOptimaMediaI(Array<Organismo> aor) {
+	public double temOptimaMediaI(Array<Organism> aor) {
 		medTem = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -818,7 +816,7 @@ public class Mundo implements Serializable {
 		return medTem / numeroI;
 	}
 
-	public double temOptimaMediaD(Array<Organismo> aor) {
+	public double temOptimaMediaD(Array<Organism> aor) {
 		medTem = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -835,8 +833,8 @@ public class Mundo implements Serializable {
 		return medTem / numeroD;
 	}
 
-	
-	public int cantidadPredadores(Array<Organismo> aor) {
+
+	public int cantidadPredadores(Array<Organism> aor) {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -847,7 +845,7 @@ public class Mundo implements Serializable {
 		return cantidad;
 	}
 
-	public int cantidadPredadoresI(Array<Organismo> aor) {
+	public int cantidadPredadoresI(Array<Organism> aor) {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -859,7 +857,7 @@ public class Mundo implements Serializable {
 		return cantidad;
 	}
 
-	public int cantidadPredadoresD(Array<Organismo> aor) {
+	public int cantidadPredadoresD(Array<Organism> aor) {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -871,7 +869,7 @@ public class Mundo implements Serializable {
 		return cantidad;
 	}
 
-	public int cantidadResistentes(Array<Organismo> aor) {
+	public int cantidadResistentes(Array<Organism> aor) {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -882,7 +880,7 @@ public class Mundo implements Serializable {
 		return cantidad;
 	}
 
-	public int cantidadResistentesI(Array<Organismo> aor) {
+	public int cantidadResistentesI(Array<Organism> aor) {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -894,7 +892,7 @@ public class Mundo implements Serializable {
 		return cantidad;
 	}
 
-	public int cantidadResistentesD(Array<Organismo> aor) {
+	public int cantidadResistentesD(Array<Organism> aor) {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -906,7 +904,7 @@ public class Mundo implements Serializable {
 		return cantidad;
 	}
 
-	public float velocidadMedia(Array<Organismo> aor) {
+	public float velocidadMedia(Array<Organism> aor) {
 		medSpeed = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -914,14 +912,16 @@ public class Mundo implements Serializable {
 				medSpeed = medSpeed + aor.get(i).speed;
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return medSpeed / numero;
 	}
 
-	public float velocidadMediaI(Array<Organismo> aor) {
+	public float velocidadMediaI(Array<Organism> aor) {
 		medSpeed = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -931,14 +931,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return medSpeed / numeroI;
 	}
 
-	public float velocidadMediaD(Array<Organismo> aor) {
+	public float velocidadMediaD(Array<Organism> aor) {
 		medSpeed = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -948,14 +950,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return medSpeed / numeroD;
 	}
 
-	public int tasaMutMedio(Array<Organismo> aor) {
+	public int tasaMutMedio(Array<Organism> aor) {
 		medMut = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -963,14 +967,16 @@ public class Mundo implements Serializable {
 				medMut = (int) (medMut + aor.get(i).tasaMut);
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return (medMut / numero);
 	}
 
-	public int tasaMutMedioI(Array<Organismo> aor) {
+	public int tasaMutMedioI(Array<Organism> aor) {
 		medMut = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -980,14 +986,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return (medMut / numeroI);
 	}
 
-	public int tasaMutMedioD(Array<Organismo> aor) {
+	public int tasaMutMedioD(Array<Organism> aor) {
 		medMut = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -997,14 +1005,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return (medMut / numeroD);
 	}
 
-	public float longevidadMedio(Array<Organismo> aor) {
+	public float longevidadMedio(Array<Organism> aor) {
 		medLon = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1012,14 +1022,16 @@ public class Mundo implements Serializable {
 				medLon = (int) (medLon + aor.get(i).longevidad);
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return (float) (medLon) / 1000 / numero;
 	}
 
-	public float longevidadMedioI(Array<Organismo> aor) {
+	public float longevidadMedioI(Array<Organism> aor) {
 		medLon = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1029,14 +1041,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return (float) (medLon) / 1000 / numeroI;
 	}
 
-	public float longevidadMedioD(Array<Organismo> aor) {
+	public float longevidadMedioD(Array<Organism> aor) {
 		medLon = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1046,14 +1060,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return (float) (medLon) / 1000 / numeroD;
 	}
 
-	public float saludMedio(Array<Organismo> aor) {
+	public float saludMedio(Array<Organism> aor) {
 		salud = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1061,14 +1077,16 @@ public class Mundo implements Serializable {
 				salud = salud + aor.get(i).SaludCoefi;
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return salud / numero;
 	}
 
-	public float saludMedioD(Array<Organismo> aor) {
+	public float saludMedioD(Array<Organism> aor) {
 		salud = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1078,14 +1096,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return salud / numeroD;
 	}
 
-	public float saludMedioI(Array<Organismo> aor) {
+	public float saludMedioI(Array<Organism> aor) {
 		salud = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1095,14 +1115,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return salud / numeroI;
 	}
 
-	public float tamanoMedio(Array<Organismo> aor) {
+	public float tamanoMedio(Array<Organism> aor) {
 		medSize = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1110,14 +1132,16 @@ public class Mundo implements Serializable {
 				medSize = medSize + aor.get(i).capacidad;
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return medSize / numero;
 	}
 
-	public float tamanoMedioI(Array<Organismo> aor) {
+	public float tamanoMedioI(Array<Organism> aor) {
 		medSize = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1127,14 +1151,16 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return medSize / numeroI;
 	}
 
-	public float tamanoMedioD(Array<Organismo> aor) {
+	public float tamanoMedioD(Array<Organism> aor) {
 		medSize = 0;
 		numero = aor.size;
 		if (numero > 0) {
@@ -1144,8 +1170,10 @@ public class Mundo implements Serializable {
 				}
 			}
 		}
-		if (numero == 0 || numeroI== 0|| numeroD==0) {
-			numero = 1; numeroI=1; numeroD=1;
+		if (numero == 0 || numeroI == 0 || numeroD == 0) {
+			numero = 1;
+			numeroI = 1;
+			numeroD = 1;
 		}
 
 		return medSize / numeroD;
@@ -1184,7 +1212,7 @@ public class Mundo implements Serializable {
 		return materia;
 	}
 
-	public double BiomasaTotal(Array<Organismo> aor) {
+	public double BiomasaTotal(Array<Organism> aor) {
 		int biomasaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -1193,7 +1221,7 @@ public class Mundo implements Serializable {
 		return biomasaTotal;
 	}
 
-	public int BiomasaTotalD(Array<Organismo> aor) {
+	public int BiomasaTotalD(Array<Organism> aor) {
 		int biomasaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -1204,7 +1232,7 @@ public class Mundo implements Serializable {
 		return biomasaTotal;
 	}
 
-	public int BiomasaTotalI(Array<Organismo> aor) {
+	public int BiomasaTotalI(Array<Organism> aor) {
 		int biomasaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -1215,7 +1243,7 @@ public class Mundo implements Serializable {
 		return biomasaTotal;
 	}
 
-	public int BioenergiaTotal(Array<Organismo> aor) {
+	public int BioenergiaTotal(Array<Organism> aor) {
 		int energiaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
@@ -1231,7 +1259,7 @@ public class Mundo implements Serializable {
 
 		if (verFrontera == false) {
 
-			double a = Masatotal - (MateriaLibre() + BiomasaTotal(aorg));
+			double a = Masatotal - (MateriaLibre() + BiomasaTotal(organisms));
 
 			if (a > Qbiomasa) {
 				numero = aqe.size;
@@ -1263,7 +1291,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = Masatotal - (MateriaLibre() + BiomasaTotal(aorg));
+			a = Masatotal - (MateriaLibre() + BiomasaTotal(organisms));
 
 			if (a > Qbiomasa) {
 				numero = aqe.size;
@@ -1295,7 +1323,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = Masatotal - (MateriaLibre() + BiomasaTotal(aorg));
+			a = Masatotal - (MateriaLibre() + BiomasaTotal(organisms));
 
 			if (a > Qbiomasa) {
 				numero = aqe.size;
@@ -1327,7 +1355,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = Masatotal - (MateriaLibre() + BiomasaTotal(aorg));
+			a = Masatotal - (MateriaLibre() + BiomasaTotal(organisms));
 
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
@@ -1349,7 +1377,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = Masatotal - (MateriaLibre() + BiomasaTotal(aorg));
+			a = Masatotal - (MateriaLibre() + BiomasaTotal(organisms));
 
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
@@ -1374,7 +1402,7 @@ public class Mundo implements Serializable {
 		}
 
 		if (verFrontera == true) {
-			double a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(aorg));
+			double a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(organisms));
 			numero = 0;
 			if (a > Qbiomasa) {
 				numero = aqe.size;
@@ -1409,7 +1437,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(aorg));
+			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(organisms));
 
 			if (a > Qbiomasa) {
 				numero = aqe.size;
@@ -1444,7 +1472,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(aorg));
+			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(organisms));
 
 			if (a > Qbiomasa) {
 				numero = aqe.size;
@@ -1479,7 +1507,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(aorg));
+			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(organisms));
 
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
@@ -1503,7 +1531,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(aorg));
+			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(organisms));
 
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
@@ -1529,7 +1557,7 @@ public class Mundo implements Serializable {
 
 			// lado derecho
 
-			double b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(aorg));
+			double b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(organisms));
 
 			if (b > QbiomasaR) {
 				numero = aqe.size;
@@ -1564,7 +1592,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(aorg));
+			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(organisms));
 
 			if (b > QbiomasaR) {
 				numero = aqe.size;
@@ -1599,7 +1627,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(aorg));
+			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(organisms));
 
 			if (b > QbiomasaR) {
 				numero = aqe.size;
@@ -1634,7 +1662,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(aorg));
+			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(organisms));
 
 			if (b < QbiomasaR * (-1)) {
 				numero = aqe.size;
@@ -1658,7 +1686,7 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(aorg));
+			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(organisms));
 
 			if (b < QbiomasaR * (-1)) {
 				numero = aqe.size;
@@ -1689,13 +1717,13 @@ public class Mundo implements Serializable {
 
 	public void catastrofe() {
 
-		numero = aorg.size;
+		numero = organisms.size;
 		for (int i = numero - 1; i >= 0; i--) {
 
 			int e = (int) (Math.random() * 10000);
 
 			if (e > 500) {
-				aorg.get(i).morir();
+				organisms.get(i).morir();
 			}
 
 		}
@@ -1721,44 +1749,44 @@ public class Mundo implements Serializable {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					// File file = fc.getSelectedFile();
 
-					f_poblacion.creararchivo(fc.getSelectedFile() + ".pob2");
+					f_poblacion.createArchive(fc.getSelectedFile() + ".pob2");
 
 					StringBuffer linea = new StringBuffer();
 
-					numero = aorg.size;
+					numero = organisms.size;
 
 					for (int i = numero - 1; i >= 0; i--) {
-						Organismo or = aorg.get(i);
+						Organism or = organisms.get(i);
 						linea.replace(0, linea.length(), "<Male>" + or.male
 								+ "<h>" + or.nombre.toString() + "dX"
-								+ or.posicion.x + "dY" + or.posicion.y
-								+ "<atb>" + or.adn.resistenciaATB + "<ancho>"
-								+ or.adn.ancho + "<alto>" + or.adn.alto
-								+ "<sentir>" + or.adn.sentir + "<temp>"
-								+ or.adn.toleranciaTemp + "<predador>"
-								+ or.adn.predador + "<speed>" + or.adn3.speed
-								+ "<cazar>" + or.adn3.cazar + "<escapar>"
-								+ or.adn3.escapar + "<alcance>"
-								+ or.adn3.radioConsiente + "<fero>"
-								+ or.adn3.feromona + "<noGen>"
+								+ or.position.x + "dY" + or.position.y
+								+ "<atb>" + or.adn.resistanceATB + "<ancho>"
+								+ or.adn.width + "<alto>" + or.adn.height
+								+ "<sentir>" + or.adn.sense + "<temp>"
+								+ or.adn.toleranceTemp + "<predador>"
+								+ or.adn.predator + "<speed>" + or.adn3.speed
+								+ "<cazar>" + or.adn3.hunt + "<escapar>"
+								+ or.adn3.escape + "<alcance>"
+								+ or.adn3.radius + "<fero>"
+								+ or.adn3.pheromone + "<noGen>"
 								+ or.adn3.parteNoGen + "<tasamut>"
-								+ or.adn5.tasaMutacion + "<longevidad>"
-								+ or.adn5.longevidad + "<color>"
+								+ or.adn5.mutationRate + "<longevidad>"
+								+ or.adn5.longevity + "<color>"
 								+ or.adn5.color + "<atb2>"
-								+ or.adn2.resistenciaATB + "<ancho2>"
-								+ or.adn2.ancho + "<alto2>" + or.adn2.alto
-								+ "<sentir2>" + or.adn2.sentir + "<temp2>"
-								+ or.adn2.toleranciaTemp + "<predador2>"
-								+ or.adn2.predador + "<speed2>" + or.adn4.speed
-								+ "<cazar2>" + or.adn4.cazar + "<escapar2>"
-								+ or.adn4.escapar + "<alcance2>"
-								+ or.adn4.radioConsiente + "<fero2>"
-								+ or.adn4.feromona + "<noGen2>"
+								+ or.adn2.resistanceATB + "<ancho2>"
+								+ or.adn2.width + "<alto2>" + or.adn2.height
+								+ "<sentir2>" + or.adn2.sense + "<temp2>"
+								+ or.adn2.toleranceTemp + "<predador2>"
+								+ or.adn2.predator + "<speed2>" + or.adn4.speed
+								+ "<cazar2>" + or.adn4.hunt + "<escapar2>"
+								+ or.adn4.escape + "<alcance2>"
+								+ or.adn4.radius + "<fero2>"
+								+ or.adn4.pheromone + "<noGen2>"
 								+ or.adn4.parteNoGen + "<tasamut2>"
-								+ or.adn6.tasaMutacion + "<longevidad2>"
-								+ or.adn6.longevidad + "<color2>"
+								+ or.adn6.mutationRate + "<longevidad2>"
+								+ or.adn6.longevity + "<color2>"
 								+ or.adn6.color + "\n");
-						f_poblacion.escribirArchivo(linea.toString());
+						f_poblacion.writeArchive(linea.toString());
 					}
 					f_poblacion.cerrarArchivo();
 
@@ -1787,47 +1815,47 @@ public class Mundo implements Serializable {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					// File file = fc.getSelectedFile();
 
-					f_poblacion.creararchivo(fc.getSelectedFile() + ".pob2");
+					f_poblacion.createArchive(fc.getSelectedFile() + ".pob2");
 
 					StringBuffer linea = new StringBuffer();
 
-					numero = aorg.size;
+					numero = organisms.size;
 
 					for (int i = numero - 1; i >= 0; i--) {
-						Organismo or = aorg.get(i);
-						if (or.marcado == -1) { // -1 == true
+						Organism or = organisms.get(i);
+						if (or.mark == -1) { // -1 == true
 							linea.replace(0, linea.length(), "<Male>" + or.male
 									+ "<h>" + or.nombre.toString() + "dX"
-									+ or.posicion.x + "dY" + or.posicion.y
-									+ "<atb>" + or.adn.resistenciaATB
-									+ "<ancho>" + or.adn.ancho + "<alto>"
-									+ or.adn.alto + "<sentir>" + or.adn.sentir
-									+ "<temp>" + or.adn.toleranciaTemp
-									+ "<predador>" + or.adn.predador
+									+ or.position.x + "dY" + or.position.y
+									+ "<atb>" + or.adn.resistanceATB
+									+ "<ancho>" + or.adn.width + "<alto>"
+									+ or.adn.height + "<sentir>" + or.adn.sense
+									+ "<temp>" + or.adn.toleranceTemp
+									+ "<predador>" + or.adn.predator
 									+ "<speed>" + or.adn3.speed + "<cazar>"
-									+ or.adn3.cazar + "<escapar>"
-									+ or.adn3.escapar + "<alcance>"
-									+ or.adn3.radioConsiente + "<fero>"
-									+ or.adn3.feromona + "<noGen>"
+									+ or.adn3.hunt + "<escapar>"
+									+ or.adn3.escape + "<alcance>"
+									+ or.adn3.radius + "<fero>"
+									+ or.adn3.pheromone + "<noGen>"
 									+ or.adn3.parteNoGen + "<tasamut>"
-									+ or.adn5.tasaMutacion + "<longevidad>"
-									+ or.adn5.longevidad + "<color>"
+									+ or.adn5.mutationRate + "<longevidad>"
+									+ or.adn5.longevity + "<color>"
 									+ or.adn5.color + "<atb2>"
-									+ or.adn2.resistenciaATB + "<ancho2>"
-									+ or.adn2.ancho + "<alto2>" + or.adn2.alto
-									+ "<sentir2>" + or.adn2.sentir + "<temp2>"
-									+ or.adn2.toleranciaTemp + "<predador2>"
-									+ or.adn2.predador + "<speed2>"
+									+ or.adn2.resistanceATB + "<ancho2>"
+									+ or.adn2.width + "<alto2>" + or.adn2.height
+									+ "<sentir2>" + or.adn2.sense + "<temp2>"
+									+ or.adn2.toleranceTemp + "<predador2>"
+									+ or.adn2.predator + "<speed2>"
 									+ or.adn4.speed + "<cazar2>"
-									+ or.adn4.cazar + "<escapar2>"
-									+ or.adn4.escapar + "<alcance2>"
-									+ or.adn4.radioConsiente + "<fero2>"
-									+ or.adn4.feromona + "<noGen2>"
+									+ or.adn4.hunt + "<escapar2>"
+									+ or.adn4.escape + "<alcance2>"
+									+ or.adn4.radius + "<fero2>"
+									+ or.adn4.pheromone + "<noGen2>"
 									+ or.adn4.parteNoGen + "<tasamut2>"
-									+ or.adn6.tasaMutacion + "<longevidad2>"
-									+ or.adn6.longevidad + "<color2>"
+									+ or.adn6.mutationRate + "<longevidad2>"
+									+ or.adn6.longevity + "<color2>"
 									+ or.adn6.color + "\n");
-							f_poblacion.escribirArchivo(linea.toString());
+							f_poblacion.writeArchive(linea.toString());
 						}
 					}
 					f_poblacion.cerrarArchivo();
@@ -1857,47 +1885,47 @@ public class Mundo implements Serializable {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					// File file = fc.getSelectedFile();
 
-					f_poblacion.creararchivo(fc.getSelectedFile() + ".pob2");
+					f_poblacion.createArchive(fc.getSelectedFile() + ".pob2");
 
 					StringBuffer linea = new StringBuffer();
 
-					numero = aorg.size;
+					numero = organisms.size;
 
 					for (int i = numero - 1; i >= 0; i--) {
-						Organismo or = aorg.get(i);
-						if (or.marcado == 1) { // 1 = false
+						Organism or = organisms.get(i);
+						if (or.mark == 1) { // 1 = false
 							linea.replace(0, linea.length(), "<Male>" + or.male
 									+ "<h>" + or.nombre.toString() + "dX"
-									+ or.posicion.x + "dY" + or.posicion.y
-									+ "<atb>" + or.adn.resistenciaATB
-									+ "<ancho>" + or.adn.ancho + "<alto>"
-									+ or.adn.alto + "<sentir>" + or.adn.sentir
-									+ "<temp>" + or.adn.toleranciaTemp
-									+ "<predador>" + or.adn.predador
+									+ or.position.x + "dY" + or.position.y
+									+ "<atb>" + or.adn.resistanceATB
+									+ "<ancho>" + or.adn.width + "<alto>"
+									+ or.adn.height + "<sentir>" + or.adn.sense
+									+ "<temp>" + or.adn.toleranceTemp
+									+ "<predador>" + or.adn.predator
 									+ "<speed>" + or.adn3.speed + "<cazar>"
-									+ or.adn3.cazar + "<escapar>"
-									+ or.adn3.escapar + "<alcance>"
-									+ or.adn3.radioConsiente + "<fero>"
-									+ or.adn3.feromona + "<noGen>"
+									+ or.adn3.hunt + "<escapar>"
+									+ or.adn3.escape + "<alcance>"
+									+ or.adn3.radius + "<fero>"
+									+ or.adn3.pheromone + "<noGen>"
 									+ or.adn3.parteNoGen + "<tasamut>"
-									+ or.adn5.tasaMutacion + "<longevidad>"
-									+ or.adn5.longevidad + "<color>"
+									+ or.adn5.mutationRate + "<longevidad>"
+									+ or.adn5.longevity + "<color>"
 									+ or.adn5.color + "<atb2>"
-									+ or.adn2.resistenciaATB + "<ancho2>"
-									+ or.adn2.ancho + "<alto2>" + or.adn2.alto
-									+ "<sentir2>" + or.adn2.sentir + "<temp2>"
-									+ or.adn2.toleranciaTemp + "<predador2>"
-									+ or.adn2.predador + "<speed2>"
+									+ or.adn2.resistanceATB + "<ancho2>"
+									+ or.adn2.width + "<alto2>" + or.adn2.height
+									+ "<sentir2>" + or.adn2.sense + "<temp2>"
+									+ or.adn2.toleranceTemp + "<predador2>"
+									+ or.adn2.predator + "<speed2>"
 									+ or.adn4.speed + "<cazar2>"
-									+ or.adn4.cazar + "<escapar2>"
-									+ or.adn4.escapar + "<alcance2>"
-									+ or.adn4.radioConsiente + "<fero2>"
-									+ or.adn4.feromona + "<noGen2>"
+									+ or.adn4.hunt + "<escapar2>"
+									+ or.adn4.escape + "<alcance2>"
+									+ or.adn4.radius + "<fero2>"
+									+ or.adn4.pheromone + "<noGen2>"
 									+ or.adn4.parteNoGen + "<tasamut2>"
-									+ or.adn6.tasaMutacion + "<longevidad2>"
-									+ or.adn6.longevidad + "<color2>"
+									+ or.adn6.mutationRate + "<longevidad2>"
+									+ or.adn6.longevity + "<color2>"
 									+ or.adn6.color + "\n");
-							f_poblacion.escribirArchivo(linea.toString());
+							f_poblacion.writeArchive(linea.toString());
 						}
 					}
 					f_poblacion.cerrarArchivo();
@@ -1912,11 +1940,10 @@ public class Mundo implements Serializable {
 
 	public void leerArchivoPoblacion() {
 
-		for (Organismo or : aorg) {
-			aorg.removeValue(or, true);
+		for (Organism or : organisms) {
+			organisms.removeValue(or, true);
 		}
-		;
-		for (Organismo or : aEspesiesTotales) {
+		for (Organism or : aEspesiesTotales) {
 			aEspesiesTotales.removeValue(or, true);
 		}
 
@@ -1927,14 +1954,14 @@ public class Mundo implements Serializable {
 			String linea = null;
 			while ((linea = br.readLine()) != null) {
 
-				Genoma gen = new Genoma(this, 1, 1, 1, 0, 0, 0);
-				Genoma gen2 = new Genoma(this, 1, 1, 1, 0, 0, 0);
+				Genome gen = new Genome(this, 1, 1, 1, 0, 0, 0);
+				Genome gen2 = new Genome(this, 1, 1, 1, 0, 0, 0);
 
-				Genoma gen3 = new Genoma(this, 0, 0, 0, 0, 0, 0, 0);
-				Genoma gen4 = new Genoma(this, 0, 0, 0, 0, 0, 0, 0);
+				Genome gen3 = new Genome(this, 0, 0, 0, 0, 0, 0, 0);
+				Genome gen4 = new Genome(this, 0, 0, 0, 0, 0, 0, 0);
 
-				Genoma gen5 = new Genoma(this, 0, 0, 0);
-				Genoma gen6 = new Genoma(this, 0, 0, 0);
+				Genome gen5 = new Genome(this, 0, 0, 0);
+				Genome gen6 = new Genome(this, 0, 0, 0);
 
 				StringBuffer sexo = new StringBuffer(linea.substring(
 						linea.indexOf("<Male>") + 6, linea.indexOf("<h>")));
@@ -1955,34 +1982,34 @@ public class Mundo implements Serializable {
 					male = false;
 				}
 
-				gen.resistenciaATB.replace(
+				gen.resistanceATB.replace(
 						0,
-						gen.resistenciaATB.length(),
+						gen.resistanceATB.length(),
 						linea.substring(linea.indexOf("<atb>") + 5,
 								linea.indexOf("<ancho>")));
-				gen.ancho.replace(
+				gen.width.replace(
 						0,
-						gen.ancho.length(),
+						gen.width.length(),
 						linea.substring(linea.indexOf("<ancho>") + 7,
 								linea.indexOf("<alto>")));
-				gen.alto.replace(
+				gen.height.replace(
 						0,
-						gen.alto.length(),
+						gen.height.length(),
 						linea.substring(linea.indexOf("<alto>") + 6,
 								linea.indexOf("<sentir>")));
-				gen.sentir.replace(
+				gen.sense.replace(
 						0,
-						gen.sentir.length(),
+						gen.sense.length(),
 						linea.substring(linea.indexOf("<sentir>") + 8,
 								linea.indexOf("<temp>")));
-				gen.toleranciaTemp.replace(
+				gen.toleranceTemp.replace(
 						0,
-						gen.toleranciaTemp.length(),
+						gen.toleranceTemp.length(),
 						linea.substring(linea.indexOf("<temp>") + 6,
 								linea.indexOf("<predador>")));
-				gen.predador.replace(
+				gen.predator.replace(
 						0,
-						gen.predador.length(),
+						gen.predator.length(),
 						linea.substring(linea.indexOf("<predador>") + 10,
 								linea.indexOf("<speed>")));
 
@@ -1991,24 +2018,24 @@ public class Mundo implements Serializable {
 						gen3.speed.length(),
 						linea.substring(linea.indexOf("<speed>") + 7,
 								linea.indexOf("<cazar>")));
-				gen3.cazar.replace(
+				gen3.hunt.replace(
 						0,
-						gen3.cazar.length(),
+						gen3.hunt.length(),
 						linea.substring(linea.indexOf("<cazar>") + 7,
 								linea.indexOf("<escapar>")));
-				gen3.escapar.replace(
+				gen3.escape.replace(
 						0,
-						gen3.escapar.length(),
+						gen3.escape.length(),
 						linea.substring(linea.indexOf("<escapar>") + 9,
 								linea.indexOf("<alcance>")));
-				gen3.radioConsiente.replace(
+				gen3.radius.replace(
 						0,
-						gen3.radioConsiente.length(),
+						gen3.radius.length(),
 						linea.substring(linea.indexOf("<alcance>") + 9,
 								linea.indexOf("<fero>")));
-				gen3.feromona.replace(
+				gen3.pheromone.replace(
 						0,
-						gen3.feromona.length(),
+						gen3.pheromone.length(),
 						linea.substring(linea.indexOf("<fero>") + 6,
 								linea.indexOf("<noGen>")));
 				gen3.parteNoGen.replace(
@@ -2017,46 +2044,46 @@ public class Mundo implements Serializable {
 						linea.substring(linea.indexOf("<noGen>") + 7,
 								linea.indexOf("<tasamut2>")));
 
-				gen5.tasaMutacion.replace(
+				gen5.mutationRate.replace(
 						0,
-						gen5.tasaMutacion.length(),
+						gen5.mutationRate.length(),
 						linea.substring(linea.indexOf("<tasamut>") + 9,
 								linea.indexOf("<longevidad>")));
-				gen5.longevidad.replace(0, gen5.longevidad.length(), linea
+				gen5.longevity.replace(0, gen5.longevity.length(), linea
 						.substring(linea.indexOf("<longevidad>") + 12,
 								linea.indexOf("<color>")));
 				gen5.color.replace(
 						0,
 						gen5.color.length(),
-						linea.substring(linea.indexOf("<color>") + 7,
-								linea.length()));
+						linea.substring(linea.indexOf("<color>") + 7
+						));
 
-				gen2.resistenciaATB.replace(
+				gen2.resistanceATB.replace(
 						0,
-						gen2.resistenciaATB.length(),
+						gen2.resistanceATB.length(),
 						linea.substring(linea.indexOf("<atb2>") + 6,
 								linea.indexOf("<ancho2>")));
-				gen2.ancho.replace(
+				gen2.width.replace(
 						0,
-						gen2.ancho.length(),
+						gen2.width.length(),
 						linea.substring(linea.indexOf("<ancho2>") + 8,
 								linea.indexOf("<alto2>")));
-				gen2.alto.replace(
+				gen2.height.replace(
 						0,
-						gen2.alto.length(),
+						gen2.height.length(),
 						linea.substring(linea.indexOf("<alto2>") + 7,
 								linea.indexOf("<sentir2>")));
-				gen2.sentir.replace(
+				gen2.sense.replace(
 						0,
-						gen2.sentir.length(),
+						gen2.sense.length(),
 						linea.substring(linea.indexOf("<sentir2>") + 9,
 								linea.indexOf("<temp2>")));
-				gen2.toleranciaTemp.replace(
+				gen2.toleranceTemp.replace(
 						0,
-						gen2.toleranciaTemp.length(),
+						gen2.toleranceTemp.length(),
 						linea.substring(linea.indexOf("<temp2>") + 7,
 								linea.indexOf("<predador2>")));
-				gen2.predador.replace(0, gen2.predador.length(), linea
+				gen2.predator.replace(0, gen2.predator.length(), linea
 						.substring(linea.indexOf("<predador2>") + 11,
 								linea.indexOf("<speed2>")));
 
@@ -2065,24 +2092,24 @@ public class Mundo implements Serializable {
 						gen4.speed.length(),
 						linea.substring(linea.indexOf("<speed2>") + 8,
 								linea.indexOf("<cazar2>")));
-				gen4.cazar.replace(
+				gen4.hunt.replace(
 						0,
-						gen4.cazar.length(),
+						gen4.hunt.length(),
 						linea.substring(linea.indexOf("<cazar2>") + 8,
 								linea.indexOf("<escapar2>")));
-				gen4.escapar.replace(
+				gen4.escape.replace(
 						0,
-						gen4.escapar.length(),
+						gen4.escape.length(),
 						linea.substring(linea.indexOf("<escapar2>") + 10,
 								linea.indexOf("<alcance2>")));
-				gen4.radioConsiente.replace(
+				gen4.radius.replace(
 						0,
-						gen4.radioConsiente.length(),
+						gen4.radius.length(),
 						linea.substring(linea.indexOf("<alcance2>") + 10,
 								linea.indexOf("<fero2>")));
-				gen4.feromona.replace(
+				gen4.pheromone.replace(
 						0,
-						gen4.feromona.length(),
+						gen4.pheromone.length(),
 						linea.substring(linea.indexOf("<fero2>") + 7,
 								linea.indexOf("<noGen2>")));
 				gen4.parteNoGen.replace(
@@ -2091,21 +2118,21 @@ public class Mundo implements Serializable {
 						linea.substring(linea.indexOf("<noGen2>") + 8,
 								linea.indexOf("<tasamut2>")));
 
-				gen6.tasaMutacion.replace(
+				gen6.mutationRate.replace(
 						0,
-						gen6.tasaMutacion.length(),
+						gen6.mutationRate.length(),
 						linea.substring(linea.indexOf("<tasamut2>") + 10,
 								linea.indexOf("<longevidad2>")));
-				gen6.longevidad.replace(0, gen6.longevidad.length(), linea
+				gen6.longevity.replace(0, gen6.longevity.length(), linea
 						.substring(linea.indexOf("<longevidad2>") + 11,
 								linea.indexOf("<color2>")));
 				gen6.color.replace(
 						0,
 						gen6.color.length(),
-						linea.substring(linea.indexOf("<color2>") + 8,
-								linea.length()));
+						linea.substring(linea.indexOf("<color2>") + 8
+						));
 
-				Organismo or = new Organismo(male, gen, gen2, gen3, gen4, gen5,
+				Organism or = new Organism(male, gen, gen2, gen3, gen4, gen5,
 						gen6, pos, nombre, this);
 
 				// asiganr una direccion a cada organismo
@@ -2115,16 +2142,16 @@ public class Mundo implements Serializable {
 				float coseno = (float) Math.sin(x + 3.1416 / 2) * 10;
 				Vector2 dir = new Vector2(seno, coseno);
 
-				or.direccion.x = dir.x;
-				or.direccion.y = dir.y;
-				aorg.add(or);
+				or.direction.x = dir.x;
+				or.direction.y = dir.y;
+				organisms.add(or);
 			}
 
-			Masatotal = MateriaLibre() + BiomasaTotal(aorg);
+			Masatotal = MateriaLibre() + BiomasaTotal(organisms);
 
-			MasatotalL = MateriaLibreL() + BiomasaTotalI(aorg);
+			MasatotalL = MateriaLibreL() + BiomasaTotalI(organisms);
 
-			MasatotalR = MateriaLibreR() + BiomasaTotalD(aorg);
+			MasatotalR = MateriaLibreR() + BiomasaTotalD(organisms);
 
 			br.close();
 			fr.close();
@@ -2162,38 +2189,38 @@ public class Mundo implements Serializable {
 
 		if (verFrontera == false) {
 
-			aorg.sort();
+			organisms.sort();
 
 			float y = (int) (alto - 120);
 			float x = 10;
 
-			for (Organismo or : aorg) {
+			for (Organism or : organisms) {
 
-				or.posicion.x = -100;
-				or.posicion.y = -100;
+				or.position.x = -100;
+				or.position.y = -100;
 
 				or.Ordenar();// este metodo mueve los organismosa un nueva
-								// posicion sin usar el metodo update
+				// posicion sin usar el metodo update
 
 			}
 
-			for (int e = indice; e < aorg.size; e++) {
-				Organismo or = aorg.get(e);
+			for (int e = indice; e < organisms.size; e++) {
+				Organism or = organisms.get(e);
 
 				indice++;
 
-				or.posicion.y = y;
-				or.posicion.x = x;
+				or.position.y = y;
+				or.position.x = x;
 
-				x = (int) (x + or.ancho * 4);
+				x = (int) (x + or.width * 4);
 
-				if (x > ancho - or.ancho) {
+				if (x > ancho - or.width) {
 					x = 10;
-					y = y - or.alto * 6;
+					y = y - or.height * 6;
 				}
 
 				if (y <= 10) {
-					e = aorg.size;
+					e = organisms.size;
 				} // si se llena la pantalla de organismos, se detiene el loop
 
 				or.Ordenar();
@@ -2213,28 +2240,28 @@ public class Mundo implements Serializable {
 			float y = (int) (alto - 120);
 			float x = (ancho / 2) + 10;
 
-			for (int e = indiceDer; e < aorg.size; e++) {
+			for (int e = indiceDer; e < organisms.size; e++) {
 
-				if (aorg.get(e).posicion.x > ancho / 2) {
+				if (organisms.get(e).posicion.x > ancho / 2) {
 
 					indiceDer++;
 
-					aorg.get(e).posicion.y = y;
-					aorg.get(e).posicion.x = x;
+					organisms.get(e).posicion.y = y;
+					organisms.get(e).posicion.x = x;
 
-					x = (int) (x + aorg.get(e).ancho * 4);
+					x = (int) (x + organisms.get(e).ancho * 4);
 
-					if (x > ancho - aorg.get(e).ancho * 4) {
+					if (x > ancho - organisms.get(e).ancho * 4) {
 						x = (ancho / 2) + 10;
-						y = y - aorg.get(e).alto * 6;
+						y = y - organisms.get(e).alto * 6;
 					}
 
 					if (y <= 10) {
-						e = aorg.size;
+						e = organisms.size;
 					}
 				} // si se llena la pantalla de organismos, se detiene el loop
 
-				aorg.get(e).Ordenar();
+				organisms.get(e).Ordenar();
 
 			}
 
@@ -2243,27 +2270,27 @@ public class Mundo implements Serializable {
 			float y2 = (int) (alto - 120);
 			float x2 = 10;
 
-			for (int e = indiceIz; e < aorg.size; e++) {
+			for (int e = indiceIz; e < organisms.size; e++) {
 
-				if (aorg.get(e).posicion.x < ancho / 2) {
+				if (organisms.get(e).posicion.x < ancho / 2) {
 					indiceIz++;
 
-					aorg.get(e).posicion.y = y2;
-					aorg.get(e).posicion.x = x2;
+					organisms.get(e).posicion.y = y2;
+					organisms.get(e).posicion.x = x2;
 
-					x2 = (int) (x2 + aorg.get(e).ancho * 4);
+					x2 = (int) (x2 + organisms.get(e).ancho * 4);
 
-					if (x2 > (ancho / 2) - aorg.get(e).ancho * 4) {
+					if (x2 > (ancho / 2) - organisms.get(e).ancho * 4) {
 						x2 = 10;
-						y2 = y2 - aorg.get(e).alto * 6;
+						y2 = y2 - organisms.get(e).alto * 6;
 					}
 
 					if (y2 <= 10) {
-						e = aorg.size;
+						e = organisms.size;
 					}
 				} // si se llena la pantalla de organismos, se detiene el loop
 
-				aorg.get(e).Ordenar();
+				organisms.get(e).Ordenar();
 
 			}
 		}
@@ -2275,21 +2302,21 @@ public class Mundo implements Serializable {
 
 	public void colectorEspesies() {
 
-		for (Organismo or : aEspesies) {
-			or.cantidad = 1;
+		for (Organism or : aEspesies) {
+			or.quantity = 1;
 			aEspesies.removeValue(or, true);
 		}
 
-		for (Organismo or : aorg) {
+		for (Organism or : organisms) {
 
 			boolean igual = false;
 
 			String id = or.nombre.toString();
-			for (Organismo or2 : aEspesies) {
+			for (Organism or2 : aEspesies) {
 
 				if (id.equals(or2.nombre.toString())) {
 					igual = true;
-					or2.cantidad++;
+					or2.quantity++;
 				}
 
 			}
@@ -2304,7 +2331,7 @@ public class Mundo implements Serializable {
 	}
 
 	// colect color allele
-	public void colectGenotipo(Array<Organismo> aor, Array<Genotipo> agen) {
+	public void colectGenotipo(Array<Organism> aor, Array<Genotype> agen) {
 
 		if (aor.size > 0) {
 			int index = agen.size;
@@ -2339,7 +2366,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectGenotipoI(Array<Organismo> aor, Array<Genotipo> agen) {
+	public void colectGenotipoI(Array<Organism> aor, Array<Genotype> agen) {
 
 		if (aor.size > 0) {
 			int index = agen.size;
@@ -2349,10 +2376,10 @@ public class Mundo implements Serializable {
 			}
 
 			int pos = 0;
-			for (int i = 0; i < aorg.size; i++) {
-				if (aorg.get(i).posicion.x < ancho / 2) {
+			for (int i = 0; i < organisms.size; i++) {
+				if (organisms.get(i).posicion.x < ancho / 2) {
 					pos = i;
-					i = aorg.size;
+					i = organisms.size;
 				}
 			}
 
@@ -2383,7 +2410,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectGenotipoD(Array<Organismo> aor, Array<Genotipo> agen) {
+	public void colectGenotipoD(Array<Organism> aor, Array<Genotype> agen) {
 
 		if (aor.size > 0) {
 			int index = agen.size;
@@ -2393,10 +2420,10 @@ public class Mundo implements Serializable {
 			}
 
 			int pos = 0;
-			for (int i = 0; i < aorg.size; i++) {
-				if (aorg.get(i).posicion.x > ancho / 2) {
+			for (int i = 0; i < organisms.size; i++) {
+				if (organisms.get(i).posicion.x > ancho / 2) {
 					pos = i;
-					i = aorg.size;
+					i = organisms.size;
 				}
 			}
 
@@ -2427,7 +2454,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectFenotipo(Array<Organismo> aor, Array<Fenotipo> afen) {
+	public void colectFenotipo(Array<Organism> aor, Array<Phenotype> afen) {
 
 		if (aor.size > 0) {
 			int index = afen.size;
@@ -2462,7 +2489,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectFenotipoI(Array<Organismo> aor, Array<Fenotipo> afen) {
+	public void colectFenotipoI(Array<Organism> aor, Array<Phenotype> afen) {
 
 		if (aor.size > 0) {
 			int index = afen.size;
@@ -2472,10 +2499,10 @@ public class Mundo implements Serializable {
 			}
 
 			int pos = 0;
-			for (int i = 0; i < aorg.size; i++) {
-				if (aorg.get(i).posicion.x < ancho / 2) {
+			for (int i = 0; i < organisms.size; i++) {
+				if (organisms.get(i).posicion.x < ancho / 2) {
 					pos = i;
-					i = aorg.size;
+					i = organisms.size;
 				}
 			}
 
@@ -2507,7 +2534,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectFenotipoD(Array<Organismo> aor, Array<Fenotipo> afen) {
+	public void colectFenotipoD(Array<Organism> aor, Array<Phenotype> afen) {
 
 		if (aor.size > 0) {
 			int index = afen.size;
@@ -2517,10 +2544,10 @@ public class Mundo implements Serializable {
 			}
 
 			int pos = 0;
-			for (int i = 0; i < aorg.size; i++) {
-				if (aorg.get(i).posicion.x > ancho / 2) {
+			for (int i = 0; i < organisms.size; i++) {
+				if (organisms.get(i).posicion.x > ancho / 2) {
 					pos = i;
-					i = aorg.size;
+					i = organisms.size;
 				}
 			}
 
@@ -2552,7 +2579,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectarAlelos(Array<Organismo> aor, Array<Alelo> aal) {
+	public void colectarAlelos(Array<Organism> aor, Array<Allele> aal) {
 		if (aor.size > 0) {
 			int index = aal.size;
 			for (int i = index - 1; i >= 0; i--) {
@@ -2562,24 +2589,24 @@ public class Mundo implements Serializable {
 
 			for (int i = 0; i < aor.get(0).aAlelos.size; i = i + 2) {
 
-				Alelo al = aor.get(0).aAlelos.get(i);
-				al.cantidad = 0;
+				Allele al = aor.get(0).aAlelos.get(i);
+				al.quantity = 0;
 				aal.add(al);
 
 			} // se agregan los alelos delprimer organismo
 
 			for (int i = 0; i < aor.size; i++) {
 
-				Organismo or = aor.get(i);
+				Organism or = aor.get(i);
 
-				for (int a = 0; a < or.aAlelos.size; a++) {
+				for (int a = 0; a < or.aAlleles.size; a++) {
 
-					Alelo al = or.aAlelos.get(a);
+					Allele al = or.aAlleles.get(a);
 					boolean igual = false;
 					for (int j = 0; j < aal.size; j++) {
 
-						if (aal.get(j).nombre.equals(al.nombre)
-								&& aal.get(j).identificador == al.identificador) {
+						if (aal.get(j).nombre.equals(al.name)
+								&& aal.get(j).identificador == al.identifier) {
 
 							igual = true;
 							aal.get(j).cantidad++;
@@ -2598,7 +2625,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectarAlelosI(Array<Organismo> aor, Array<Alelo> aal) {
+	public void colectarAlelosI(Array<Organism> aor, Array<Allele> aal) {
 		if (aor.size > 0) {
 			int index = aal.size;
 			for (int i = index - 1; i >= 0; i--) {
@@ -2607,32 +2634,32 @@ public class Mundo implements Serializable {
 			}// limpia la lista
 
 			int pos = 0;
-			for (int i = 0; i < aorg.size; i++) {
-				if (aorg.get(i).posicion.x < ancho / 2) {
+			for (int i = 0; i < organisms.size; i++) {
+				if (organisms.get(i).posicion.x < ancho / 2) {
 					pos = i;
-					i = aorg.size;
+					i = organisms.size;
 				}
 			}
 
 			for (int i = 0; i < aor.get(pos).aAlelos.size; i = i + 2) {
 
-				Alelo al = aor.get(pos).aAlelos.get(i);
-				al.cantidad = 0;
+				Allele al = aor.get(pos).aAlelos.get(i);
+				al.quantity = 0;
 				aal.add(al);
 			} // se agregan los alelos delprimer organismo
 
 			for (int i = 0; i < aor.size; i++) {
 
-				Organismo or = aor.get(i);
-				if (or.posicion.x < ancho / 2) {
-					for (int a = 0; a < or.aAlelos.size; a++) {
+				Organism or = aor.get(i);
+				if (or.position.x < ancho / 2) {
+					for (int a = 0; a < or.aAlleles.size; a++) {
 
-						Alelo al = or.aAlelos.get(a);
+						Allele al = or.aAlleles.get(a);
 						boolean igual = false;
 						for (int j = 0; j < aal.size; j++) {
 
-							if (aal.get(j).nombre.equals(al.nombre)
-									&& aal.get(j).identificador == al.identificador) {
+							if (aal.get(j).nombre.equals(al.name)
+									&& aal.get(j).identificador == al.identifier) {
 
 								igual = true;
 								aal.get(j).cantidad++;
@@ -2652,7 +2679,7 @@ public class Mundo implements Serializable {
 		}
 	}
 
-	public void colectarAlelosD(Array<Organismo> aor, Array<Alelo> aal) {
+	public void colectarAlelosD(Array<Organism> aor, Array<Allele> aal) {
 		if (aor.size > 0) {
 			int index = aal.size;
 			for (int i = index - 1; i >= 0; i--) {
@@ -2661,32 +2688,32 @@ public class Mundo implements Serializable {
 			}// limpia la lista
 
 			int pos = 0;
-			for (int i = 0; i < aorg.size; i++) {
-				if (aorg.get(i).posicion.x > ancho / 2) {
+			for (int i = 0; i < organisms.size; i++) {
+				if (organisms.get(i).posicion.x > ancho / 2) {
 					pos = i;
-					i = aorg.size;
+					i = organisms.size;
 				}
 			}
 
 			for (int i = 0; i < aor.get(pos).aAlelos.size; i = i + 2) {
 
-				Alelo al = aor.get(pos).aAlelos.get(i);
-				al.cantidad = 0;
+				Allele al = aor.get(pos).aAlelos.get(i);
+				al.quantity = 0;
 				aal.add(al);
 			} // se agregan los alelos delprimer organismo
 
 			for (int i = 0; i < aor.size; i++) {
 
-				Organismo or = aor.get(i);
-				if (or.posicion.x > ancho / 2) {
-					for (int a = 0; a < or.aAlelos.size; a++) {
+				Organism or = aor.get(i);
+				if (or.position.x > ancho / 2) {
+					for (int a = 0; a < or.aAlleles.size; a++) {
 
-						Alelo al = or.aAlelos.get(a);
+						Allele al = or.aAlleles.get(a);
 						boolean igual = false;
 						for (int j = 0; j < aal.size; j++) {
 
-							if (aal.get(j).nombre.equals(al.nombre)
-									&& aal.get(j).identificador == al.identificador) {
+							if (aal.get(j).nombre.equals(al.name)
+									&& aal.get(j).identificador == al.identifier) {
 
 								igual = true;
 								aal.get(j).cantidad++;
@@ -2708,14 +2735,14 @@ public class Mundo implements Serializable {
 
 	// colectar todas las que aparecen
 
-	public void colectorEspesiesTotales(Array<Organismo> aor) {
+	public void colectorEspesiesTotales(Array<Organism> aor) {
 
-		for (Organismo or : aor) {
+		for (Organism or : aor) {
 
 			boolean igual = false;
 			String id = or.nombre.toString();
 
-			for (Organismo or2 : aEspesiesTotales) {
+			for (Organism or2 : aEspesiesTotales) {
 
 				if (id.equals(or2.nombre.toString())) {
 					igual = true;
@@ -2734,145 +2761,145 @@ public class Mundo implements Serializable {
 
 		if (verFrontera == false) {
 
-			colectarAlelos(aorg, aAlelos);
+			colectarAlelos(organisms, aAlelos);
 
 			numero = aAlelos.size;
 			int cantidad = 0;
 
-			for (Alelo al : aAlelos) {
-				cantidad = cantidad + al.cantidad;
+			for (Allele al : aAlelos) {
+				cantidad = cantidad + al.quantity;
 			}
 
 			linea.replace(0, linea.length(), "");
-			linea.append(addCero2().toString() + minutos2 + ":"
-					+ addCero().toString() + segundos + "");
+			linea.append(addCero2().toString() + minutes2 + ":"
+					+ addCero().toString() + seconds + "");
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Alelo al = aAlelos.get(i);
+				Allele al = aAlelos.get(i);
 
-				if (!al.nombre.equals(tx.color)
-						|| !al.nombre.equals(tx.longevidad)
-						|| !al.nombre.equals(tx.fidelidadADNpol)) {
+				if (!al.name.equals(tx.color)
+						|| !al.name.equals(tx.longevidad)
+						|| !al.name.equals(tx.fidelidadADNpol)) {
 
-					cantidad = aorg.size * 2;
+					cantidad = organisms.size * 2;
 				}
 
-				if (al.nombre.equals(tx.color)
-						|| al.nombre.equals(tx.longevidad)
-						|| al.nombre.equals(tx.fidelidadADNpol)) {
+				if (al.name.equals(tx.color)
+						|| al.name.equals(tx.longevidad)
+						|| al.name.equals(tx.fidelidadADNpol)) {
 
-					cantidad = cantidadHembras(aorg) * 2 + cantidadMachos(aorg);
+					cantidad = cantidadHembras(organisms) * 2 + cantidadMachos(organisms);
 				}
 
 				linea.append(";"
-						+ al.nombre
+						+ al.name
 						+ ";"
 						+ "a"
-						+ al.identificador
+						+ al.identifier
 						+ ";"
 						+ format3
-								.format(((float) al.cantidad / (float) cantidad) * 100)
-						+ ";" + al.cantidad);
+						.format(((float) al.quantity / (float) cantidad) * 100)
+						+ ";" + al.quantity);
 
 				linea.append("\n");
 			}
 			linea.append("\n");
-			f_alelos.escribirArchivo(linea.toString());
+			f_alelos.writeArchive(linea.toString());
 		}
 
 		if (verFrontera == true) {
 
-			colectarAlelosD(aorg, aAlelos);// trabajar con los organismosdela
-											// derecha
+			colectarAlelosD(organisms, aAlelos);// trabajar con los organismosdela
+			// derecha
 			numero = aAlelos.size;
 			int cantidadD = 0;
-			for (Alelo al : aAlelos) {
-				cantidadD = cantidadD + al.cantidad;
+			for (Allele al : aAlelos) {
+				cantidadD = cantidadD + al.quantity;
 			}
 
 			linea.replace(0, linea.length(), "");
 
-			linea.append(addCero2().toString() + minutos2 + ":"
-					+ addCero().toString() + segundos + "");
+			linea.append(addCero2().toString() + minutes2 + ":"
+					+ addCero().toString() + seconds + "");
 			linea.append("\n" + tx.panelDer + "\n");
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Alelo al = aAlelos.get(i);
+				Allele al = aAlelos.get(i);
 
-				if (!al.nombre.equals(tx.color)
-						|| !al.nombre.equals(tx.longevidad)
-						|| !al.nombre.equals(tx.fidelidadADNpol)) {
+				if (!al.name.equals(tx.color)
+						|| !al.name.equals(tx.longevidad)
+						|| !al.name.equals(tx.fidelidadADNpol)) {
 
-					cantidadD = aorg.size * 2;
+					cantidadD = organisms.size * 2;
 				}
 
-				if (al.nombre.equals(tx.color)
-						|| al.nombre.equals(tx.longevidad)
-						|| al.nombre.equals(tx.fidelidadADNpol)) {
+				if (al.name.equals(tx.color)
+						|| al.name.equals(tx.longevidad)
+						|| al.name.equals(tx.fidelidadADNpol)) {
 
-					cantidadD = cantidadHembrasD(aorg) * 2
-							+ cantidadMachosD(aorg);
+					cantidadD = cantidadHembrasD(organisms) * 2
+							+ cantidadMachosD(organisms);
 				}
 				linea.append(";"
-						+ al.nombre
+						+ al.name
 						+ ";"
 						+ "a"
-						+ al.identificador
+						+ al.identifier
 						+ ";"
 						+ format3
-								.format(((float) al.cantidad / (float) al.cantidad) * 100)
-						+ ";" + al.cantidad);
+						.format(((float) al.quantity / (float) al.quantity) * 100)
+						+ ";" + al.quantity);
 
 				linea.append("\n");
 			}
 			linea.append("\n");
 
-			colectarAlelosI(aorg, aAlelos);// trabajar con los organismosdela
-											// izquierd
+			colectarAlelosI(organisms, aAlelos);// trabajar con los organismosdela
+			// izquierd
 			numero = aAlelos.size;
 			int cantidadI = 0;
-			for (Alelo al : aAlelos) {
-				cantidadI = cantidadI + al.cantidad;
+			for (Allele al : aAlelos) {
+				cantidadI = cantidadI + al.quantity;
 			}
 
 			linea.append(tx.panelIz + "\n");// trabajar con los organismos de la
-											// izquierda
+			// izquierda
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Alelo al = aAlelos.get(i);
+				Allele al = aAlelos.get(i);
 
-				if (!al.nombre.equals(tx.color)
-						|| !al.nombre.equals(tx.longevidad)
-						|| !al.nombre.equals(tx.fidelidadADNpol)) {
+				if (!al.name.equals(tx.color)
+						|| !al.name.equals(tx.longevidad)
+						|| !al.name.equals(tx.fidelidadADNpol)) {
 
-					cantidadI = aorg.size * 2;
+					cantidadI = organisms.size * 2;
 				}
 
-				if (al.nombre.equals(tx.color)
-						|| al.nombre.equals(tx.longevidad)
-						|| al.nombre.equals(tx.fidelidadADNpol)) {
+				if (al.name.equals(tx.color)
+						|| al.name.equals(tx.longevidad)
+						|| al.name.equals(tx.fidelidadADNpol)) {
 
-					cantidadI = cantidadHembrasI(aorg) * 2
-							+ cantidadMachosI(aorg);
+					cantidadI = cantidadHembrasI(organisms) * 2
+							+ cantidadMachosI(organisms);
 				}
 				linea.append(";"
-						+ al.nombre
+						+ al.name
 						+ ";"
 						+ "a"
-						+ al.identificador
+						+ al.identifier
 						+ ";"
 						+ format3
-								.format(((float) al.cantidad / (float) al.cantidad) * 100)
-						+ ";" + al.cantidad);
+						.format(((float) al.quantity / (float) al.quantity) * 100)
+						+ ";" + al.quantity);
 
 				linea.append("\n");
 			}
 			linea.append("\n");
 
-			f_alelos.escribirArchivo(linea.toString());
+			f_alelos.writeArchive(linea.toString());
 		}
 
 	}
@@ -2880,58 +2907,58 @@ public class Mundo implements Serializable {
 	public void archivarFenotipo2() {
 
 		if (verFrontera == false) {
-			colectFenotipo(aorg, aFenotipos);
+			colectFenotipo(organisms, aFenotipos);
 
 			numero = aFenotipos.size;
 			int cantidad = 0;
 
-			for (Fenotipo fn : aFenotipos) {
-				cantidad = cantidad + fn.cantidad;
+			for (Phenotype fn : aFenotipos) {
+				cantidad = cantidad + fn.quantity;
 			}
 
 			linea.replace(0, linea.length(), "");
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Fenotipo fn = aFenotipos.get(i);
+				Phenotype fn = aFenotipos.get(i);
 
 				if (i == numero - 1) {
 					linea.append(";"
 							+ addCero2().toString()
-							+ minutos2
+							+ minutes2
 							+ ":"
 							+ addCero().toString()
-							+ segundos
+							+ seconds
 							+ ";"
-							+ fn.nombre
+							+ fn.name
 							+ ";"
-							+ fn.cantidad
+							+ fn.quantity
 							+ ";"
-							+ format.format(((float) fn.cantidad / (float) cantidad) * 100));
+							+ format.format(((float) fn.quantity / (float) cantidad) * 100));
 				}
 				if (i < numero - 1) {
 					linea.append(";;"
-							+ fn.nombre
+							+ fn.name
 							+ ";"
-							+ fn.cantidad
+							+ fn.quantity
 							+ ";"
-							+ format.format(((float) fn.cantidad / (float) cantidad) * 100));
+							+ format.format(((float) fn.quantity / (float) cantidad) * 100));
 				}
 
 				linea.append("\n");
 			}
 			linea.append("\n");
-			f_fenotipos.escribirArchivo(linea.toString());
+			f_fenotipos.writeArchive(linea.toString());
 		}
 
 		if (verFrontera == true) {
 
-			colectFenotipoD(aorg, aFenotipos);// trabajar con los organismos de
-												// la derecha
+			colectFenotipoD(organisms, aFenotipos);// trabajar con los organismos de
+			// la derecha
 			numero = aFenotipos.size;
 			int cantidadD = 0;
-			for (Fenotipo fn : aFenotipos) {
-				cantidadD = cantidadD + fn.cantidad;
+			for (Phenotype fn : aFenotipos) {
+				cantidadD = cantidadD + fn.quantity;
 			}
 
 			linea.replace(0, linea.length(), "");
@@ -2940,75 +2967,75 @@ public class Mundo implements Serializable {
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Fenotipo fn = aFenotipos.get(i);
+				Phenotype fn = aFenotipos.get(i);
 
 				if (i == numero - 1) {
 					linea.append(";"
 							+ addCero2().toString()
-							+ minutos2
+							+ minutes2
 							+ ":"
 							+ addCero().toString()
-							+ segundos
+							+ seconds
 							+ ";"
-							+ fn.nombre
+							+ fn.name
 							+ ";"
-							+ fn.cantidad
+							+ fn.quantity
 							+ ";"
-							+ format.format(((float) fn.cantidad / (float) cantidadD) * 100));
+							+ format.format(((float) fn.quantity / (float) cantidadD) * 100));
 				}
 				if (i < numero - 1) {
 					linea.append(";;"
-							+ fn.nombre
+							+ fn.name
 							+ ";"
-							+ fn.cantidad
+							+ fn.quantity
 							+ ";"
-							+ format.format(((float) fn.cantidad / (float) cantidadD) * 100));
+							+ format.format(((float) fn.quantity / (float) cantidadD) * 100));
 				}
 
 				linea.append("\n");
 			}
 
-			colectFenotipoI(aorg, aFenotipos);// trabajar con los organismos de
-												// la izquierda
+			colectFenotipoI(organisms, aFenotipos);// trabajar con los organismos de
+			// la izquierda
 			numero = aFenotipos.size;
 			int cantidadI = 0;
-			for (Fenotipo fn : aFenotipos) {
-				cantidadI = cantidadI + fn.cantidad;
+			for (Phenotype fn : aFenotipos) {
+				cantidadI = cantidadI + fn.quantity;
 			}
 
 			linea.append(tx.panelIz + "\n");
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Fenotipo fn = aFenotipos.get(i);
+				Phenotype fn = aFenotipos.get(i);
 
 				if (i == numero - 1) {
 					linea.append(";"
 							+ addCero2().toString()
-							+ minutos2
+							+ minutes2
 							+ ":"
 							+ addCero().toString()
-							+ segundos
+							+ seconds
 							+ ";"
-							+ fn.nombre
+							+ fn.name
 							+ ";"
-							+ fn.cantidad
+							+ fn.quantity
 							+ ";"
-							+ format.format(((float) fn.cantidad / (float) cantidadI) * 100));
+							+ format.format(((float) fn.quantity / (float) cantidadI) * 100));
 				}
 				if (i < numero - 1) {
 					linea.append(";;"
-							+ fn.nombre
+							+ fn.name
 							+ ";"
-							+ fn.cantidad
+							+ fn.quantity
 							+ ";"
-							+ format.format(((float) fn.cantidad / (float) cantidadI) * 100));
+							+ format.format(((float) fn.quantity / (float) cantidadI) * 100));
 				}
 
 				linea.append("\n");
 			}
 
-			f_fenotipos.escribirArchivo(linea.toString());
+			f_fenotipos.writeArchive(linea.toString());
 		}
 
 	}
@@ -3017,13 +3044,13 @@ public class Mundo implements Serializable {
 
 		if (verFrontera == false) {
 
-			colectGenotipo(aorg, aGenotipos);
+			colectGenotipo(organisms, aGenotipos);
 
 			numero = aGenotipos.size;
 			int cantidad = 0;
 
-			for (Genotipo gn : aGenotipos) {
-				cantidad = cantidad + gn.cantidad;
+			for (Genotype gn : aGenotipos) {
+				cantidad = cantidad + gn.quantity;
 			}
 
 			linea.replace(0, linea.length(), "");
@@ -3031,45 +3058,45 @@ public class Mundo implements Serializable {
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Genotipo gn = aGenotipos.get(i);
+				Genotype gn = aGenotipos.get(i);
 
 				if (i == numero - 1) {
 					linea.append(";"
 							+ addCero2().toString()
-							+ minutos2
+							+ minutes2
 							+ ":"
 							+ addCero().toString()
-							+ segundos
+							+ seconds
 							+ ";"
-							+ gn.nombre
+							+ gn.name
 							+ ";"
-							+ gn.cantidad
+							+ gn.quantity
 							+ ";"
-							+ format.format(((float) gn.cantidad / (float) cantidad) * 100));
+							+ format.format(((float) gn.quantity / (float) cantidad) * 100));
 				}
 				if (i < numero - 1) {
 					linea.append(";;"
-							+ gn.nombre
+							+ gn.name
 							+ ";"
-							+ gn.cantidad
+							+ gn.quantity
 							+ ";"
-							+ format.format(((float) gn.cantidad / (float) cantidad) * 100));
+							+ format.format(((float) gn.quantity / (float) cantidad) * 100));
 				}
 
 				linea.append("\n");
 			}
 			linea.append("\n");
-			f_genotipos.escribirArchivo(linea.toString());
+			f_genotipos.writeArchive(linea.toString());
 		}
 
 		if (verFrontera == true) {
 
-			colectGenotipoD(aorg, aGenotipos);// trabajar con los organismos de
-												// la derecha
+			colectGenotipoD(organisms, aGenotipos);// trabajar con los organismos de
+			// la derecha
 			numero = aGenotipos.size;
 			int cantidadD = 0;
-			for (Genotipo gn : aGenotipos) {
-				cantidadD = cantidadD + gn.cantidad;
+			for (Genotype gn : aGenotipos) {
+				cantidadD = cantidadD + gn.quantity;
 			}
 			linea.replace(0, linea.length(), "");
 			// linea.append(minutos2+":"+segundos+"\n");
@@ -3078,76 +3105,76 @@ public class Mundo implements Serializable {
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Genotipo gn = aGenotipos.get(i);
+				Genotype gn = aGenotipos.get(i);
 
 				if (i == numero - 1) {
 					linea.append(";"
 							+ addCero2().toString()
-							+ minutos2
+							+ minutes2
 							+ ":"
 							+ addCero().toString()
-							+ segundos
+							+ seconds
 							+ ";"
-							+ gn.nombre
+							+ gn.name
 							+ ";"
-							+ gn.cantidad
+							+ gn.quantity
 							+ ";"
-							+ format.format(((float) gn.cantidad / (float) cantidadD) * 100));
+							+ format.format(((float) gn.quantity / (float) cantidadD) * 100));
 				}
 				if (i < numero - 1) {
 					linea.append(";;"
-							+ gn.nombre
+							+ gn.name
 							+ ";"
-							+ gn.cantidad
+							+ gn.quantity
 							+ ";"
-							+ format.format(((float) gn.cantidad / (float) cantidadD) * 100));
+							+ format.format(((float) gn.quantity / (float) cantidadD) * 100));
 				}
 
 				linea.append("\n");
 			}
 
-			colectGenotipoI(aorg, aGenotipos);// trabajar con los organismos de
-												// la izquierda
+			colectGenotipoI(organisms, aGenotipos);// trabajar con los organismos de
+			// la izquierda
 			numero = aGenotipos.size;
 			int cantidadI = 0;
-			for (Genotipo gn : aGenotipos) {
-				cantidadI = cantidadI + gn.cantidad;
+			for (Genotype gn : aGenotipos) {
+				cantidadI = cantidadI + gn.quantity;
 			}
 
 			linea.append(tx.panelIz + "\n");
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Genotipo gn = aGenotipos.get(i);
+				Genotype gn = aGenotipos.get(i);
 
 				if (i == numero - 1) {
 					linea.append(";"
 							+ addCero2().toString()
-							+ minutos2
+							+ minutes2
 							+ ":"
 							+ addCero().toString()
-							+ segundos
+							+ seconds
 							+ ";"
-							+ gn.nombre
+							+ gn.name
 							+ ";"
-							+ gn.cantidad
+							+ gn.quantity
 							+ ";"
-							+ format.format(((float) gn.cantidad / (float) cantidadI) * 100));
+							+ format.format(((float) gn.quantity / (float) cantidadI) * 100));
 				}
 				if (i < numero - 1) {
 					linea.append(";;"
-							+ gn.nombre
+							+ gn.name
 							+ ";"
-							+ gn.cantidad
+							+ gn.quantity
 							+ ";"
-							+ format.format(((float) gn.cantidad / (float) cantidadI) * 100));
+							+ format.format(((float) gn.quantity / (float) cantidadI) * 100));
 				}
 
 				linea.append("\n");
 			}
 			linea.append("\n");
 
-			f_genotipos.escribirArchivo(linea.toString());
+			f_genotipos.writeArchive(linea.toString());
 		}
 
 	}
@@ -3155,162 +3182,162 @@ public class Mundo implements Serializable {
 	public void archivarGenoma() {
 		if (verFrontera == false) {
 
-			colectarAlelos(aorg, aAlelos);
+			colectarAlelos(organisms, aAlelos);
 
 			numero = aAlelos.size;
 			int cantidad = 0;
 
-			for (Alelo al : aAlelos) {
-				cantidad = cantidad + al.cantidad;
+			for (Allele al : aAlelos) {
+				cantidad = cantidad + al.quantity;
 			}
 
 			linea.replace(0, linea.length(), "");
 			linea.append("\n" + tx.tiempo + ": " + addCero2().toString()
-					+ minutos2 + ":" + addCero().toString() + segundos + "\n\n");
+					+ minutes2 + ":" + addCero().toString() + seconds + "\n\n");
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Alelo al = aAlelos.get(i);
+				Allele al = aAlelos.get(i);
 
-				linea.append(al.nombre + "-a" + al.identificador + ">  "
-						+ al.secuencia);
+				linea.append(al.name + "-a" + al.identifier + ">  "
+						+ al.sequence);
 
 				linea.append("\n");
 			}
-			f_genes.escribirArchivo(linea.toString());
+			f_genes.writeArchive(linea.toString());
 		}
 
 		if (verFrontera == true) {
 
-			colectarAlelosD(aorg, aAlelos);// trabajar con los organismosdela
-											// derecha
+			colectarAlelosD(organisms, aAlelos);// trabajar con los organismosdela
+			// derecha
 			numero = aAlelos.size;
 			int cantidadD = 0;
-			for (Alelo al : aAlelos) {
-				cantidadD = cantidadD + al.cantidad;
+			for (Allele al : aAlelos) {
+				cantidadD = cantidadD + al.quantity;
 			}
 			linea.replace(0, linea.length(), "");
 			linea.append("\n" + tx.tiempo + ": " + addCero2().toString()
-					+ minutos2 + ":" + addCero().toString() + segundos + "\n\n");
+					+ minutes2 + ":" + addCero().toString() + seconds + "\n\n");
 
 			linea.append(tx.panelDer + "\n");
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Alelo al = aAlelos.get(i);
+				Allele al = aAlelos.get(i);
 
-				linea.append(al.nombre + "-a" + al.identificador + ">  "
-						+ al.secuencia);
+				linea.append(al.name + "-a" + al.identifier + ">  "
+						+ al.sequence);
 
 				linea.append("\n");
 			}
 
-			colectarAlelosI(aorg, aAlelos);// trabajar con los organismosdela
-											// izquierd
+			colectarAlelosI(organisms, aAlelos);// trabajar con los organismosdela
+			// izquierd
 			numero = aAlelos.size;
 			int cantidadI = 0;
-			for (Alelo al : aAlelos) {
-				cantidadI = cantidadI + al.cantidad;
+			for (Allele al : aAlelos) {
+				cantidadI = cantidadI + al.quantity;
 			}
 
 			linea.append(tx.panelIz + "\n");// trabajar con los organismos de la
-											// izquierda
+			// izquierda
 
 			for (int i = numero - 1; i >= 0; i--) {
 
-				Alelo al = aAlelos.get(i);
+				Allele al = aAlelos.get(i);
 
-				linea.append(al.nombre + "-a" + al.identificador + ">  "
-						+ al.secuencia);
+				linea.append(al.name + "-a" + al.identifier + ">  "
+						+ al.sequence);
 
 				linea.append("\n");
 			}
 
-			f_genes.escribirArchivo(linea.toString());
+			f_genes.writeArchive(linea.toString());
 		}
 
 	}
 
 	public void archivarProteoma() {
-		if (aorg.size > 0) {
+		if (organisms.size > 0) {
 
-			f_proteoma.escribirArchivo("" + addCero2().toString() + minutos2
-					+ ":" + addCero().toString() + segundos + "\n");
+			f_proteoma.writeArchive("" + addCero2().toString() + minutes2
+					+ ":" + addCero().toString() + seconds + "\n");
 			numero = aEspesies.size;
 			for (int i = numero - 1; i >= 0; i--) {
-				Organismo or = aEspesies.get(i);
+				Organism or = aEspesies.get(i);
 				linea.replace(0, linea.length(), "");
 				linea.append(">" + or.nombre.toString() + "\n"
-						+ or.adn.colectarProteoma(this) + "\n\n");
+						+ or.adn.collectProteome(this) + "\n\n");
 
-				f_proteoma.escribirArchivo(linea.toString());
+				f_proteoma.writeArchive(linea.toString());
 			}
-			f_proteoma.escribirArchivo("\n\n");
+			f_proteoma.writeArchive("\n\n");
 		}
 	}
 
 	public void archivarFenotipo() {
-		if (aorg.size > 0) {
+		if (organisms.size > 0) {
 
-			f_mutantes.escribirArchivo("" + addCero2().toString() + minutos2
-					+ ":" + addCero().toString() + segundos);
+			f_mutantes.writeArchive("" + addCero2().toString() + minutes2
+					+ ":" + addCero().toString() + seconds);
 			numero = aEspesies.size;
 			for (int i = numero - 1; i >= 0; i--) {
-				Organismo or = aEspesies.get(i);
+				Organism or = aEspesies.get(i);
 
 				linea.replace(0, linea.length(), "");
 				linea.append(" " + ";" + or.nombre.toString() + ";"
-						+ or.cantidad);
+						+ or.quantity);
 
-				if (colectaralto == true) {
-					linea.append("," + (or.alto + or.ancho));
+				if (collectHeight == true) {
+					linea.append("," + (or.height + or.width));
 				}
 
-				if (colectSpeed == true) {
+				if (collectSpeed == true) {
 					linea.append(";" + or.speed);
 				}
-				if (colectColor == true) {
+				if (collectColor == true) {
 					linea.append(";" + or.color);
 				}
-				if (colectarTasaMut == true) {
-					linea.append(";" + or.tasaMut);
+				if (collectMutationRate == true) {
+					linea.append(";" + or.mutationRate);
 				}
-				if (colectarTemp == true) {
-					linea.append(";" + or.tempOptima);
+				if (collectTemp == true) {
+					linea.append(";" + or.optimalTemp);
 				}
-				if (colectarLongevidad == true) {
-					linea.append(";" + or.longevidad);
+				if (collectLongevity == true) {
+					linea.append(";" + or.longevity);
 				}
-				if (colectRadioconsiente == true) {
-					linea.append(";" + or.radioConsiente);
+				if (collectRadius == true) {
+					linea.append(";" + or.radius);
 				}
-				if (colectarFeromona == true) {
-					linea.append(";" + or.feromona);
+				if (collectPheromone == true) {
+					linea.append(";" + or.pheromone);
 				}
-				if (colectPredador == true) {
-					linea.append(";" + or.carnivoro);
+				if (collectPredator == true) {
+					linea.append(";" + or.carnivore);
 				}
-				if (colectSentir == true) {
-					linea.append(";" + or.sentir);
+				if (collectSense == true) {
+					linea.append(";" + or.sense);
 				}
-				if (colectCazar == true) {
-					linea.append(";" + or.cazar);
+				if (collectHunt == true) {
+					linea.append(";" + or.hunt);
 				}
-				if (colectEscapar == true) {
-					linea.append(";" + or.escapar);
+				if (collectEscape == true) {
+					linea.append(";" + or.escape);
 				}
-				if (colectarResistencia == true) {
-					linea.append(";" + or.resistenciaATB);
+				if (collectResistance == true) {
+					linea.append(";" + or.resistanceATB);
 				}
 				linea.append("\n");
 
-				f_mutantes.escribirArchivo(linea.toString());
+				f_mutantes.writeArchive(linea.toString());
 			}
 
 		}
 	}
 
-	public int contarOrganismos(Array<Organismo> aor, boolean der) {
+	public int contarOrganismos(Array<Organism> aor, boolean der) {
 
 		int cuenta = 0;
 
@@ -3338,17 +3365,17 @@ public class Mundo implements Serializable {
 			linea.replace(
 					0,
 					linea.length(),
-					"" + addCero2().toString() + minutos2 + ":"
-							+ addCero().toString() + segundos + ";" + aorg.size
-							+ ";" + cantidadPredadores(aorg) + ";"
-							+ cantidadResistentes(aorg) + ";"
-							+ format.format(velocidadMedia(aorg)) + ";"
-							+ format.format(tamanoMedio(aorg)) + ";"
-							+ format.format(longevidadMedio(aorg)) + ";"
-							+ format.format(tasaMutMedio(aorg)) + ";"
+					"" + addCero2().toString() + minutes2 + ":"
+							+ addCero().toString() + seconds + ";" + organisms.size
+							+ ";" + cantidadPredadores(organisms) + ";"
+							+ cantidadResistentes(organisms) + ";"
+							+ format.format(velocidadMedia(organisms)) + ";"
+							+ format.format(tamanoMedio(organisms)) + ";"
+							+ format.format(longevidadMedio(organisms)) + ";"
+							+ format.format(tasaMutMedio(organisms)) + ";"
 							+ format.format(temperatura) + ";"
-							+ format.format(temOptimaMedia(aorg)) + "\n");
-			f_datos.escribirArchivo(linea.toString());
+							+ format.format(temOptimaMedia(organisms)) + "\n");
+			f_datos.writeArchive(linea.toString());
 		}
 
 		if (verFrontera == true) {
@@ -3357,37 +3384,37 @@ public class Mundo implements Serializable {
 					0,
 					linea.length(),
 					addCero2().toString()
-							+ minutos2
+							+ minutes2
 							+ ":"
 							+ addCero().toString()
-							+ segundos
+							+ seconds
 							+ ";"
-							+ contarOrganismos(aorg, false)
+							+ contarOrganismos(organisms, false)
 							+ ";"
-							+ contarOrganismos(aorg, true)
+							+ contarOrganismos(organisms, true)
 							+ ";"
 							+ contarOrganismos(aEspesies, false)
 							+ ";"
 							+ contarOrganismos(aEspesies, true)
 							+ ";"
-							+ (contarOrganismos(aorg, false) - cantidadPredadoresI(aorg))
+							+ (contarOrganismos(organisms, false) - cantidadPredadoresI(organisms))
 							+ ";"
-							+ (contarOrganismos(aorg, true) - cantidadPredadoresD(aorg))
-							+ ";" + cantidadPredadoresI(aorg) + ";"
-							+ cantidadPredadoresD(aorg) + ";"
-							+ cantidadResistentesI(aorg) + ";"
-							+ cantidadResistentesD(aorg) + ";"
-							+ format.format(velocidadMediaI(aorg)) + ";"
-							+ format.format(velocidadMediaD(aorg)) + ";"
-							+ format.format(tamanoMedioI(aorg)) + ";"
-							+ format.format(tamanoMedioD(aorg)) + ";"
-							+ format.format(longevidadMedioI(aorg)) + ";"
-							+ format.format(longevidadMedioD(aorg)) + ";"
-							+ tasaMutMedioI(aorg) + ";" + tasaMutMedioD(aorg)
+							+ (contarOrganismos(organisms, true) - cantidadPredadoresD(organisms))
+							+ ";" + cantidadPredadoresI(organisms) + ";"
+							+ cantidadPredadoresD(organisms) + ";"
+							+ cantidadResistentesI(organisms) + ";"
+							+ cantidadResistentesD(organisms) + ";"
+							+ format.format(velocidadMediaI(organisms)) + ";"
+							+ format.format(velocidadMediaD(organisms)) + ";"
+							+ format.format(tamanoMedioI(organisms)) + ";"
+							+ format.format(tamanoMedioD(organisms)) + ";"
+							+ format.format(longevidadMedioI(organisms)) + ";"
+							+ format.format(longevidadMedioD(organisms)) + ";"
+							+ tasaMutMedioI(organisms) + ";" + tasaMutMedioD(organisms)
 							+ ";" + format.format(temperatura) + ";"
-							+ format.format(temOptimaMediaI(aorg)) + ";"
-							+ format.format(temOptimaMediaD(aorg)) + "\n");
-			f_datos.escribirArchivo(linea.toString());
+							+ format.format(temOptimaMediaI(organisms)) + ";"
+							+ format.format(temOptimaMediaD(organisms)) + "\n");
+			f_datos.writeArchive(linea.toString());
 		}
 
 	}
@@ -3434,11 +3461,11 @@ public class Mundo implements Serializable {
 
 		StringBuffer linea = new StringBuffer();
 
-		for (Organismo or : aEspesiesTotales) {
+		for (Organism or : aEspesiesTotales) {
 			linea.replace(0, linea.length(), "");
 			linea.append(">" + or.fechaNacimiento + " " + or.nombre.toString()
-					+ "\n" + or.adn.colectarGenoma(this) + "\n");
-			f_arbol.escribirArchivo(linea.toString());
+					+ "\n" + or.adn.collectGenome(this) + "\n");
+			f_arbol.writeArchive(linea.toString());
 		}
 
 		f_arbol.cerrarArchivo();
@@ -3449,28 +3476,28 @@ public class Mundo implements Serializable {
 	public void update() {
 
 		if (parar == false) {
-			if (tiempoMaximo == 0) {
-				if (aorg.size > 0) {
-					
-                  if(verFrontera==true) {
-						
-						cantidadOrganismosI(aorg);
-						cantidadOrganismosD(aorg);
+			if (maxTime == 0) {
+				if (organisms.size > 0) {
+
+					if (verFrontera == true) {
+
+						cantidadOrganismosI(organisms);
+						cantidadOrganismosD(organisms);
 						cantidadEspeciesI(aEspesies);
 						cantidadEspeciesD(aEspesies);
-						
+
 					}
 
-					for (Senergia es : ase) {
+					for (Senergy es : ase) {
 						es.update();
 					}// mueve los cuantos de luz
-					for (Qenergia eq : aqe) {
+					for (Qenergy eq : aqe) {
 						eq.update();
 					}// mueve los cuantos de luz
-					for (Organismo or : aorg) {
+					for (Organism or : organisms) {
 						or.update();
 					}// mueve los organismos
-					if (segundos == 60) {
+					if (seconds == 60) {
 						System.gc();
 					}
 					detectarColiciones();
@@ -3478,7 +3505,7 @@ public class Mundo implements Serializable {
 					chequearBalance();
 					activarCatastrofe();
 					activarATB();
-					colectorEspesiesTotales(aorg);
+					colectorEspesiesTotales(organisms);
 					tomarMuestras();
 					termociclar();
 					contadorTiempo();
@@ -3486,28 +3513,28 @@ public class Mundo implements Serializable {
 				}
 			}
 
-			if (tiempoMaximo > 0) {
-				if (aorg.size > 0 && segundos4 < tiempoMaximo) {
+			if (maxTime > 0) {
+				if (organisms.size > 0 && seconds4 < maxTime) {
 
-					 if(verFrontera==true) {
-							
-							cantidadOrganismosI(aorg);
-							cantidadOrganismosD(aorg);
-							cantidadEspeciesI(aEspesies);
-							cantidadEspeciesD(aEspesies);
-							
-						}
-					
-					for (Senergia es : ase) {
+					if (verFrontera == true) {
+
+						cantidadOrganismosI(organisms);
+						cantidadOrganismosD(organisms);
+						cantidadEspeciesI(aEspesies);
+						cantidadEspeciesD(aEspesies);
+
+					}
+
+					for (Senergy es : ase) {
 						es.update();
 					}// mueve los cuantos de luz
-					for (Qenergia eq : aqe) {
+					for (Qenergy eq : aqe) {
 						eq.update();
 					}// mueve los cuantos de luz
-					for (Organismo or : aorg) {
+					for (Organism or : organisms) {
 						or.update();
 					}// mueve los organismos
-					if (segundos == 60) {
+					if (seconds == 60) {
 						System.gc();
 					}
 					detectarColiciones();
@@ -3515,7 +3542,7 @@ public class Mundo implements Serializable {
 					chequearBalance();
 					activarCatastrofe();
 					activarATB();
-					colectorEspesiesTotales(aorg);
+					colectorEspesiesTotales(organisms);
 					tomarMuestras();
 					termociclar();
 					contadorTiempo();
@@ -3531,12 +3558,12 @@ public class Mundo implements Serializable {
 
 		// primer control de temperatura
 
-		if (deltaTime1 <= 0 && minStar1 != 0 && minutos2 >= minStar1) {
+		if (deltaTime1 <= 0 && minStar1 != 0 && minutes2 >= minStar1) {
 			temperatura = TempFinal1;
 		}
 
-		if (deltaTime1 > 0 && minStar1 != 0 && minutos2 >= minStar1
-				&& minutos2 < minStar1 + deltaTime1) {
+		if (deltaTime1 > 0 && minStar1 != 0 && minutes2 >= minStar1
+				&& minutes2 < minStar1 + deltaTime1) {
 
 			if (delta3Time() > msecondTime(1000)) {
 
@@ -3549,12 +3576,12 @@ public class Mundo implements Serializable {
 
 		// segundo control de temperatura
 
-		if (deltaTime2 <= 0 && minStar2 != 0 && minutos2 >= minStar2) {
+		if (deltaTime2 <= 0 && minStar2 != 0 && minutes2 >= minStar2) {
 			temperatura = TempFinal2;
 		}
 
-		if (deltaTime2 > 0 && minStar2 != 0 && minutos2 >= minStar2
-				&& minutos2 < minStar2 + deltaTime2) {
+		if (deltaTime2 > 0 && minStar2 != 0 && minutes2 >= minStar2
+				&& minutes2 < minStar2 + deltaTime2) {
 
 			if (delta3Time() > msecondTime(1000)) {
 
@@ -3575,16 +3602,16 @@ public class Mundo implements Serializable {
 
 		if (deltaTime() > msecondTime(1000)) {
 
-			segundos = segundos + 1;
+			seconds = seconds + 1;
 			segundos2 = segundos2 + 1;
 			segundos3 = segundos3 + 1;
-			segundos4 = segundos4 + 1;
+			seconds4 = seconds4 + 1;
 			segundos5 = segundos5 + 1;
 
-			if (segundos == 60) {
-				segundos = 0;
+			if (seconds == 60) {
+				seconds = 0;
 				minutos = minutos + 1;
-				minutos2 = minutos2 + 1;
+				minutes2 = minutes2 + 1;
 				minutos3 = minutos3 + 1;
 			}
 
@@ -3608,10 +3635,9 @@ public class Mundo implements Serializable {
 
 		ceroIz.replace(0, ceroIz.length(), "");
 
-		if (segundos < 10) {
+		if (seconds < 10) {
 			ceroIz.append("0");
 		}
-		;
 
 		return ceroIz;
 	}
@@ -3620,10 +3646,9 @@ public class Mundo implements Serializable {
 
 		ceroIz2.replace(0, ceroIz2.length(), "");
 
-		if (minutos2 < 10) {
+		if (minutes2 < 10) {
 			ceroIz2.append("0");
 		}
-		;
 
 		return ceroIz2;
 	}
@@ -3675,230 +3700,230 @@ public class Mundo implements Serializable {
 
 		// organismo toca la energia verde
 
-		for (int i = 0; i < aorg.size; i++) {
-			Organismo or = aorg.get(i);
-			Rectangle er = or.borde;
+		for (int i = 0; i < organisms.size; i++) {
+			Organism or = organisms.get(i);
+			Rectangle er = or.border;
 
-			if (or.carnivoro == false && or.muriendo == 0) { // el organismo no
-																// es carnivoro
+			if (or.carnivore == false && or.muriendo == 0) { // el organismo no
+				// es carnivoro
 
 				// chequea la posicion del organismo para ver que cuantos de
 				// energia buscar
 
-				if (or.posicion.x <= ancho * (1 / 10)) {
+				if (or.position.x <= ancho * (1 / 10)) {
 
 					for (int a = 0; a < ase1.size; a++) {
-						Senergia se = ase1.get(a);
+						Senergy se = ase1.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (1 / 10)
-						&& or.posicion.x <= ancho * (2 / 10)) {
+				if (or.position.x > ancho * (1 / 10)
+						&& or.position.x <= ancho * (2 / 10)) {
 
 					for (int a = 0; a < ase2.size; a++) {
-						Senergia se = ase2.get(a);
+						Senergy se = ase2.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (2 / 10)
-						&& or.posicion.x <= ancho * (3 / 10)) {
+				if (or.position.x > ancho * (2 / 10)
+						&& or.position.x <= ancho * (3 / 10)) {
 
 					for (int a = 0; a < ase3.size; a++) {
-						Senergia se = ase3.get(a);
+						Senergy se = ase3.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (3 / 10)
-						&& or.posicion.x <= ancho * (4 / 10)) {
+				if (or.position.x > ancho * (3 / 10)
+						&& or.position.x <= ancho * (4 / 10)) {
 
 					for (int a = 0; a < ase4.size; a++) {
-						Senergia se = ase4.get(a);
+						Senergy se = ase4.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (4 / 10)
-						&& or.posicion.x <= ancho * (5 / 10)) {
+				if (or.position.x > ancho * (4 / 10)
+						&& or.position.x <= ancho * (5 / 10)) {
 
 					for (int a = 0; a < ase5.size; a++) {
-						Senergia se = ase5.get(a);
+						Senergy se = ase5.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (5 / 10)
-						&& or.posicion.x <= ancho * (6 / 10)) {
+				if (or.position.x > ancho * (5 / 10)
+						&& or.position.x <= ancho * (6 / 10)) {
 
 					for (int a = 0; a < ase6.size; a++) {
-						Senergia se = ase6.get(a);
+						Senergy se = ase6.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (6 / 10)
-						&& or.posicion.x <= ancho * (7 / 10)) {
+				if (or.position.x > ancho * (6 / 10)
+						&& or.position.x <= ancho * (7 / 10)) {
 
 					for (int a = 0; a < ase7.size; a++) {
-						Senergia se = ase7.get(a);
+						Senergy se = ase7.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (7 / 10)
-						&& or.posicion.x <= ancho * (8 / 10)) {
+				if (or.position.x > ancho * (7 / 10)
+						&& or.position.x <= ancho * (8 / 10)) {
 
 					for (int a = 0; a < ase8.size; a++) {
-						Senergia se = ase8.get(a);
+						Senergy se = ase8.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (8 / 10)
-						&& or.posicion.x <= ancho * (9 / 10)) {
+				if (or.position.x > ancho * (8 / 10)
+						&& or.position.x <= ancho * (9 / 10)) {
 
 					for (int a = 0; a < ase9.size; a++) {
-						Senergia se = ase9.get(a);
+						Senergy se = ase9.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
 
-				if (or.posicion.x > ancho * (9 / 10) && or.posicion.x <= ancho) {
+				if (or.position.x > ancho * (9 / 10) && or.position.x <= ancho) {
 
 					for (int a = 0; a < ase10.size; a++) {
-						Senergia se = ase10.get(a);
+						Senergy se = ase10.get(a);
 						Rectangle tr = se.borde;
 						if (se.visible == true) {
-							if (er.overlaps(tr) && or.energia < or.capacidad) {
-								double delta = or.capacidad - or.energia;
-								or.energia = or.energia + se.energia;
+							if (er.overlaps(tr) && or.energy < or.capacity) {
+								double delta = or.capacity - or.energy;
+								or.energy = or.energy + se.energia;
 								se.energia = se.energia - delta;
 								if (se.energia <= 0) {
 									se.visible = false;
 								}
 							}
 						}
-						if (or.energia > or.capacidad) {
-							or.energia = or.capacidad;
+						if (or.energy > or.capacity) {
+							or.energy = or.capacity;
 						}
 					}
 				}
@@ -3908,24 +3933,24 @@ public class Mundo implements Serializable {
 
 		// organismo toca la biomasa
 
-		for (int i = 0; i < aorg.size; i++) {
-			Organismo or = aorg.get(i);
-			Rectangle er = or.borde;
+		for (int i = 0; i < organisms.size; i++) {
+			Organism or = organisms.get(i);
+			Rectangle er = or.border;
 
-			if (or.carnivoro == false && or.muriendo == 0) {
+			if (or.carnivore == false && or.muriendo == 0) {
 
 				// chequea la posicion del organismo para ver que cuantos de
 				// energia buscar
 
-				if (or.posicion.x <= ancho * (1 / 10)) {
+				if (or.position.x <= ancho * (1 / 10)) {
 					for (int a = 0; a < aqe1.size; a++) {
-						Qenergia qe = aqe1.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe1.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -3933,16 +3958,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (1 / 10)
-						&& or.posicion.x <= ancho * (2 / 10)) {
+				if (or.position.x > ancho * (1 / 10)
+						&& or.position.x <= ancho * (2 / 10)) {
 					for (int a = 0; a < aqe2.size; a++) {
-						Qenergia qe = aqe2.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe2.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -3950,16 +3975,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (2 / 10)
-						&& or.posicion.x <= ancho * (3 / 10)) {
+				if (or.position.x > ancho * (2 / 10)
+						&& or.position.x <= ancho * (3 / 10)) {
 					for (int a = 0; a < aqe3.size; a++) {
-						Qenergia qe = aqe3.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe3.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -3967,16 +3992,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (3 / 10)
-						&& or.posicion.x <= ancho * (4 / 10)) {
+				if (or.position.x > ancho * (3 / 10)
+						&& or.position.x <= ancho * (4 / 10)) {
 					for (int a = 0; a < aqe4.size; a++) {
-						Qenergia qe = aqe4.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe4.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -3984,16 +4009,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (4 / 10)
-						&& or.posicion.x <= ancho * (5 / 10)) {
+				if (or.position.x > ancho * (4 / 10)
+						&& or.position.x <= ancho * (5 / 10)) {
 					for (int a = 0; a < aqe5.size; a++) {
-						Qenergia qe = aqe5.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe5.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -4001,16 +4026,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (5 / 10)
-						&& or.posicion.x <= ancho * (6 / 10)) {
+				if (or.position.x > ancho * (5 / 10)
+						&& or.position.x <= ancho * (6 / 10)) {
 					for (int a = 0; a < aqe6.size; a++) {
-						Qenergia qe = aqe6.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe6.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -4018,16 +4043,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (6 / 10)
-						&& or.posicion.x <= ancho * (7 / 10)) {
+				if (or.position.x > ancho * (6 / 10)
+						&& or.position.x <= ancho * (7 / 10)) {
 					for (int a = 0; a < aqe7.size; a++) {
-						Qenergia qe = aqe7.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe7.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -4035,16 +4060,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (7 / 10)
-						&& or.posicion.x <= ancho * (8 / 10)) {
+				if (or.position.x > ancho * (7 / 10)
+						&& or.position.x <= ancho * (8 / 10)) {
 					for (int a = 0; a < aqe8.size; a++) {
-						Qenergia qe = aqe8.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe8.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -4052,16 +4077,16 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (8 / 10)
-						&& or.posicion.x <= ancho * (9 / 10)) {
+				if (or.position.x > ancho * (8 / 10)
+						&& or.position.x <= ancho * (9 / 10)) {
 					for (int a = 0; a < aqe9.size; a++) {
-						Qenergia qe = aqe9.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe9.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -4069,15 +4094,15 @@ public class Mundo implements Serializable {
 					}
 				}
 
-				if (or.posicion.x > ancho * (9 / 10) && or.posicion.x <= ancho) {
+				if (or.position.x > ancho * (9 / 10) && or.position.x <= ancho) {
 					for (int a = 0; a < aqe10.size; a++) {
-						Qenergia qe = aqe10.get(a);
-						Rectangle tr = qe.borde;
+						Qenergy qe = aqe10.get(a);
+						Rectangle tr = qe.border;
 
 						if (qe.visible == true) {
 							if (er.overlaps(tr)) {
-								if (or.biomasa < or.capacidad) {
-									or.biomasa = (int) (or.biomasa + qe.masa);
+								if (or.biomass < or.capacity) {
+									or.biomass = (int) (or.biomass + qe.mass);
 									qe.visible = false;
 								}
 							}
@@ -4090,29 +4115,29 @@ public class Mundo implements Serializable {
 
 		// Organismo toca organismo
 
-		for (int x = 0; x < aorg.size; x++) {
+		for (int x = 0; x < organisms.size; x++) {
 
-			Organismo or = aorg.get(x);
-			Rectangle er = or.borde;
+			Organism or = organisms.get(x);
+			Rectangle er = or.border;
 
 			// Fecundacion
-			if (or.segundos >= or.tiempoMitosis / 1000 && or.male == false
+			if (or.seconds >= or.timeMitosis / 1000 && or.male == false
 					&& or.parteNoGen == false) {// Si es mayor de edad, hembra y
-												// se reproduce sexualmente
+				// se reproduce sexualmente
 
-				for (int a = x; a < aorg.size; a++) { // Se busca pareja
-					Organismo or2 = aorg.get(a);
-					Rectangle er2 = or2.borde;
+				for (int a = x; a < organisms.size; a++) { // Se busca pareja
+					Organism or2 = organisms.get(a);
+					Rectangle er2 = or2.border;
 
-					if (or2.segundos >= or2.tiempoMitosis / 1000
+					if (or2.seconds >= or2.timeMitosis / 1000
 							&& or2.male == true) { // o2 es macho
 
 						if (er.overlaps(er2)) { // Se tocan?
 							if (a != x) {
 
 								or.Fecundation(or, or2); // Se produce la
-															// fecundacion
-								a = aorg.size; // No busca más machos
+								// fecundacion
+								a = organisms.size; // No busca más machos
 
 							}
 						}
@@ -4122,24 +4147,24 @@ public class Mundo implements Serializable {
 
 			// Fecundacion partenogenesis con Cortejo
 
-			if (or.segundos >= or.tiempoMitosis / 1000 && or.male == false
+			if (or.seconds >= or.timeMitosis / 1000 && or.male == false
 					&& or.parteNoGen == true) {// Si es mayor de edad, hembra y
-												// se reproduce asexualmente
+				// se reproduce asexualmente
 
-				for (int a = x; a < aorg.size; a++) { // Se busca pareja
-					Organismo or2 = aorg.get(a);
-					Rectangle er2 = or2.borde;
+				for (int a = x; a < organisms.size; a++) { // Se busca pareja
+					Organism or2 = organisms.get(a);
+					Rectangle er2 = or2.border;
 
-					if (or2.segundos >= or2.tiempoMitosis / 1000
+					if (or2.seconds >= or2.timeMitosis / 1000
 							&& or2.male == true) { // o2 es macho
 
 						if (er.overlaps(er2)) { // Se tocan?
 							if (a != x) {
 
 								or.ReproduccionParteNoGen(or); // se reproduce
-																// asexualmente
-																// y listo
-								a = aorg.size; // No busca más machos
+								// asexualmente
+								// y listo
+								a = organisms.size; // No busca más machos
 
 							}
 						}
@@ -4177,50 +4202,48 @@ public class Mundo implements Serializable {
 					}
 				}
 			}*/
-				
-			
-			
-			
+
+
 			// Carnivoros
 
-			if (or.carnivoro == true && or.muriendo == 0) { // El organismo es
-															// carnivoro
+			if (or.carnivore == true && or.muriendo == 0) { // El organismo es
+				// carnivoro
 
-				for (int a = 0; a < aorg.size; a++) { // Se busca una presa
-					Organismo or2 = aorg.get(a);
-					Rectangle er2 = or2.borde;
+				for (int a = 0; a < organisms.size; a++) { // Se busca una presa
+					Organism or2 = organisms.get(a);
+					Rectangle er2 = or2.border;
 
-					if (or.identificador != or2.identificador
-							&& or.capacidad >= or2.capacidad) { // La presa es
-																// otro
-																// organismo
+					if (or.identifier != or2.identifier
+							&& or.capacity >= or2.capacity) { // La presa es
+						// otro
+						// organismo
 
 						if (er.overlaps(er2)) { // Se tocan ?
 							if (a != x) {
 
 								// intercamvio de masa y energia
-								EnRe = (int) (or.capacidad - or.energia);
-								BioRe = (int) (or.capacidad - or.biomasa);
+								EnRe = (int) (or.capacity - or.energy);
+								BioRe = (int) (or.capacity - or.biomass);
 
-								if (EnRe >= or2.energia && EnRe > 0) {
-									or.energia = or.energia + or2.energia;
-									or2.energia = 0;
+								if (EnRe >= or2.energy && EnRe > 0) {
+									or.energy = or.energy + or2.energy;
+									or2.energy = 0;
 								}
-								if (EnRe < or2.energia && EnRe > 0) {
-									or.energia = or.energia + EnRe;
-									or2.energia = or2.energia - EnRe;
-								}
-
-								if (BioRe >= or2.biomasa && BioRe > 0) {
-									or.biomasa = or.biomasa + or2.biomasa;
-									or2.biomasa = 0;
-								}
-								if (BioRe < or2.biomasa && BioRe > 0) {
-									or.biomasa = or.biomasa + BioRe;
-									or2.biomasa = or2.biomasa - BioRe;
+								if (EnRe < or2.energy && EnRe > 0) {
+									or.energy = or.energy + EnRe;
+									or2.energy = or2.energy - EnRe;
 								}
 
-								if (or2.energia <= 0) {
+								if (BioRe >= or2.biomass && BioRe > 0) {
+									or.biomass = or.biomass + or2.biomass;
+									or2.biomass = 0;
+								}
+								if (BioRe < or2.biomass && BioRe > 0) {
+									or.biomass = or.biomass + BioRe;
+									or2.biomass = or2.biomass - BioRe;
+								}
+
+								if (or2.energy <= 0) {
 									or2.morir();
 								} // muerte de la presa
 
@@ -4239,18 +4262,18 @@ public class Mundo implements Serializable {
 
 		if (verFrontera == true) {
 
-			for (int x = 0; x < aorg.size; x++) {
+			for (int x = 0; x < organisms.size; x++) {
 
-				Organismo or = aorg.get(x);
-				Rectangle er = or.borde;
+				Organism or = organisms.get(x);
+				Rectangle er = or.border;
 				if (er.overlaps(frontera)) {
-					if (or.posicion.x < (ancho/2-or.ancho) || or.posicion.x < ancho/2 && or.direccion.x > 0) {
-						or.posicion.x = 0;
+					if (or.position.x < (ancho / 2 - or.width) || or.position.x < ancho / 2 && or.direction.x > 0) {
+						or.position.x = 0;
 						//or.direccion.x = -1;
 					}
 
-					if (or.posicion.x > (ancho/2+or.ancho*2) || or.posicion.x > ancho/2 && or.direccion.x < 0) {
-						or.posicion.x = ancho;
+					if (or.position.x > (ancho / 2 + or.width * 2) || or.position.x > ancho / 2 && or.direction.x < 0) {
+						or.position.x = ancho;
 						//or.direccion.x = 1;
 					}
 
@@ -4264,36 +4287,35 @@ public class Mundo implements Serializable {
 
 		// reproduccion partenogenetica
 
-		for (int x = 0; x < aorg.size; x++) {
+		for (int x = 0; x < organisms.size; x++) {
 
-			Organismo or = aorg.get(x);
+			Organism or = organisms.get(x);
 
-			if (or.segundos >= or.tiempoMitosis / 1000 && or.tiempoCiclo >= 10
+			if (or.seconds >= or.timeMitosis / 1000 && or.timeCycle >= 10
 					&& or.male == false && or.parteNoGen == true) {// Si es
-																	// mayor de
-																	// edad,
-																	// hembra y
-																	// se
-																	// reproduce
-																	// asexualmente
+				// mayor de
+				// edad,
+				// hembra y
+				// se
+				// reproduce
+				// asexualmente
 
 				or.ReproduccionParteNoGenSinCortejo(or); // se reproduce
-															// asexualmente y
-															// listo
+				// asexualmente y
+				// listo
 
 			}
 		}
 	}
 
 	// Horizontal transfer
-	
-	public void contagio(Organismo or1, Organismo or2) {
-		
-		
-		
+
+	public void contagio(Organism or1, Organism or2) {
+
+
 	}
 
-	public void horizontalTransfer(Organismo or1, Organismo or2) {
+	public void horizontalTransfer(Organism or1, Organism or2) {
 
 		if (horizontalTransferRate > 0) {
 			int random = (int) (Math.random() * horizontalTransferRate);//
@@ -4303,69 +4325,69 @@ public class Mundo implements Serializable {
 			if (random == 0) {
 
 				switch (gentipe) {
-				case 0:
-					or1.adn.alto.insert(0, or2.adn.alto);
+					case 0:
+						or1.adn.height.insert(0, or2.adn.height);
 
-					break;
-				case 1:
-					or1.adn.ancho.insert(0, or2.adn.ancho);
+						break;
+					case 1:
+						or1.adn.width.insert(0, or2.adn.width);
 
-					break;
+						break;
 
-				case 2:
-					or1.adn.color.insert(0, or2.adn.color);
+					case 2:
+						or1.adn.color.insert(0, or2.adn.color);
 
-					break;
+						break;
 
-				case 3:
-					or1.adn.speed.insert(0, or2.adn.speed);
+					case 3:
+						or1.adn.speed.insert(0, or2.adn.speed);
 
-					break;
+						break;
 
-				case 4:
-					or1.adn.predador.insert(0, or2.adn.predador);
+					case 4:
+						or1.adn.predator.insert(0, or2.adn.predator);
 
-					break;
+						break;
 
-				case 5:
-					or1.adn.sentir.insert(0, or2.adn.sentir);
+					case 5:
+						or1.adn.sense.insert(0, or2.adn.sense);
 
-					break;
+						break;
 
-				case 6:
-					or1.adn.cazar.insert(0, or2.adn.cazar);
+					case 6:
+						or1.adn.hunt.insert(0, or2.adn.hunt);
 
-					break;
+						break;
 
-				case 7:
-					or1.adn.escapar.insert(0, or2.adn.escapar);
+					case 7:
+						or1.adn.escape.insert(0, or2.adn.escape);
 
-					break;
+						break;
 
-				case 8:
-					or1.adn.radioConsiente.insert(0, or2.adn.radioConsiente);
+					case 8:
+						or1.adn.radius.insert(0, or2.adn.radius);
 
-					break;
+						break;
 
-				case 9:
-					or1.adn.tasaMutacion.insert(0, or2.adn.tasaMutacion);
+					case 9:
+						or1.adn.mutationRate.insert(0, or2.adn.mutationRate);
 
-					break;
+						break;
 
-				case 10:
-					or1.adn.longevidad.insert(0, or2.adn.longevidad);
+					case 10:
+						or1.adn.longevity.insert(0, or2.adn.longevity);
 
-					break;
+						break;
 
-				case 11:
-					or1.adn.toleranciaTemp.insert(0, or2.adn.toleranciaTemp);
+					case 11:
+						or1.adn.toleranceTemp.insert(0, or2.adn.toleranceTemp);
 
-					break;
+						break;
 
-				case 12:
-					or1.adn.resistenciaATB.insert(0, or2.adn.resistenciaATB);
+					case 12:
+						or1.adn.resistanceATB.insert(0, or2.adn.resistanceATB);
 
-					break;
+						break;
 
 				}
 
@@ -4384,7 +4406,7 @@ public class Mundo implements Serializable {
 		// transferido.dispose();
 		// textura_sex.dispose();
 		// textura_feromona.dispose();
-		textura_organismos.dispose();
+		organismTexture.dispose();
 	}
 
 }

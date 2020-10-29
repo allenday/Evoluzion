@@ -21,12 +21,12 @@ import com.badlogic.gdx.Game;
 
 public class Evoluzion extends Game {
 
-	MenuInicio menu;
+	StartMenu menu;
 
 	@Override
 	public void create() {
 
-		menu = new MenuInicio(this);
+		menu = new StartMenu(this);
 
 		setScreen(menu);
 
