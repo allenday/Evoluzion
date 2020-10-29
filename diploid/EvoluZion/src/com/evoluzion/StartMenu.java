@@ -58,29 +58,29 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.badlogic.gdx.utils.OrderedMap;
 
-public class MenuInicio implements Screen, Serializable {
+public class StartMenu implements Screen, Serializable {
 
 	Evoluzion ev;
-	Texto tx;
+	Text tx;
 
-	Mundo m;
-	MenuInicio mi;
+	World m;
+	StartMenu mi;
 	OrthographicCamera camara;
 	SpriteBatch batch;
 	Stage stage;
 	File f2;
 	TextureAtlas ta_atlas, ta_atlas2;// carga imagenes de atlas de texturas
 	Skin sk_skin, sk_skin2, sk_skin3; // almacena recursos de atlas como
-										// imagenes y colores para ser usados
-										// mas facilmente
+	// imagenes y colores para ser usados
+	// mas facilmente
 	TextButton b_salir, b_comenzar; // crea botones con texto similares a los de
-									// swing
+	// swing
 	CheckBoxStyle cbStile;
 
 	ShapeRenderer rectangulo;
 
-	Archivar a_ruta;
-	Archivar a_idioma;
+	Archive a_ruta;
+	Archive a_idioma;
 
 	Sprite titulo;
 	Texture tx_titulo;
@@ -276,7 +276,7 @@ public class MenuInicio implements Screen, Serializable {
 
 	StringBuffer genero, predador;
 
-	VentanaClones ventana, ventana2, ventana3, ventana4;
+	ClonesWindow ventana, ventana2, ventana3, ventana4;
 	private TextButton b_restaurar;
 	private TextField tf_energiaR;
 	private TextField tf_biomasaR;
@@ -290,10 +290,10 @@ public class MenuInicio implements Screen, Serializable {
 	private CheckBox cb_colectarPartenogenesis;
 	private TextField tf_gap92;
 
-	public MenuInicio(Evoluzion ev) {
+	public StartMenu(Evoluzion ev) {
 
 		this.ev = ev;
-		tx = new Texto();
+		tx = new Text();
 		// m= new Mundo(ev,"",0,50,50,20,20,false);
 
 		mi = this;
@@ -324,17 +324,17 @@ public class MenuInicio implements Screen, Serializable {
 
 		rectangulo = new ShapeRenderer();
 
-		a_ruta = new Archivar();
-		a_idioma = new Archivar();
+		a_ruta = new Archive();
+		a_idioma = new Archive();
 
 		leerRuta();
 		leerIdioma();
 
 		if (ingles == 1) {
-			tx.setIngles();
+			tx.setEnglish();
 		}
 		if (ingles == -1) {
-			tx.setEspanol();
+			tx.setSpanish();
 		}
 
 		controles();
@@ -342,19 +342,19 @@ public class MenuInicio implements Screen, Serializable {
 
 		leerMenuIncio();
 
-		ventana = new VentanaClones(this, 0, "R1", colorGen, anchoGen, altoGen,
+		ventana = new ClonesWindow(this, 0, "R1", colorGen, anchoGen, altoGen,
 				senseGen, optTempGen, predGen, speedGen, cazarGen, escapeGen,
 				radioGen, ferGen, parNoGen, tasMutGen, longeGen, resistGen,
 				sexGen);
-		ventana2 = new VentanaClones(this, 1, "R2", colorGen2, anchoGen2,
+		ventana2 = new ClonesWindow(this, 1, "R2", colorGen2, anchoGen2,
 				altoGen2, senseGen2, optTempGen2, predGen2, speedGen2,
 				cazarGen2, escapeGen2, radioGen2, ferGen2, parNoGen2,
 				tasMutGen2, longeGen2, resistGen2, sexGen2);
-		ventana3 = new VentanaClones(this, 2, "L3", colorGen3, anchoGen3,
+		ventana3 = new ClonesWindow(this, 2, "L3", colorGen3, anchoGen3,
 				altoGen3, senseGen3, optTempGen3, predGen3, speedGen3,
 				cazarGen3, escapeGen3, radioGen3, ferGen3, parNoGen3,
 				tasMutGen3, longeGen3, resistGen3, sexGen3);
-		ventana4 = new VentanaClones(this, 3, "L4", colorGen4, anchoGen4,
+		ventana4 = new ClonesWindow(this, 3, "L4", colorGen4, anchoGen4,
 				altoGen4, senseGen4, optTempGen4, predGen4, speedGen4,
 				cazarGen4, escapeGen4, radioGen4, ferGen3, parNoGen4,
 				tasMutGen4, longeGen4, resistGen4, sexGen4);
@@ -365,13 +365,13 @@ public class MenuInicio implements Screen, Serializable {
 
 	public void escribirIdioma() {
 
-		a_idioma.creararchivo("evo_idioma.tmp");
+		a_idioma.createArchive("evo_idioma.tmp");
 
 		if (ingles == 1) {
-			a_idioma.escribirArchivo("eng");
+			a_idioma.writeArchive("eng");
 		}
 		if (ingles == -1) {
-			a_idioma.escribirArchivo("spa");
+			a_idioma.writeArchive("spa");
 		}
 		a_idioma.cerrarArchivo();
 	}
@@ -384,7 +384,7 @@ public class MenuInicio implements Screen, Serializable {
 			String linea = null;
 			while ((linea = br.readLine()) != null) {
 
-				String str = linea.substring(0, linea.length());
+				String str = linea;
 
 				if (str.equals("eng")) {
 					ingles = 1;
@@ -410,8 +410,8 @@ public class MenuInicio implements Screen, Serializable {
 
 	public void escribirRuta() {
 
-		a_ruta.creararchivo("evo_ruta.tmp");
-		a_ruta.escribirArchivo(ruta);
+		a_ruta.createArchive("evo_ruta.tmp");
+		a_ruta.writeArchive(ruta);
 		a_ruta.cerrarArchivo();
 
 	}
@@ -424,7 +424,7 @@ public class MenuInicio implements Screen, Serializable {
 			String linea = null;
 			while ((linea = br.readLine()) != null) {
 
-				ruta = linea.substring(0, linea.length());
+				ruta = linea;
 
 			}
 
@@ -775,14 +775,14 @@ public class MenuInicio implements Screen, Serializable {
 		// mapa genomico
 
 		fuente.draw(batch, "C1) 5`->" + tx.ResATB, 0 + orX, -30 + orY);
-		fuente.draw(batch, tx.tamano, 150 + orX, -30 + orY);
-		fuente.draw(batch, tx.sentidos, 265 + orX, -30 + orY);
-		fuente.draw(batch, tx.temOptima, 380 + orX, -30 + orY);
+		fuente.draw(batch, tx.size, 150 + orX, -30 + orY);
+		fuente.draw(batch, tx.senses, 265 + orX, -30 + orY);
+		fuente.draw(batch, tx.optimalTemp, 380 + orX, -30 + orY);
 		fuente.draw(batch, tx.genPredador + "-->3`", 515 + orX, -30 + orY);
 
 		fuente.draw(batch, "C2) 5`->" + tx.velocidad, 0 + orX, -75 + orY);
-		fuente.draw(batch, tx.buscarComida, 130 + orX, -75 + orY);
-		fuente.draw(batch, tx.escapar, 230 + orX, -75 + orY);
+		fuente.draw(batch, tx.searchFood, 130 + orX, -75 + orY);
+		fuente.draw(batch, tx.escape, 230 + orX, -75 + orY);
 		fuente.draw(batch, tx.alcanceVisual, 340 + orX, -75 + orY);
 		fuente.draw(batch, tx.fer, 462 + orX, -75 + orY);
 		fuente.draw(batch, tx.partenogen + "-->3`", 525 + orX, -75 + orY);
@@ -829,10 +829,10 @@ public class MenuInicio implements Screen, Serializable {
 	public String texGenero(boolean macho) {
 
 		if (macho == true) {
-			genero.replace(0, genero.length(), "(" + tx.macho + ")");
+			genero.replace(0, genero.length(), "(" + tx.male + ")");
 		}
 		if (macho == false) {
-			genero.replace(0, genero.length(), "(" + tx.hembra + ")");
+			genero.replace(0, genero.length(), "(" + tx.female + ")");
 		}
 
 		return genero.toString();
@@ -1231,7 +1231,7 @@ public class MenuInicio implements Screen, Serializable {
 			cb_mutar.setChecked(true);
 			cb_mutar.setPosition(20 + orX, 306 + orY);
 
-			cb_mutarSize = new CheckBox(tx.tamano, checkBoxStyle);
+			cb_mutarSize = new CheckBox(tx.size, checkBoxStyle);
 			cb_mutarSize.getCells().get(0).size(16, 16);
 			cb_mutarSize.setChecked(true);
 			cb_mutarSize.setPosition(20 + orX, 285 + orY);
@@ -1241,7 +1241,7 @@ public class MenuInicio implements Screen, Serializable {
 			cb_mutarSpeed.setChecked(true);
 			cb_mutarSpeed.setPosition(20 + orX, 264 + orY);
 
-			cb_mutarSentir = new CheckBox(tx.sentidos, checkBoxStyle);
+			cb_mutarSentir = new CheckBox(tx.senses, checkBoxStyle);
 			cb_mutarSentir.getCells().get(0).size(16, 16);
 			cb_mutarSentir.setChecked(true);
 			cb_mutarSentir.setPosition(20 + orX, 243 + orY);
@@ -1251,7 +1251,7 @@ public class MenuInicio implements Screen, Serializable {
 			cb_mutarTasaMut.setChecked(true);
 			cb_mutarTasaMut.setPosition(20 + orX, 222 + orY);
 
-			cb_mutartolerancia = new CheckBox(tx.temOptima, checkBoxStyle);
+			cb_mutartolerancia = new CheckBox(tx.optimalTemp, checkBoxStyle);
 			cb_mutartolerancia.getCells().get(0).size(16, 16);
 			cb_mutartolerancia.setChecked(true);
 			cb_mutartolerancia.setPosition(20 + orX, 201 + orY);
@@ -1266,12 +1266,12 @@ public class MenuInicio implements Screen, Serializable {
 			cb_Partenogenesis.setChecked(true);
 			cb_Partenogenesis.setPosition(200 + orX, 180 + orY);
 
-			cb_mutarCazar = new CheckBox(tx.buscarComida, checkBoxStyle);
+			cb_mutarCazar = new CheckBox(tx.searchFood, checkBoxStyle);
 			cb_mutarCazar.getCells().get(0).size(16, 16);
 			cb_mutarCazar.setChecked(true);
 			cb_mutarCazar.setPosition(200 + orX, 306 + orY);
 
-			cb_mutarEscapar = new CheckBox(tx.escapar, checkBoxStyle);
+			cb_mutarEscapar = new CheckBox(tx.escape, checkBoxStyle);
 			cb_mutarEscapar.getCells().get(0).size(16, 16);
 			cb_mutarEscapar.setChecked(true);
 			cb_mutarEscapar.setPosition(200 + orX, 285 + orY);
@@ -1313,7 +1313,7 @@ public class MenuInicio implements Screen, Serializable {
 			cb_colectarColor.setChecked(true);
 			cb_colectarColor.setPosition(20 + orX, 125 + orY);
 
-			cb_colectarSize = new CheckBox(tx.tamano, checkBoxStyle);
+			cb_colectarSize = new CheckBox(tx.size, checkBoxStyle);
 			cb_colectarSize.getCells().get(0).size(16, 16);
 			cb_colectarSize.setChecked(true);
 			cb_colectarSize.setPosition(20 + orX, 104 + orY);
@@ -1323,17 +1323,17 @@ public class MenuInicio implements Screen, Serializable {
 			cb_colectarSpeed.setChecked(false);
 			cb_colectarSpeed.setPosition(20 + orX, 83 + orY);
 
-			cb_colectarSentir = new CheckBox(tx.sentidos, checkBoxStyle);
+			cb_colectarSentir = new CheckBox(tx.senses, checkBoxStyle);
 			cb_colectarSentir.getCells().get(0).size(16, 16);
 			cb_colectarSentir.setChecked(false);
 			cb_colectarSentir.setPosition(20 + orX, 62 + orY);
 
-			cb_colectarCazar = new CheckBox(tx.buscarComida, checkBoxStyle);
+			cb_colectarCazar = new CheckBox(tx.searchFood, checkBoxStyle);
 			cb_colectarCazar.getCells().get(0).size(16, 16);
 			cb_colectarCazar.setChecked(false);
 			cb_colectarCazar.setPosition(200 + orX, 125 + orY);
 
-			cb_colectarEscapar = new CheckBox(tx.escapar, checkBoxStyle);
+			cb_colectarEscapar = new CheckBox(tx.escape, checkBoxStyle);
 			cb_colectarEscapar.getCells().get(0).size(16, 16);
 			cb_colectarEscapar.setChecked(false);
 			cb_colectarEscapar.setPosition(200 + orX, 104 + orY);
@@ -1363,7 +1363,7 @@ public class MenuInicio implements Screen, Serializable {
 			cb_colectarTasaMut.setChecked(false);
 			cb_colectarTasaMut.setPosition(20 + orX, 41 + orY);
 
-			cb_colectarTolerancia = new CheckBox(tx.temOptima, checkBoxStyle);
+			cb_colectarTolerancia = new CheckBox(tx.optimalTemp, checkBoxStyle);
 			cb_colectarTolerancia.getCells().get(0).size(16, 16);
 			cb_colectarTolerancia.setChecked(false);
 			cb_colectarTolerancia.setPosition(20 + orX, 20 + orY);
@@ -1682,10 +1682,10 @@ public class MenuInicio implements Screen, Serializable {
 					ingles = ingles * (-1);
 
 					if (ingles == 1) {
-						tx.setIngles();
+						tx.setEnglish();
 					}
 					if (ingles == -1) {
-						tx.setEspanol();
+						tx.setSpanish();
 					}
 
 					JOptionPane.showMessageDialog(null, tx.losCambiosReiniciar);
@@ -1871,7 +1871,7 @@ public class MenuInicio implements Screen, Serializable {
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
 					//
-					ev.setScreen(new MenuInicio(ev));
+					ev.setScreen(new StartMenu(ev));
 
 					// jf.dispose();
 				}
@@ -1964,18 +1964,18 @@ public class MenuInicio implements Screen, Serializable {
 						e.printStackTrace();
 					}
 
-					m = new Mundo(ev, ruta, text.getText(), poblacion, numOrg,
+					m = new World(ev, ruta, text.getText(), poblacion, numOrg,
 							numSenL, numQenL, SenergiaL, QbiomasaL, numSenR,
 							numQenR, SenergiaR, QbiomasaR, cb_leerPoblacion
-									.isChecked(), cb_moverMasa.isChecked(),
+							.isChecked(), cb_moverMasa.isChecked(),
 							cb_Frontera.isChecked(),
 							cb_discriminar.isChecked(), genesPedidos()
-									.toString(), ingles);
+							.toString(), ingles);
 
 					m.tiempoMuestreo = tiempoMuestreo;
 					m.tiempoCatastrofe = tiempoCatastrofe;
 					m.tiempoATB = tiempoATB;
-					m.tiempoMaximo = tiempoMaximo;
+					m.maxTime = tiempoMaximo;
 					m.maximo = numOrgMax;
 					m.temperatura = Temperatura;
 					m.minStar1 = Start1;
@@ -1984,7 +1984,7 @@ public class MenuInicio implements Screen, Serializable {
 					m.deltaTime2 = DeltaTiempo2;
 					m.TempFinal1 = TempFinal1;
 					m.TempFinal2 = TempFinal2;
-					m.eficiencia = eficiencia;
+					m.efficiency = eficiencia;
 					m.horizontalTransferRate = horizontalTransferRate;
 
 					m.gap1 = Integer.parseInt(tf_gap1.getText());
@@ -2022,22 +2022,22 @@ public class MenuInicio implements Screen, Serializable {
 								/ (DeltaTiempo2 * 60);
 					}
 
-					m.colectarancho = cb_colectarSize.isChecked();
-					m.colectaralto = cb_colectarSize.isChecked();
-					m.colectSpeed = cb_colectarSpeed.isChecked();
-					m.colectColor = cb_colectarColor.isChecked();
-					m.colectSentir = cb_colectarSentir.isChecked();
-					m.colectCazar = cb_colectarCazar.isChecked();
-					m.colectEscapar = cb_colectarEscapar.isChecked();
-					m.colectRadioconsiente = cb_colectarRadioCon.isChecked();
-					m.colectarFeromona = cb_colectarferomona.isChecked();
+					m.collectWidth = cb_colectarSize.isChecked();
+					m.collectHeight = cb_colectarSize.isChecked();
+					m.collectSpeed = cb_colectarSpeed.isChecked();
+					m.collectColor = cb_colectarColor.isChecked();
+					m.collectSense = cb_colectarSentir.isChecked();
+					m.collectHunt = cb_colectarCazar.isChecked();
+					m.collectEscape = cb_colectarEscapar.isChecked();
+					m.collectRadius = cb_colectarRadioCon.isChecked();
+					m.collectPheromone = cb_colectarferomona.isChecked();
 					m.colectarParteNoGen = cb_colectarPartenogenesis
 							.isChecked();
-					m.colectPredador = cb_colectarPredador.isChecked();
-					m.colectarLongevidad = cb_colectarLongevidad.isChecked();
-					m.colectarTasaMut = cb_colectarTasaMut.isChecked();
-					m.colectarTemp = cb_colectarTolerancia.isChecked();
-					m.colectarResistencia = cb_colectarResistencia.isChecked();
+					m.collectPredator = cb_colectarPredador.isChecked();
+					m.collectLongevity = cb_colectarLongevidad.isChecked();
+					m.collectMutationRate = cb_colectarTasaMut.isChecked();
+					m.collectTemp = cb_colectarTolerancia.isChecked();
+					m.collectResistance = cb_colectarResistencia.isChecked();
 
 					m.mutarColor = cb_mutar.isChecked();
 					m.mutarSize = cb_mutarSize.isChecked();
@@ -2103,29 +2103,29 @@ public class MenuInicio implements Screen, Serializable {
 						ma++;
 					}
 
-					m.aorg.shuffle();
+					m.organisms.shuffle();
 
 					m.setDelta();
 					m.setDelta2();
 					m.setDelta3();
 					m.setTiempo();
 
-					m.segundos = 0;
+					m.seconds = 0;
 					m.segundos2 = 0;
 					m.segundos3 = 0;
-					m.segundos4 = 0;
+					m.seconds4 = 0;
 					m.segundos5 = 0;
 
 					// m.colectorEspesiesTotales();
 
-					m.f_genes.creararchivo(ruta + m.nombre + tx.genomasTXT);
-					m.f_genes.escribirArchivo(tx.cuandoEstenPresentes + "\n");
-					m.f_datos.creararchivo(ruta + m.nombre + tx.datosXls);
+					m.f_genes.createArchive(ruta + m.nombre + tx.genomasTXT);
+					m.f_genes.writeArchive(tx.cuandoEstenPresentes + "\n");
+					m.f_datos.createArchive(ruta + m.nombre + tx.datosXls);
 					if (m.verFrontera == false) {
-						m.f_datos.escribirArchivo(tx.datosOrdenados);
+						m.f_datos.writeArchive(tx.datosOrdenados);
 					}
 					if (m.verFrontera == true) {
-						m.f_datos.escribirArchivo(tx.datosOrdenados2);
+						m.f_datos.writeArchive(tx.datosOrdenados2);
 					}
 					// m.f_proteoma.creararchivo(ruta+m.nombre+tx.proteomaTXT);
 					// m.f_proteoma.escribirArchivo(tx.cuandoEstenPresntesProt+genesPedidos().toString()+
@@ -2139,7 +2139,7 @@ public class MenuInicio implements Screen, Serializable {
 						linea.append("; " + tx.resistensiaATB);
 					}
 					if (cb_colectarSize.isChecked()) {
-						linea.append("; " + tx.tamano);
+						linea.append("; " + tx.size);
 					}
 					// if(cb_colectarSize.isChecked()){linea.append(", "+
 					// tx.ancho);}
@@ -2150,7 +2150,7 @@ public class MenuInicio implements Screen, Serializable {
 						linea.append("; " + tx.fidelidadADNpol);
 					}
 					if (cb_colectarTolerancia.isChecked()) {
-						linea.append("; " + tx.temOptima);
+						linea.append("; " + tx.optimalTemp);
 					}
 					if (cb_colectarLongevidad.isChecked()) {
 						linea.append("; " + tx.longevidad);
@@ -2168,13 +2168,13 @@ public class MenuInicio implements Screen, Serializable {
 						linea.append("; " + tx.genPredador);
 					}
 					if (cb_colectarSentir.isChecked()) {
-						linea.append("; " + tx.sentidos);
+						linea.append("; " + tx.senses);
 					}
 					if (cb_colectarCazar.isChecked()) {
-						linea.append("; " + tx.buscarComida);
+						linea.append("; " + tx.searchFood);
 					}
 					if (cb_colectarEscapar.isChecked()) {
-						linea.append("; " + tx.escapar);
+						linea.append("; " + tx.escape);
 					}
 					if (cb_colectarColor.isChecked()) {
 						linea.append("; " + tx.color);
@@ -2189,8 +2189,8 @@ public class MenuInicio implements Screen, Serializable {
 							+ tx.nombre + ";" + tx.porcentage + " (%)" + ";"
 							+ tx.cantidad + "\n");
 
-					m.f_alelos.creararchivo(ruta + m.nombre + tx.alelosXLS);
-					m.f_alelos.escribirArchivo(linea.toString());
+					m.f_alelos.createArchive(ruta + m.nombre + tx.alelosXLS);
+					m.f_alelos.writeArchive(linea.toString());
 
 					linea.replace(0, linea.length(), "");
 					linea.append(tx.losGenotipopresentes + "\n\n");
@@ -2200,25 +2200,25 @@ public class MenuInicio implements Screen, Serializable {
 						linea.append(";" + tx.ResATB);
 					}
 					if (cb_colectarSize.isChecked()) {
-						linea.append(";" + tx.tamano);
+						linea.append(";" + tx.size);
 					}
 					if (cb_colectarSpeed.isChecked()) {
 						linea.append(";" + tx.alas);
 					}
 					if (cb_colectarTolerancia.isChecked()) {
-						linea.append(";" + tx.temOptima);
+						linea.append(";" + tx.optimalTemp);
 					}
 					if (cb_colectarPredador.isChecked()) {
 						linea.append(";" + tx.genPredador);
 					}
 					if (cb_colectarSentir.isChecked()) {
-						linea.append(";" + tx.sentidos);
+						linea.append(";" + tx.senses);
 					}
 					if (cb_colectarCazar.isChecked()) {
-						linea.append(";" + tx.buscarComida);
+						linea.append(";" + tx.searchFood);
 					}
 					if (cb_colectarEscapar.isChecked()) {
-						linea.append(";" + tx.escapar);
+						linea.append(";" + tx.escape);
 					}
 					if (cb_colectarRadioCon.isChecked()) {
 						linea.append(";" + tx.alcanceVisual);
@@ -2244,8 +2244,8 @@ public class MenuInicio implements Screen, Serializable {
 
 					// m.f_alelos.escribirArchivo(linea.toString());
 					m.f_genotipos
-							.creararchivo(ruta + m.nombre + tx.genotipoXLS);
-					m.f_genotipos.escribirArchivo(linea.toString());
+							.createArchive(ruta + m.nombre + tx.genotipoXLS);
+					m.f_genotipos.writeArchive(linea.toString());
 
 					linea.replace(0, linea.length(), "");
 
@@ -2255,25 +2255,25 @@ public class MenuInicio implements Screen, Serializable {
 						linea.append(";" + tx.ResATB);
 					}
 					if (cb_colectarSize.isChecked()) {
-						linea.append(";" + tx.tamano);
+						linea.append(";" + tx.size);
 					}
 					if (cb_colectarSpeed.isChecked()) {
 						linea.append(";" + tx.alas);
 					}
 					if (cb_colectarTolerancia.isChecked()) {
-						linea.append(";" + tx.temOptima);
+						linea.append(";" + tx.optimalTemp);
 					}
 					if (cb_colectarPredador.isChecked()) {
 						linea.append(";" + tx.genPredador);
 					}
 					if (cb_colectarSentir.isChecked()) {
-						linea.append(";" + tx.sentidos);
+						linea.append(";" + tx.senses);
 					}
 					if (cb_colectarCazar.isChecked()) {
-						linea.append(";" + tx.buscarComida);
+						linea.append(";" + tx.searchFood);
 					}
 					if (cb_colectarEscapar.isChecked()) {
-						linea.append(";" + tx.escapar);
+						linea.append(";" + tx.escape);
 					}
 					if (cb_colectarRadioCon.isChecked()) {
 						linea.append(";" + tx.alcanceVisual);
@@ -2297,8 +2297,8 @@ public class MenuInicio implements Screen, Serializable {
 							+ " (%)");
 					linea.append("\n");
 
-					m.f_fenotipos.creararchivo(ruta + m.nombre + tx.fenomaTXT);
-					m.f_fenotipos.escribirArchivo(linea.toString());
+					m.f_fenotipos.createArchive(ruta + m.nombre + tx.fenomaTXT);
+					m.f_fenotipos.writeArchive(linea.toString());
 					m.archivarFenotipo2();
 
 					// m.f_arbol.creararchivo(ruta+m.nombre+tx.arbolTXT);
@@ -2311,7 +2311,7 @@ public class MenuInicio implements Screen, Serializable {
 					m.archivarAlelos();
 					m.archivarGenotipo();
 
-					ev.setScreen(new Pantalla(ev, m));
+					ev.setScreen(new Screen(ev, m));
 					dispose();
 
 					return true;
@@ -2334,25 +2334,25 @@ public class MenuInicio implements Screen, Serializable {
 			lin.append(tx.ResATB + ">");
 		}
 		if (cb_colectarSize.isChecked() == true) {
-			lin.append(tx.tamano + ">");
+			lin.append(tx.size + ">");
 		}
 		if (cb_colectarSpeed.isChecked() == true) {
 			lin.append(tx.alas + ">");
 		}
 		if (cb_colectarTolerancia.isChecked() == true) {
-			lin.append(tx.temOptima + ">");
+			lin.append(tx.optimalTemp + ">");
 		}
 		if (cb_colectarPredador.isChecked() == true) {
 			lin.append(tx.genPredador + ">");
 		}
 		if (cb_colectarSentir.isChecked() == true) {
-			lin.append(tx.sentidos + ">");
+			lin.append(tx.senses + ">");
 		}
 		if (cb_colectarCazar.isChecked() == true) {
-			lin.append(tx.buscarComida + ">");
+			lin.append(tx.searchFood + ">");
 		}
 		if (cb_colectarEscapar.isChecked() == true) {
-			lin.append(tx.escapar + ">");
+			lin.append(tx.escape + ">");
 		}
 		if (cb_colectarRadioCon.isChecked() == true) {
 			lin.append(tx.alcanceVisual + ">");

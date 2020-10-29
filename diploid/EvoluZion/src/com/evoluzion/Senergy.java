@@ -27,11 +27,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Senergia {
+public class Senergy {
 
-	Mundo m;
+	World m;
 
-	private Sprite imagen;
+	private final Sprite imagen;
 	double energia;
 	float ancho = 7;
 	float alto = 7;
@@ -41,7 +41,7 @@ public class Senergia {
 	Rectangle borde;
 	boolean visible = true;
 
-	public Senergia(Vector2 posicion, Mundo m) {
+	public Senergy(Vector2 posicion, World m) {
 
 		this.m = m;
 		// energia=m.Senergia;
@@ -63,7 +63,7 @@ public class Senergia {
 		direccion.y = -1;
 		direccion.x = 0;
 
-		imagen = new Sprite(m.textura_organismos.getRegions().get(24));
+		imagen = new Sprite(m.organismTexture.getRegions().get(24));
 		imagen.setPosition(this.posicion.x, this.posicion.y);
 		imagen.setSize(ancho, alto);
 

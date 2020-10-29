@@ -20,16 +20,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Archivar {
+public class Archive {
 
 	private File f;
 	private FileWriter fr;
 
-	public Archivar() {
+	public Archive() {
 
 	}
 
-	public void creararchivo(String str) {
+	public void createArchive(String str) {
 		try {
 			f = new File(str);
 		} catch (Exception ex) {
@@ -44,13 +44,11 @@ public class Archivar {
 
 	}
 
-	public void escribirArchivo(String linea) {
+	public void writeArchive(String line) {
 
 		try {
-			fr.append(linea);
-		}
-
-		catch (Exception ex) {
+			fr.append(line);
+		} catch (Exception ex) {
 
 			ex.printStackTrace();
 		}

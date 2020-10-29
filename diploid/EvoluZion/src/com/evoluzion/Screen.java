@@ -45,57 +45,60 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
-public class Pantalla implements Screen {
+public class Screen implements Screen {
 
 	protected Evoluzion ev;
-	protected Mundo m;
-	Texto tx;
+	protected World world;
+	Text tx;
 
-	private OrthographicCamera camara;
-	private SpriteBatch batch;
-	private ShapeRenderer caja, borde, frontera, pausaCaja;
-	private BitmapFont fuente;
-	private BitmapFont fu_fuente;
-	private boolean debugin = false;
-	private TextureAtlas ta_atlas;// carga imagenes de atlas de texturas
+	private final OrthographicCamera camara;
+	private final SpriteBatch batch;
+	private final ShapeRenderer caja;
+	private final ShapeRenderer borde;
+	private final ShapeRenderer frontera;
+	private final ShapeRenderer pausaCaja;
+	private final BitmapFont fuente;
+	private final BitmapFont fu_fuente;
+	private final boolean debugin = false;
+	private final TextureAtlas ta_atlas;// carga imagenes de atlas de texturas
 	private Stage stage; // stage maneja elementos que reciben entradas como
-							// botones o eventos
-	private Skin sk_skin; // almacena recursos de atlas como imagenes y colores
-							// para ser usados mas facilmente
-	private TextButton b_pausa, b_Salir, b_colectar; // crea botones con texto
-														// similares a los de
-														// swing
-	private int verPanel = 1;
-	private int verBotones1 = 1;
+	// botones o eventos
+	private final Skin sk_skin; // almacena recursos de atlas como imagenes y colores
+	// para ser usados mas facilmente
+	private TextButton bPause, bExit, bCollect; // crea botones con texto
+	// similares a los de
+	// swing
+	private final int viewPanel = 1;
+	private int viewButtons = 1;
 
-	Organismo or;
-	Senergia se;
-	Qenergia qe;
-	int numero = 0; // se usa para que los metodos cuenten elementos
-	int cantidad = 0;
-	int cantidad2 = 0;
-	int cantidad3 = 0;
-	int cont, cont2, cont3;
+	Organism or;
+	Senergy se;
+	Qenergy qe;
+	int number = 0; // se usa para que los metodos cuenten elementos
+	int quantity = 0;
+	int quantity2 = 0;
+	int quantity3 = 0;
+	int count1, count2, count3;
 	int press = 1; // 1=false -1 = true
 	int mark = 1; // 1=false -1 = true
 	int verFrontera = 1;// 1=false -1 = true
 	boolean keypress = false;
 
-	private NumberFormat format = new DecimalFormat("0.00");
-	private NumberFormat format3 = new DecimalFormat("0.0");
-	private NumberFormat format2 = new DecimalFormat("#");
+	private final NumberFormat format = new DecimalFormat("0.00");
+	private final NumberFormat format3 = new DecimalFormat("0.0");
+	private final NumberFormat format2 = new DecimalFormat("#");
 	private TextButton b_colectarP;
 	boolean todoGuardado = false;
-	private TextButton b_catastrofe;
+	private TextButton bCatastrophe;
 	private TextButton b_guardar;
 	private TextButton b_colectarPM;
 	private TextButton b_colectarPnM;
-	private TextButton b_marcarTodo;
+	private TextButton bSelectAll;
 
-	private CheckBox cb_verEnergia;
-	private Skin sk_skin2;
-	private TextureAtlas ta_atlas2;
-	private CheckBox cb_verMasa;
+	private CheckBox cb_viewEnergy;
+	private final Skin sk_skin2;
+	private final TextureAtlas ta_atlas2;
+	private CheckBox cb_viewMass;
 	private CheckBox cb_verOrganismos;
 	private TextButton b_antibiotico;
 	private TextButton b_frontera;
@@ -103,23 +106,23 @@ public class Pantalla implements Screen {
 
 	// int fps = 0;//without any limits
 
-	public Pantalla(Evoluzion ev, Mundo m) {
+	public Screen(Evoluzion ev, World world) {
 
 		this.ev = ev;
-		this.m = m;
-		tx = m.tx;// usamos la configuracionde taxto del menu inicio
-		if (m.aorg.size > 0) {
-			or = m.aorg.get(0);
+		this.world = world;
+		tx = world.tx;// usamos la configuracionde taxto del menu inicio
+		if (world.organisms.size > 0) {
+			or = world.organisms.get(0);
 		}
-		if (m.ase.size > 0) {
-			se = m.ase.get(0);
+		if (world.ase.size > 0) {
+			se = world.ase.get(0);
 		}
-		if (m.aqe.size > 0) {
-			qe = m.aqe.get(0);
+		if (world.aqe.size > 0) {
+			qe = world.aqe.get(0);
 		}
 
 		camara = new OrthographicCamera();
-		camara.setToOrtho(false, m.ancho, m.alto);
+		camara.setToOrtho(false, world.ancho, world.alto);
 
 		batch = new SpriteBatch();
 		caja = new ShapeRenderer();
@@ -143,10 +146,10 @@ public class Pantalla implements Screen {
 	}
 
 	long diff, start = System.currentTimeMillis();
-	CheckBox cb_verAlelos;
+	CheckBox cb_viewAlleles;
 	CheckBox cb_verDatos;
-	CheckBox cb_verFenotipo;
-	CheckBox cb_verGenotipo;
+	CheckBox cb_viewPhenotype;
+	CheckBox cb_viewGenotype;
 	TextButton b_ordenar;
 	private TextButton b_stop;
 
@@ -162,32 +165,32 @@ public class Pantalla implements Screen {
 
 		// entradasTeclado();
 
-		if (verBotones1 == 1) {
+		if (viewButtons == 1) {
 
 			b_colectarP.setVisible(false);
 			b_colectarPM.setVisible(false);
 			b_colectarPnM.setVisible(false);
 
-			verBotones1 = verBotones1 * 2;
+			viewButtons = viewButtons * 2;
 
 		}
 
-		if (verBotones1 == -1) {
+		if (viewButtons == -1) {
 
 			b_colectarP.setVisible(true);
 			b_colectarPM.setVisible(true);
 			b_colectarPnM.setVisible(true);
 
-			verBotones1 = verBotones1 * 2;
+			viewButtons = viewButtons * 2;
 		}
 
-		if (m.pausaGame == 1) { // 1=play -1=pausa
-			m.update();// actualiza los datos que maneja el Mundo
+		if (world.pausaGame == 1) { // 1=play -1=pausa
+			world.update();// actualiza los datos que maneja el Mundo
 			// System.out.println("rendering");
 		}
 
-		if (m.aorg.size > 0 && m.segundos4 >= m.tiempoMaximo
-				&& m.tiempoMaximo > 0) {
+		if (world.organisms.size > 0 && world.seconds4 >= world.maxTime
+				&& world.maxTime > 0) {
 
 			b_ordenar.setVisible(true);
 
@@ -198,20 +201,20 @@ public class Pantalla implements Screen {
 		//
 		// dibuja Senergia
 
-		if (cb_verEnergia.isChecked() == true) {
-			cantidad = m.ase.size;
+		if (cb_viewEnergy.isChecked() == true) {
+			quantity = world.ase.size;
 
-			for (cont = cantidad - 1; cont >= 0; cont--) {
-				se = m.ase.get(cont);
+			for (count1 = quantity - 1; count1 >= 0; count1--) {
+				se = world.ase.get(count1);
 				se.verObjeto(batch);
 			}
 		}
 		// dibujamos Qenergia
-		if (cb_verMasa.isChecked() == true) {
-			cantidad2 = m.aqe.size;
+		if (cb_viewMass.isChecked() == true) {
+			quantity2 = world.aqe.size;
 
-			for (cont2 = cantidad2 - 1; cont2 >= 0; cont2--) {
-				qe = m.aqe.get(cont2);
+			for (count2 = quantity2 - 1; count2 >= 0; count2--) {
+				qe = world.aqe.get(count2);
 				qe.verObjeto(batch);
 			}
 		}
@@ -220,17 +223,17 @@ public class Pantalla implements Screen {
 		// dibujamos los organismos
 
 		if (cb_verOrganismos.isChecked() == true) {
-			cantidad3 = m.aorg.size;
+			quantity3 = world.organisms.size;
 
-			for (cont3 = cantidad3 - 1; cont3 >= 0; cont3--) {
-				or = m.aorg.get(cont3);
+			for (count3 = quantity3 - 1; count3 >= 0; count3--) {
+				or = world.organisms.get(count3);
 				or.verOrganismo(batch);
 			}
 			// verl los organismos marcados
-			cantidad3 = m.aorg.size;
+			quantity3 = world.organisms.size;
 
-			for (cont3 = cantidad3 - 1; cont3 >= 0; cont3--) {
-				or = m.aorg.get(cont3);
+			for (count3 = quantity3 - 1; count3 >= 0; count3--) {
+				or = world.organisms.get(count3);
 				or.verMarcado(borde, batch, fuente);
 			}
 		}
@@ -238,48 +241,47 @@ public class Pantalla implements Screen {
 		// dibujar rectangulos en modo debug
 		if (debugin == true) {
 
-			for (Organismo or : m.aorg) {
+			for (Organism or : world.organisms) {
 				or.verBorde(borde);
 			}
 
-			for (Qenergia qe : m.aqe) {
+			for (Qenergy qe : world.aqe) {
 				qe.verBorde(borde);
 			}
 		}
 
-		if (m.verFrontera == true) {
+		if (world.verFrontera == true) {
 
 			frontera.begin(ShapeType.FilledRectangle);
 			frontera.setColor(Color.CYAN);
-			frontera.filledRect(m.frontera.x, m.frontera.y, m.frontera.width,
-					m.frontera.height);
+			frontera.filledRect(world.frontera.x, world.frontera.y, world.frontera.width,
+					world.frontera.height);
 			frontera.end();
 		}
 
 		caja.begin(ShapeType.FilledRectangle);
 
 		caja.setColor(Color.BLACK);
-		caja.filledRect(0, m.alto - 30, m.ancho, 30);
+		caja.filledRect(0, world.alto - 30, world.ancho, 30);
 		caja.end();
 		batch.begin();
-		fuente.draw(batch, "|h: " + m.horas + " |m: " + m.addCero2().toString()
-				+ m.minutos + " |s: " + m.addCero().toString() + m.segundos,
-				450, m.alto - 60);
+		fuente.draw(batch, "|h: " + world.horas + " |m: " + world.addCero2().toString()
+						+ world.minutos + " |s: " + world.addCero().toString() + world.seconds,
+				450, world.alto - 60);
 
-		if (m.antibiotico == 1) {
-			fuente.draw(batch, tx.antibioticoON, 450, m.alto - 80);
+		if (world.antibiotico == 1) {
+			fuente.draw(batch, tx.antibioticoON, 450, world.alto - 80);
 		} else {
-			fuente.draw(batch, tx.antibioticoOFF, 455, m.alto - 80);
+			fuente.draw(batch, tx.antibioticoOFF, 455, world.alto - 80);
 		}
-		;
 
 		batch.end();
 
-		if (m.pausaGame == -1) {
+		if (world.pausaGame == -1) {
 
 			pausaCaja.begin(ShapeType.FilledRectangle);
 			pausaCaja.setColor(Color.BLACK);
-			pausaCaja.filledRect((m.ancho / 2) - 100, (m.alto / 2) - 25, 200,
+			pausaCaja.filledRect((world.ancho / 2) - 100, (world.alto / 2) - 25, 200,
 					50);
 			pausaCaja.end();
 
@@ -289,115 +291,114 @@ public class Pantalla implements Screen {
 			batch.end();
 		}
 
-		if (m.verFrontera == false) {
+		if (world.verFrontera == false) {
 
 			if (cb_verDatos.isChecked()) {
 
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, m.alto - 300, 180, 300);
+				caja.filledRect(0, world.alto - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
 
 				fuente.setColor(Color.WHITE);
-				fuente.draw(batch, tx.Organismos + m.aorg.size, 5, m.alto - 60);
+				fuente.draw(batch, tx.Organismos + world.organisms.size, 5, world.alto - 60);
 
-				int masatotal = (int) (m.BiomasaTotal(m.aorg) + m
+				int masatotal = (int) (world.BiomasaTotal(world.organisms) + world
 						.MateriaLibre());
-				fuente.draw(batch, tx.masaTotal + masatotal, 5, m.alto - 80);
-				fuente.draw(batch, tx.masa + m.MateriaLibre(), 5, m.alto - 100);
-				fuente.draw(batch, tx.biomasa + m.BiomasaTotal(m.aorg), 5,
-						m.alto - 120);
+				fuente.draw(batch, tx.masaTotal + masatotal, 5, world.alto - 80);
+				fuente.draw(batch, tx.masa + world.MateriaLibre(), 5, world.alto - 100);
+				fuente.draw(batch, tx.biomasa + world.BiomasaTotal(world.organisms), 5,
+						world.alto - 120);
 				fuente.draw(
 						batch,
 						tx.velocidadMedia
-								+ format.format(m.velocidadMedia(m.aorg)), 5,
-						m.alto - 140);
+								+ format.format(world.velocidadMedia(world.organisms)), 5,
+						world.alto - 140);
 				fuente.draw(batch,
-						tx.tamanoMedi + format.format(m.tamanoMedio(m.aorg)),
-						5, m.alto - 160);
+						tx.tamanoMedi + format.format(world.tamanoMedio(world.organisms)),
+						5, world.alto - 160);
 				fuente.draw(
 						batch,
 						tx.tasaMutacionMedia
-								+ format2.format(m.tasaMutMedio(m.aorg)), 5,
-						m.alto - 180);
+								+ format2.format(world.tasaMutMedio(world.organisms)), 5,
+						world.alto - 180);
 				fuente.draw(batch,
-						tx.vidaMdia + format.format(m.longevidadMedio(m.aorg))
-								+ " (s)", 5, m.alto - 200);
+						tx.vidaMdia + format.format(world.longevidadMedio(world.organisms))
+								+ " (s)", 5, world.alto - 200);
 				fuente.draw(batch,
-						tx.resistensiaATB + m.cantidadResistentes(m.aorg), 5,
-						m.alto - 220);
+						tx.resistensiaATB + world.cantidadResistentes(world.organisms), 5,
+						world.alto - 220);
 				fuente.draw(batch,
-						tx.temperatura + format.format(m.temperatura), 5,
-						m.alto - 240);
+						tx.temperatura + format.format(world.temperatura), 5,
+						world.alto - 240);
 				fuente.draw(
 						batch,
 						tx.temOptimaMedia
-								+ format.format(m.temOptimaMedia(m.aorg)), 5,
-						m.alto - 260);
+								+ format.format(world.temOptimaMedia(world.organisms)), 5,
+						world.alto - 260);
 
 				batch.end();
 			}
 
-			if (cb_verAlelos.isChecked()) {
+			if (cb_viewAlleles.isChecked()) {
 
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, m.alto - 540, 180, 250);
+				caja.filledRect(0, world.alto - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
 
-				fuente.draw(batch, tx.alelo + "s:", 5, m.alto - 300);
+				fuente.draw(batch, tx.alelo + "s:", 5, world.alto - 300);
 				// mostrar % de alelos
-				m.colectarAlelos(m.aorg, m.aAlelos);
+				world.colectarAlelos(world.organisms, world.aAlelos);
 
-				numero = m.aAlelos.size;
-				float renglon = m.alto - 330;
-				for (int i = 0; i < numero; i++) {
+				number = world.aAlelos.size;
+				float renglon = world.alto - 330;
+				for (int i = 0; i < number; i++) {
 
-					Alelo al = m.aAlelos.get(i);
+					Allele al = world.aAlelos.get(i);
 
-					if (!al.nombre.equals(tx.color)
-							|| !al.nombre.equals(tx.longevidad)
-							|| !al.nombre.equals(tx.fidelidadADNpol)) {
+					if (!al.name.equals(tx.color)
+							|| !al.name.equals(tx.longevidad)
+							|| !al.name.equals(tx.fidelidadADNpol)) {
 
-						cantidad = m.aorg.size * 2;
+						quantity = world.organisms.size * 2;
 					}
 
-					if (al.nombre.equals(tx.color)
-							|| al.nombre.equals(tx.longevidad)
-							|| al.nombre.equals(tx.fidelidadADNpol)) {
+					if (al.name.equals(tx.color)
+							|| al.name.equals(tx.longevidad)
+							|| al.name.equals(tx.fidelidadADNpol)) {
 
-						cantidad = m.cantidadHembras(m.aorg) * 2
-								+ m.cantidadMachos(m.aorg);
+						quantity = world.cantidadHembras(world.organisms) * 2
+								+ world.cantidadMachos(world.organisms);
 					}
 
 					fuente.draw(
 							batch,
-							al.nombre
+							al.name
 									+ ": "
 									+ "a"
-									+ al.identificador
+									+ al.identifier
 									+ " > "
 									+ format3
-											.format(((float) al.cantidad / (float) cantidad) * 100)
+									.format(((float) al.quantity / (float) quantity) * 100)
 									+ " %", 5, renglon);
 
 					renglon = renglon - 20;
 
 				}
-				;
 
 				batch.end();
 			}
 
 		}
 
-		if (m.verFrontera == true) {
+		if (world.verFrontera == true) {
 
 			// panel izquierdo
 			if (cb_verDatos.isChecked()) {
@@ -405,97 +406,97 @@ public class Pantalla implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, m.alto - 300, 180, 300);
+				caja.filledRect(0, world.alto - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
 
 				fuente.setColor(Color.WHITE);
 				fuente.draw(batch,
-						tx.Organismos + m.numeroI, 5,
-						m.alto - 60);
+						tx.Organismos + world.numeroI, 5,
+						world.alto - 60);
 
-				int masatotal = (int) (m.BiomasaTotalI(m.aorg) + m
-						.MateriaLibreL());
-				fuente.draw(batch, tx.masaTotal + masatotal, 5, m.alto - 80);
-				fuente.draw(batch, tx.masa + m.MateriaLibreL(), 5, m.alto - 100);
-				fuente.draw(batch, tx.biomasa + m.BiomasaTotalI(m.aorg), 5,
-						m.alto - 120);
+				int masatotal = world.BiomasaTotalI(world.organisms) + world
+						.MateriaLibreL();
+				fuente.draw(batch, tx.masaTotal + masatotal, 5, world.alto - 80);
+				fuente.draw(batch, tx.masa + world.MateriaLibreL(), 5, world.alto - 100);
+				fuente.draw(batch, tx.biomasa + world.BiomasaTotalI(world.organisms), 5,
+						world.alto - 120);
 				fuente.draw(
 						batch,
 						tx.velocidadMedia
-								+ format.format(m.velocidadMediaI(m.aorg)), 5,
-						m.alto - 140);
+								+ format.format(world.velocidadMediaI(world.organisms)), 5,
+						world.alto - 140);
 				fuente.draw(batch,
-						tx.tamanoMedi + format.format(m.tamanoMedioI(m.aorg)),
-						5, m.alto - 160);
+						tx.tamanoMedi + format.format(world.tamanoMedioI(world.organisms)),
+						5, world.alto - 160);
 				fuente.draw(
 						batch,
 						tx.tasaMutacionMedia
-								+ format2.format(m.tasaMutMedioI(m.aorg)), 5,
-						m.alto - 180);
+								+ format2.format(world.tasaMutMedioI(world.organisms)), 5,
+						world.alto - 180);
 				fuente.draw(batch,
-						tx.vidaMdia + format.format(m.longevidadMedioI(m.aorg))
-								+ " (s)", 5, m.alto - 200);
+						tx.vidaMdia + format.format(world.longevidadMedioI(world.organisms))
+								+ " (s)", 5, world.alto - 200);
 				fuente.draw(batch,
-						tx.resistensiaATB + m.cantidadResistentesI(m.aorg), 5,
-						m.alto - 220);
+						tx.resistensiaATB + world.cantidadResistentesI(world.organisms), 5,
+						world.alto - 220);
 				fuente.draw(batch,
-						tx.temperatura + format.format(m.temperatura), 5,
-						m.alto - 240);
+						tx.temperatura + format.format(world.temperatura), 5,
+						world.alto - 240);
 				fuente.draw(
 						batch,
 						tx.temOptimaMedia
-								+ format.format(m.temOptimaMediaI(m.aorg)), 5,
-						m.alto - 260);
+								+ format.format(world.temOptimaMediaI(world.organisms)), 5,
+						world.alto - 260);
 
 				batch.end();
 			}
 
-			if (cb_verAlelos.isChecked()) {
+			if (cb_viewAlleles.isChecked()) {
 
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, m.alto - 540, 180, 250);
+				caja.filledRect(0, world.alto - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
 
-				fuente.draw(batch, tx.alelo + "s:", 5, m.alto - 300);
+				fuente.draw(batch, tx.alelo + "s:", 5, world.alto - 300);
 				// mostrar % de alelos
-				m.colectarAlelosI(m.aorg, m.aAlelos);
+				world.colectarAlelosI(world.organisms, world.aAlelos);
 
-				numero = m.aAlelos.size;
-				float renglon = m.alto - 330;
-				for (int i = numero - 1; i >= 0; i--) {
+				number = world.aAlelos.size;
+				float renglon = world.alto - 330;
+				for (int i = number - 1; i >= 0; i--) {
 
-					Alelo al = m.aAlelos.get(i);
+					Allele al = world.aAlelos.get(i);
 
-					if (!al.nombre.equals(tx.color)
-							|| !al.nombre.equals(tx.longevidad)
-							|| !al.nombre.equals(tx.fidelidadADNpol)) {
+					if (!al.name.equals(tx.color)
+							|| !al.name.equals(tx.longevidad)
+							|| !al.name.equals(tx.fidelidadADNpol)) {
 
-						cantidad = m.aorg.size * 2;
+						quantity = world.organisms.size * 2;
 					}
 
-					if (al.nombre.equals(tx.color)
-							|| al.nombre.equals(tx.longevidad)
-							|| al.nombre.equals(tx.fidelidadADNpol)) {
+					if (al.name.equals(tx.color)
+							|| al.name.equals(tx.longevidad)
+							|| al.name.equals(tx.fidelidadADNpol)) {
 
-						cantidad = m.cantidadHembrasI(m.aorg) * 2
-								+ m.cantidadMachosI(m.aorg);
+						quantity = world.cantidadHembrasI(world.organisms) * 2
+								+ world.cantidadMachosI(world.organisms);
 					}
 
 					fuente.draw(
 							batch,
-							al.nombre
+							al.name
 									+ ": "
 									+ "a"
-									+ al.identificador
+									+ al.identifier
 									+ " > "
 									+ format3
-											.format(((float) al.cantidad / (float) cantidad) * 100)
+									.format(((float) al.quantity / (float) quantity) * 100)
 									+ " %", 5, renglon);
 
 					renglon = renglon - 20;
@@ -511,98 +512,98 @@ public class Pantalla implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(840, m.alto - 300, 180, 300);
+				caja.filledRect(840, world.alto - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
 
 				fuente.setColor(Color.WHITE);
 				fuente.draw(batch,
-						tx.Organismos + m.numeroD, 840,
-						m.alto - 60);
+						tx.Organismos + world.numeroD, 840,
+						world.alto - 60);
 
-				int masatotalD = (int) (m.BiomasaTotalD(m.aorg) + m
-						.MateriaLibreR());
-				fuente.draw(batch, tx.masaTotal + masatotalD, 840, m.alto - 80);
-				fuente.draw(batch, tx.masa + m.MateriaLibreR(), 840,
-						m.alto - 100);
-				fuente.draw(batch, tx.biomasa + m.BiomasaTotalD(m.aorg), 840,
-						m.alto - 120);
+				int masatotalD = world.BiomasaTotalD(world.organisms) + world
+						.MateriaLibreR();
+				fuente.draw(batch, tx.masaTotal + masatotalD, 840, world.alto - 80);
+				fuente.draw(batch, tx.masa + world.MateriaLibreR(), 840,
+						world.alto - 100);
+				fuente.draw(batch, tx.biomasa + world.BiomasaTotalD(world.organisms), 840,
+						world.alto - 120);
 				fuente.draw(
 						batch,
 						tx.velocidadMedia
-								+ format.format(m.velocidadMediaD(m.aorg)),
-						840, m.alto - 140);
+								+ format.format(world.velocidadMediaD(world.organisms)),
+						840, world.alto - 140);
 				fuente.draw(batch,
-						tx.tamanoMedi + format.format(m.tamanoMedioD(m.aorg)),
-						840, m.alto - 160);
+						tx.tamanoMedi + format.format(world.tamanoMedioD(world.organisms)),
+						840, world.alto - 160);
 				fuente.draw(
 						batch,
 						tx.tasaMutacionMedia
-								+ format2.format(m.tasaMutMedioD(m.aorg)), 840,
-						m.alto - 180);
+								+ format2.format(world.tasaMutMedioD(world.organisms)), 840,
+						world.alto - 180);
 				fuente.draw(batch,
-						tx.vidaMdia + format.format(m.longevidadMedioD(m.aorg))
-								+ " (s)", 840, m.alto - 200);
+						tx.vidaMdia + format.format(world.longevidadMedioD(world.organisms))
+								+ " (s)", 840, world.alto - 200);
 				fuente.draw(batch,
-						tx.resistensiaATB + m.cantidadResistentesD(m.aorg),
-						840, m.alto - 220);
+						tx.resistensiaATB + world.cantidadResistentesD(world.organisms),
+						840, world.alto - 220);
 				fuente.draw(batch,
-						tx.temperatura + format.format(m.temperatura), 840,
-						m.alto - 240);
+						tx.temperatura + format.format(world.temperatura), 840,
+						world.alto - 240);
 				fuente.draw(
 						batch,
 						tx.temOptimaMedia
-								+ format.format(m.temOptimaMediaD(m.aorg)),
-						840, m.alto - 260);
+								+ format.format(world.temOptimaMediaD(world.organisms)),
+						840, world.alto - 260);
 
 				batch.end();
 			}
 
-			if (cb_verAlelos.isChecked()) {
+			if (cb_viewAlleles.isChecked()) {
 
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(840, m.alto - 540, 180, 250);
+				caja.filledRect(840, world.alto - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
 
-				fuente.draw(batch, tx.alelo + "s:", 840, m.alto - 300);
+				fuente.draw(batch, tx.alelo + "s:", 840, world.alto - 300);
 				// mostrar % de alelos
-				m.colectarAlelosD(m.aorg, m.aAlelos);
+				world.colectarAlelosD(world.organisms, world.aAlelos);
 
-				numero = m.aAlelos.size;
-				float renglon = m.alto - 330;
-				for (int i = numero - 1; i >= 0; i--) {
+				number = world.aAlelos.size;
+				float renglon = world.alto - 330;
+				for (int i = number - 1; i >= 0; i--) {
 
-					Alelo al = m.aAlelos.get(i);
+					Allele al = world.aAlelos.get(i);
 
-					if (!al.nombre.equals(tx.color)
-							|| !al.nombre.equals(tx.longevidad)
-							|| !al.nombre.equals(tx.fidelidadADNpol)) {
+					if (!al.name.equals(tx.color)
+							|| !al.name.equals(tx.longevidad)
+							|| !al.name.equals(tx.fidelidadADNpol)) {
 
-						cantidad = m.aorg.size * 2;
+						quantity = world.organisms.size * 2;
 					}
 
-					if (al.nombre.equals(tx.color)
-							|| al.nombre.equals(tx.longevidad)
-							|| al.nombre.equals(tx.fidelidadADNpol)) {
+					if (al.name.equals(tx.color)
+							|| al.name.equals(tx.longevidad)
+							|| al.name.equals(tx.fidelidadADNpol)) {
 
-						cantidad = m.cantidadHembrasD(m.aorg) * 2
-								+ m.cantidadMachosD(m.aorg);
+						quantity = world.cantidadHembrasD(world.organisms) * 2
+								+ world.cantidadMachosD(world.organisms);
 					}
 
 					fuente.draw(
 							batch,
-							al.nombre
+							al.name
 									+ ": "
 									+ "a"
-									+ al.identificador
+									+ al.identifier
 									+ " > "
 									+ format3
-											.format(((float) al.cantidad / (float) cantidad) * 100)
+									.format(((float) al.quantity / (float) quantity) * 100)
 									+ " %", 840, renglon);
 
 					renglon = renglon - 20;
@@ -613,14 +614,14 @@ public class Pantalla implements Screen {
 
 		}
 
-		cb_verEnergia.setVisible(true);
-		cb_verMasa.setVisible(true);
+		cb_viewEnergy.setVisible(true);
+		cb_viewMass.setVisible(true);
 		cb_verOrganismos.setVisible(true);
 
-		if (verPanel == -1) {
+		if (viewPanel == -1) {
 
-			cb_verEnergia.setVisible(false);
-			cb_verMasa.setVisible(false);
+			cb_viewEnergy.setVisible(false);
+			cb_viewMass.setVisible(false);
 			cb_verOrganismos.setVisible(false);
 		}
 
@@ -635,17 +636,17 @@ public class Pantalla implements Screen {
 			camara.unproject(touchPos);
 			// System.out.println(touchPos.x + " "+ touchPos.y);
 
-			cantidad3 = m.aorg.size;
+			quantity3 = world.organisms.size;
 
-			for (cont3 = cantidad3 - 1; cont3 >= 0; cont3--) {
+			for (count3 = quantity3 - 1; count3 >= 0; count3--) {
 
-				or = m.aorg.get(cont3);
-				if (touchPos.x > or.posicion.x
-						&& touchPos.x < or.posicion.x + or.ancho
-						&& touchPos.y > or.posicion.y
-						&& touchPos.y < or.posicion.y + or.alto) {
+				or = world.organisms.get(count3);
+				if (touchPos.x > or.position.x
+						&& touchPos.x < or.position.x + or.width
+						&& touchPos.y > or.position.y
+						&& touchPos.y < or.position.y + or.height) {
 
-					or.marcado = or.marcado * (-1);
+					or.mark = or.mark * (-1);
 
 				}
 			}
@@ -657,19 +658,19 @@ public class Pantalla implements Screen {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camara.unproject(touchPos);
 
-			cantidad3 = m.aorg.size;
+			quantity3 = world.organisms.size;
 
-			for (cont3 = cantidad3 - 1; cont3 >= 0; cont3--) {
+			for (count3 = quantity3 - 1; count3 >= 0; count3--) {
 
-				or = m.aorg.get(cont3);
+				or = world.organisms.get(count3);
 
-				if (or.marcado == -1 && touchPos.x > or.posicion.x - or.ancho
-						&& touchPos.x < or.posicion.x + or.ancho * 2
-						&& touchPos.y > or.posicion.y - or.alto
-						&& touchPos.y < or.posicion.y + or.alto * 2) {
+				if (or.mark == -1 && touchPos.x > or.position.x - or.width
+						&& touchPos.x < or.position.x + or.width * 2
+						&& touchPos.y > or.position.y - or.height
+						&& touchPos.y < or.position.y + or.height * 2) {
 
-					or.posicion.x = touchPos.x - or.ancho / 2;
-					or.posicion.y = touchPos.y - or.alto / 2;
+					or.position.x = touchPos.x - or.width / 2;
+					or.position.y = touchPos.y - or.height / 2;
 					or.Ordenar();
 				}
 			}
@@ -678,7 +679,7 @@ public class Pantalla implements Screen {
 
 		if (Gdx.input.isKeyPressed(Keys.P)) {
 
-			m.pausaGame = m.pausaGame * (-1);
+			world.pausaGame = world.pausaGame * (-1);
 
 		}
 
@@ -686,7 +687,7 @@ public class Pantalla implements Screen {
 
 	public void entradasTeclado() {
 
-		Gdx.input.setInputProcessor(new ETeclado(this));
+		Gdx.input.setInputProcessor(new Keyboard(this));
 	}
 
 	@Override
@@ -710,85 +711,85 @@ public class Pantalla implements Screen {
 
 			// instancia los botones
 
-			b_colectar = new TextButton(tx.tomarMuestra, estilo);
-			b_colectar.setWidth(130);
-			b_colectar.setHeight(20);
-			b_colectar.setX(200);
-			b_colectar.setX(0);
-			b_colectar.setY(m.alto - 20);
+			bCollect = new TextButton(tx.tomarMuestra, estilo);
+			bCollect.setWidth(130);
+			bCollect.setHeight(20);
+			bCollect.setX(200);
+			bCollect.setX(0);
+			bCollect.setY(world.alto - 20);
 
 			b_guardar = new TextButton(tx.menuGuardar, estilo);
 			b_guardar.setWidth(130);
 			b_guardar.setHeight(20);
 			b_guardar.setX(130);
-			b_guardar.setY(m.alto - 20);
+			b_guardar.setY(world.alto - 20);
 
 			b_colectarP = new TextButton(tx.guardarTodos, estilo);
 			b_colectarP.setWidth(130);
 			b_colectarP.setHeight(20);
 			b_colectarP.setX(130);
-			b_colectarP.setY(m.alto - 65);
+			b_colectarP.setY(world.alto - 65);
 
 			b_colectarPM = new TextButton(tx.guardarMarcados, estilo);
 			b_colectarPM.setWidth(130);
 			b_colectarPM.setHeight(20);
 			b_colectarPM.setX(130);
-			b_colectarPM.setY(m.alto - 88);
+			b_colectarPM.setY(world.alto - 88);
 
 			b_colectarPnM = new TextButton(tx.guardarNoMarcados, estilo);
 			b_colectarPnM.setWidth(130);
 			b_colectarPnM.setHeight(20);
 			b_colectarPnM.setX(130);
-			b_colectarPnM.setY(m.alto - 111);
+			b_colectarPnM.setY(world.alto - 111);
 
-			b_marcarTodo = new TextButton(tx.marcarDesmarcar, estilo);
-			b_marcarTodo.setWidth(130);
-			b_marcarTodo.setHeight(20);
-			b_marcarTodo.setX(260);
-			b_marcarTodo.setY(m.alto - 20);
+			bSelectAll = new TextButton(tx.marcarDesmarcar, estilo);
+			bSelectAll.setWidth(130);
+			bSelectAll.setHeight(20);
+			bSelectAll.setX(260);
+			bSelectAll.setY(world.alto - 20);
 
 			b_antibiotico = new TextButton(tx.antibiotico, estilo);
 			b_antibiotico.setWidth(130);
 			b_antibiotico.setHeight(20);
 			b_antibiotico.setX(390);
-			b_antibiotico.setY(m.alto - 20);
+			b_antibiotico.setY(world.alto - 20);
 
 			b_frontera = new TextButton(tx.frontera, estilo);
 			b_frontera.setWidth(130);
 			b_frontera.setHeight(20);
 			b_frontera.setX(390);
-			b_frontera.setY(m.alto - 42);
+			b_frontera.setY(world.alto - 42);
 
-			b_catastrofe = new TextButton(tx.catastrofe, estilo);
-			b_catastrofe.setWidth(140);
-			b_catastrofe.setHeight(20);
-			b_catastrofe.setX(520);
-			b_catastrofe.setY(m.alto - 20);
+			bCatastrophe = new TextButton(tx.catastrofe, estilo);
+			bCatastrophe.setWidth(140);
+			bCatastrophe.setHeight(20);
+			bCatastrophe.setX(520);
+			bCatastrophe.setY(world.alto - 20);
 
 			b_stop = new TextButton(tx.parar, estilo);
 			b_stop.setWidth(130);
 			b_stop.setHeight(20);
 			b_stop.setX(660);
-			b_stop.setY(m.alto - 20);
+			b_stop.setY(world.alto - 20);
 
-			b_pausa = new TextButton(tx.playPausa, estilo);
-			b_pausa.setWidth(130);
-			b_pausa.setHeight(20);
-			b_pausa.setX(770);
-			b_pausa.setY(m.alto - 20);
+			bPause = new TextButton(tx.playPausa, estilo);
+			bPause.setWidth(130);
+			bPause.setHeight(20);
+			bPause.setX(770);
+			bPause.setY(world.alto - 20);
 
 			b_ordenar = new TextButton(tx.ordenar, estilo);
 			b_ordenar.setVisible(false);
 			b_ordenar.setWidth(130);
 			b_ordenar.setHeight(35);
-			b_ordenar.setX((m.ancho / 2) - 130 / 2);
+			b_ordenar.setX((world.ancho / 2) - 130 / 2);
 			b_ordenar.setY(5);
 
-			b_Salir = new TextButton(tx.guardarYcerrar, estilo);
-			b_Salir.setWidth(130);
-			b_Salir.setHeight(20);
-			b_Salir.setX(900);
-			b_Salir.setY(m.alto - 20);
+			bExit = new TextButton(tx.guardarYcerrar, estilo);
+			bExit.setWidth(130);
+			bExit.setHeight(20);
+			bExit.setX(900);
+			bExit.setY(world.alto - 20);
 
 			CheckBoxStyle checkBoxStyle = new CheckBoxStyle();
 			checkBoxStyle.checkboxOff = sk_skin2.getDrawable("boxN0");
@@ -800,30 +801,30 @@ public class Pantalla implements Screen {
 			cb_verDatos.setChecked(true);
 			cb_verDatos.setPosition(-10, 630);
 
-			cb_verAlelos = new CheckBox(tx.verAlelos, checkBoxStyle);
-			cb_verAlelos.getCells().get(0).size(15, 15);
-			cb_verAlelos.setChecked(true);
-			cb_verAlelos.setPosition(100, 630);
+			cb_viewAlleles = new CheckBox(tx.verAlelos, checkBoxStyle);
+			cb_viewAlleles.getCells().get(0).size(15, 15);
+			cb_viewAlleles.setChecked(true);
+			cb_viewAlleles.setPosition(100, 630);
 
-			cb_verFenotipo = new CheckBox(tx.verFenotipo, checkBoxStyle);
-			cb_verFenotipo.getCells().get(0).size(15, 15);
-			cb_verFenotipo.setChecked(true);
-			cb_verFenotipo.setPosition(220, 630);
+			cb_viewPhenotype = new CheckBox(tx.verFenotipo, checkBoxStyle);
+			cb_viewPhenotype.getCells().get(0).size(15, 15);
+			cb_viewPhenotype.setChecked(true);
+			cb_viewPhenotype.setPosition(220, 630);
 
-			cb_verGenotipo = new CheckBox(tx.verGenotipo, checkBoxStyle);
-			cb_verGenotipo.getCells().get(0).size(15, 15);
-			cb_verGenotipo.setChecked(true);
-			cb_verGenotipo.setPosition(380, 630);
+			cb_viewGenotype = new CheckBox(tx.verGenotipo, checkBoxStyle);
+			cb_viewGenotype.getCells().get(0).size(15, 15);
+			cb_viewGenotype.setChecked(true);
+			cb_viewGenotype.setPosition(380, 630);
 
-			cb_verEnergia = new CheckBox(tx.verEnergia, checkBoxStyle);
-			cb_verEnergia.getCells().get(0).size(15, 15);
-			cb_verEnergia.setChecked(false);
-			cb_verEnergia.setPosition(530, 630);
+			cb_viewEnergy = new CheckBox(tx.verEnergia, checkBoxStyle);
+			cb_viewEnergy.getCells().get(0).size(15, 15);
+			cb_viewEnergy.setChecked(false);
+			cb_viewEnergy.setPosition(530, 630);
 
-			cb_verMasa = new CheckBox(tx.verMasa, checkBoxStyle);
-			cb_verMasa.getCells().get(0).size(15, 15);
-			cb_verMasa.setChecked(false);
-			cb_verMasa.setPosition(680, 630);
+			cb_viewMass = new CheckBox(tx.verMasa, checkBoxStyle);
+			cb_viewMass.getCells().get(0).size(15, 15);
+			cb_viewMass.setChecked(false);
+			cb_viewMass.setPosition(680, 630);
 
 			cb_verOrganismos = new CheckBox(tx.verOrgansimo, checkBoxStyle);
 			cb_verOrganismos.getCells().get(0).size(15, 15);
@@ -831,23 +832,23 @@ public class Pantalla implements Screen {
 			cb_verOrganismos.setPosition(830, 630);
 
 			stage.addActor(cb_verDatos);
-			stage.addActor(cb_verAlelos);
+			stage.addActor(cb_viewAlleles);
 			// stage.addActor(cb_verFenotipo);
 			// stage.addActor(cb_verGenotipo);
-			stage.addActor(cb_verEnergia);
-			stage.addActor(cb_verMasa);
+			stage.addActor(cb_viewEnergy);
+			stage.addActor(cb_viewMass);
 			stage.addActor(cb_verOrganismos);
-			stage.addActor(b_Salir);
-			stage.addActor(b_pausa);
+			stage.addActor(bExit);
+			stage.addActor(bPause);
 			stage.addActor(b_stop);
 			// stage.addActor(b_verOcultar);
 			stage.addActor(b_guardar);
-			stage.addActor(b_colectar);
+			stage.addActor(bCollect);
 			stage.addActor(b_colectarP);
 			stage.addActor(b_colectarPM);
 			stage.addActor(b_colectarPnM);
-			stage.addActor(b_marcarTodo);
-			stage.addActor(b_catastrofe);
+			stage.addActor(bSelectAll);
+			stage.addActor(bCatastrophe);
 
 			stage.addActor(b_antibiotico);
 			stage.addActor(b_frontera);
@@ -855,12 +856,12 @@ public class Pantalla implements Screen {
 
 			// se agregan los listener para los botones
 
-			b_Salir.addListener(new InputListener() {
+			bExit.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					m.pausaGame = m.pausaGame * (-1);
+										 int pointer, int button) {
+					world.pausaGame = world.pausaGame * (-1);
 
-					Object[] options = { tx.si, tx.no };
+					Object[] options = {tx.si, tx.no};
 					int n = JOptionPane.showOptionDialog(null,
 							tx.terminarGuardarMensaje, "",
 
@@ -870,23 +871,23 @@ public class Pantalla implements Screen {
 
 					if (n == JOptionPane.YES_OPTION) {
 						if (todoGuardado == false) {
-							if (m.aorg.size > 0) {
-								m.guardarDatos();
-								m.archivarGenoma();
-								m.archivarGenotipo();
-								m.archivarFenotipo2();
-								m.archivarAlelos();
+							if (world.organisms.size > 0) {
+								world.guardarDatos();
+								world.archivarGenoma();
+								world.archivarGenotipo();
+								world.archivarFenotipo2();
+								world.archivarAlelos();
 							}
-							m.f_genes.cerrarArchivo();
+							world.f_genes.cerrarArchivo();
 							// m.f_proteoma.cerrarArchivo();
 							// m.f_mutantes.cerrarArchivo();
-							m.f_datos.cerrarArchivo();
-							m.f_alelos.cerrarArchivo();
-							m.f_genotipos.cerrarArchivo();
+							world.f_datos.cerrarArchivo();
+							world.f_alelos.cerrarArchivo();
+							world.f_genotipos.cerrarArchivo();
 						}
-						m.f_fenotipos.cerrarArchivo();
+						world.f_fenotipos.cerrarArchivo();
 
-						ev.setScreen(new MenuInicio(ev));
+						ev.setScreen(new StartMenu(ev));
 						// m = null;
 						dispose();
 					}
@@ -906,9 +907,9 @@ public class Pantalla implements Screen {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					m.pausaGame = m.pausaGame * (-1);
+					world.pausaGame = world.pausaGame * (-1);
 
-					Object[] options = { tx.si, tx.no };
+					Object[] options = {tx.si, tx.no};
 					int n = JOptionPane.showOptionDialog(null,
 							tx.terminarMensaje, "",
 
@@ -918,13 +919,13 @@ public class Pantalla implements Screen {
 
 					if (n == JOptionPane.YES_OPTION) {
 
-						m.parar = true;
-						m.pausaGame = m.pausaGame * (-1);
+						world.parar = true;
+						world.pausaGame = world.pausaGame * (-1);
 						b_ordenar.setVisible(true);
 						b_stop.setTouchable(Touchable.disabled);
-						b_catastrofe.setTouchable(Touchable.disabled);
+						bCatastrophe.setTouchable(Touchable.disabled);
 						b_antibiotico.setTouchable(Touchable.disabled);
-						b_pausa.setTouchable(Touchable.disabled);
+						bPause.setTouchable(Touchable.disabled);
 					}
 					if (n == JOptionPane.NO_OPTION) {
 					}
@@ -933,22 +934,22 @@ public class Pantalla implements Screen {
 				}
 
 				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
+									int pointer, int button) {
 
 				}
 			});
 
-			b_pausa.addListener(new InputListener() {
+			bPause.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
+										 int pointer, int button) {
 
-					m.pausaGame = m.pausaGame * (-1);
+					world.pausaGame = world.pausaGame * (-1);
 
 					return true;
 				}
 
 				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
+									int pointer, int button) {
 				}
 			});
 
@@ -968,34 +969,34 @@ public class Pantalla implements Screen {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					verBotones1 = verBotones1 / 2;
-					verBotones1 = verBotones1 * (-1);
+					viewButtons = viewButtons / 2;
+					viewButtons = viewButtons * (-1);
 
 					return true;
 				}
 
 				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
+									int pointer, int button) {
 				}
 			});
 
-			b_colectar.addListener(new InputListener() {
+			bCollect.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					m.colectorEspesies();
-					m.guardarDatos();
-					m.archivarGenoma();
+										 int pointer, int button) {
+					world.colectorEspesies();
+					world.guardarDatos();
+					world.archivarGenoma();
 					// m.archivarProteoma();
-					m.archivarGenotipo();
-					m.archivarAlelos();
-					m.archivarFenotipo2();
+					world.archivarGenotipo();
+					world.archivarAlelos();
+					world.archivarFenotipo2();
 
 					return true;
 				}
 
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
-					verBotones1 = verBotones1 / 2;
+					viewButtons = viewButtons / 2;
 					// verBotones1= verBotones1*(-1);
 
 				}
@@ -1005,8 +1006,8 @@ public class Pantalla implements Screen {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					m.pausaGame = -1;
-					m.guardarPoblacion();
+					world.pausaGame = -1;
+					world.guardarPoblacion();
 					// m.pausaGame=1;
 					return true;
 				}
@@ -1014,7 +1015,7 @@ public class Pantalla implements Screen {
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					verBotones1 = verBotones1 / 2;
+					viewButtons = viewButtons / 2;
 					// verBotones1= verBotones1*(-1);
 					// m.pausaGame= 1;
 
@@ -1024,8 +1025,8 @@ public class Pantalla implements Screen {
 			b_colectarPM.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					m.pausaGame = -1;
-					m.guardarPoblacionMarcada();
+					world.pausaGame = -1;
+					world.guardarPoblacionMarcada();
 					//
 					return true;
 				}
@@ -1033,7 +1034,7 @@ public class Pantalla implements Screen {
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					verBotones1 = verBotones1 / 2;
+					viewButtons = viewButtons / 2;
 					// verBotones1= verBotones1*(-1);
 					// m.pausaGame= 1;
 
@@ -1043,34 +1044,34 @@ public class Pantalla implements Screen {
 			b_colectarPnM.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					m.pausaGame = -1;
-					m.guardarPoblacionNoMaracada();
+					world.pausaGame = -1;
+					world.guardarPoblacionNoMaracada();
 					//
 					return true;
 				}
 
 				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
+									int pointer, int button) {
 
-					verBotones1 = verBotones1 / 2;
+					viewButtons = viewButtons / 2;
 					// verBotones1= verBotones1*(-1);
 					// m.pausaGame= 1;
 
 				}
 			});
 
-			b_marcarTodo.addListener(new InputListener() {
+			bSelectAll.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
-					numero = m.aorg.size;
+										 int pointer, int button) {
+					number = world.organisms.size;
 					mark = mark * (-1);
-					for (int i = numero - 1; i >= 0; i--) {
+					for (int i = number - 1; i >= 0; i--) {
 
 						if (mark == 1) {
-							m.aorg.get(i).marcado = 1;
+							world.organisms.get(i).marcado = 1;
 						}
 						if (mark == -1) {
-							m.aorg.get(i).marcado = -1;
+							world.organisms.get(i).marcado = -1;
 						}
 					}
 
@@ -1087,27 +1088,27 @@ public class Pantalla implements Screen {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					m.antibiotico = m.antibiotico * (-1);
+					world.antibiotico = world.antibiotico * (-1);
 
 					return true;
 				}
 
 				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
+									int pointer, int button) {
 				}
 			});
 
-			b_catastrofe.addListener(new InputListener() {
+			bCatastrophe.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
-						int pointer, int button) {
+										 int pointer, int button) {
 
-					m.catastrofe();
+					world.catastrofe();
 
 					return true;
 				}
 
 				public void touchUp(InputEvent event, float x, float y,
-						int pointer, int button) {
+									int pointer, int button) {
 				}
 			});
 
@@ -1118,13 +1119,13 @@ public class Pantalla implements Screen {
 					verFrontera = verFrontera * (-1);
 
 					if (verFrontera == 1) {
-						m.verFrontera = false;
+						world.verFrontera = false;
 
-						m.f_datos.escribirArchivo("\n" + tx.datosOrdenados);
+						world.f_datos.writeArchive("\n" + tx.datosOrdenados);
 					}
 					if (verFrontera == -1) {
-						m.verFrontera = true;
-						m.f_datos.escribirArchivo("\n" + tx.datosOrdenados2);
+						world.verFrontera = true;
+						world.f_datos.writeArchive("\n" + tx.datosOrdenados2);
 					}
 
 					return true;
@@ -1139,38 +1140,38 @@ public class Pantalla implements Screen {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					m.Ordenar();
+					world.Ordenar();
 
 					b_ordenar.setText(tx.Siguiente);
 
-					if (m.verFrontera == false) {
-						if (m.indice == m.aorg.size) {
-							m.indice = 0;
+					if (world.verFrontera == false) {
+						if (world.indice == world.organisms.size) {
+							world.indice = 0;
 							b_ordenar.setText(tx.ordenar);
 						}
 					}
-					if (m.verFrontera == true) {
-						if (m.numeroD == m
+					if (world.verFrontera == true) {
+						if (world.numeroD == world
 								.numeroI) {
-							if (m.indiceDer == m.numeroD) {
-								m.indiceDer = 0;
-								m.indiceIz = 0;
+							if (world.indiceDer == world.numeroD) {
+								world.indiceDer = 0;
+								world.indiceIz = 0;
 								b_ordenar.setText(tx.ordenar);
 							}
 						}
-						if (m.numeroD > m
+						if (world.numeroD > world
 								.numeroI) {
-							if (m.indiceDer == m.numeroD) {
-								m.indiceDer = 0;
-								m.indiceIz = 0;
+							if (world.indiceDer == world.numeroD) {
+								world.indiceDer = 0;
+								world.indiceIz = 0;
 								b_ordenar.setText(tx.ordenar);
 							}
 						}
-						if (m.numeroD < m
+						if (world.numeroD < world
 								.numeroI) {
-							if (m.indiceIz == m.numeroI) {
-								m.indiceDer = 0;
-								m.indiceIz = 0;
+							if (world.indiceIz == world.numeroI) {
+								world.indiceDer = 0;
+								world.indiceIz = 0;
 								b_ordenar.setText(tx.ordenar);
 							}
 						}
@@ -1215,7 +1216,7 @@ public class Pantalla implements Screen {
 	@Override
 	public void dispose() {
 
-		m.dispose();
+		world.dispose();
 		sk_skin.dispose();
 		fu_fuente.dispose();
 		ta_atlas.dispose();
