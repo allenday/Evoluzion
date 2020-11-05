@@ -60,7 +60,6 @@ public class World implements Serializable {
 	Array<Allele> aAlelos;
 	Array<Phenotype> aFenotipos;
 	Array<Genotype> aGenotipos;
-	A
 
 	float ancho, alto, ratio; // dimenciones de la pantalla
 	//
