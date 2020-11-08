@@ -299,7 +299,7 @@ public class World implements Serializable {
 			}
 
 			Senergy se = new Senergy(pos, this);
-			se.energia = this.Senergia;
+			se.energy = this.Senergia;
 			ase.add(se);
 		}
 
@@ -318,7 +318,7 @@ public class World implements Serializable {
 			}
 
 			Senergy se = new Senergy(pos, this);
-			se.energia = this.SenergiaR;
+			se.energy = this.SenergiaR;
 			ase.add(se);
 
 		}
@@ -436,43 +436,43 @@ public class World implements Serializable {
 
 		for (int i = 0; i < aqe.size; i++) {
 
-			if (aqe.get(i).posicion.x <= ancho * (1 / 10)) {
+			if (aqe.get(i).position.x <= ancho * (1 / 10)) {
 				aqe1.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (1 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (2 / 10)) {
+			if (aqe.get(i).position.x > ancho * (1 / 10)
+					&& aqe.get(i).position.x <= ancho * (2 / 10)) {
 				aqe2.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (2 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (3 / 10)) {
+			if (aqe.get(i).position.x > ancho * (2 / 10)
+					&& aqe.get(i).position.x <= ancho * (3 / 10)) {
 				aqe3.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (3 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (4 / 10)) {
+			if (aqe.get(i).position.x > ancho * (3 / 10)
+					&& aqe.get(i).position.x <= ancho * (4 / 10)) {
 				aqe4.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (4 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (5 / 10)) {
+			if (aqe.get(i).position.x > ancho * (4 / 10)
+					&& aqe.get(i).position.x <= ancho * (5 / 10)) {
 				aqe5.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (5 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (6 / 10)) {
+			if (aqe.get(i).position.x > ancho * (5 / 10)
+					&& aqe.get(i).position.x <= ancho * (6 / 10)) {
 				aqe6.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (6 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (7 / 10)) {
+			if (aqe.get(i).position.x > ancho * (6 / 10)
+					&& aqe.get(i).position.x <= ancho * (7 / 10)) {
 				aqe7.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (7 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (8 / 10)) {
+			if (aqe.get(i).position.x > ancho * (7 / 10)
+					&& aqe.get(i).position.x <= ancho * (8 / 10)) {
 				aqe8.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (8 / 10)
-					&& aqe.get(i).posicion.x <= ancho * (9 / 10)) {
+			if (aqe.get(i).position.x > ancho * (8 / 10)
+					&& aqe.get(i).position.x <= ancho * (9 / 10)) {
 				aqe9.add(aqe.get(i));
 			}
-			if (aqe.get(i).posicion.x > ancho * (9 / 10)
-					&& aqe.get(i).posicion.x <= ancho) {
+			if (aqe.get(i).position.x > ancho * (9 / 10)
+					&& aqe.get(i).position.x <= ancho) {
 				aqe10.add(aqe.get(i));
 			}
 
@@ -625,7 +625,7 @@ public class World implements Serializable {
 
 		for (int i = 0; i < aor.size; i++) {
 
-			if (aor.get(i).posicion.x < ancho / 2) {
+			if (aor.get(i).position.x < ancho / 2) {
 				num = num + 1;
 			}
 			//	System.out.println("dentro del loop"+ num);//return numeroI;
@@ -642,7 +642,7 @@ public class World implements Serializable {
 		int num = 0;
 		for (int i = 0; i < aor.size; i++) {
 
-			if (aor.get(i).posicion.x > ancho / 2) {
+			if (aor.get(i).position.x > ancho / 2) {
 				num = num + 1;
 			}
 		}
@@ -654,7 +654,7 @@ public class World implements Serializable {
 		int num = 0;
 		for (int i = 0; i < aor.size; i++) {
 
-			if (aor.get(i).posicion.x > ancho / 2) {
+			if (aor.get(i).position.x > ancho / 2) {
 				num = num + 1;
 			}
 		}
@@ -666,7 +666,7 @@ public class World implements Serializable {
 		int num = 0;
 		for (int i = 0; i < aor.size; i++) {
 
-			if (aor.get(i).posicion.x > ancho / 2) {
+			if (aor.get(i).position.x > ancho / 2) {
 				num = num + 1;
 			}
 		}
@@ -709,7 +709,7 @@ public class World implements Serializable {
 		int machos = 0;
 		for (int i = numero - 1; i >= 0; i--) {
 
-			if (aor.get(i).posicion.x < ancho / 2 && aor.get(i).male == true) {
+			if (aor.get(i).position.x < ancho / 2 && aor.get(i).male == true) {
 				machos = machos + 1;
 			}
 
@@ -725,7 +725,7 @@ public class World implements Serializable {
 		int machos = 0;
 		for (int i = numero - 1; i >= 0; i--) {
 
-			if (aor.get(i).posicion.x > ancho / 2 && aor.get(i).male == true) {
+			if (aor.get(i).position.x > ancho / 2 && aor.get(i).male == true) {
 				machos = machos + 1;
 			}
 
@@ -757,7 +757,7 @@ public class World implements Serializable {
 		int hembras = 0;
 		for (int i = numero - 1; i >= 0; i--) {
 
-			if (aor.get(i).posicion.x < ancho / 2 && aor.get(i).male == false) {
+			if (aor.get(i).position.x < ancho / 2 && aor.get(i).male == false) {
 				hembras = hembras + 1;
 			}
 
@@ -773,7 +773,7 @@ public class World implements Serializable {
 		int hembras = 0;
 		for (int i = numero - 1; i >= 0; i--) {
 
-			if (aor.get(i).posicion.x > ancho / 2 && aor.get(i).male == false) {
+			if (aor.get(i).position.x > ancho / 2 && aor.get(i).male == false) {
 				hembras = hembras + 1;
 			}
 
@@ -788,7 +788,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				medTem = medTem + aor.get(i).tempOptima;
+				medTem = medTem + aor.get(i).optimalTemp;
 			}
 		}
 		if (numero == 0) {
@@ -803,8 +803,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x < ancho / 2) {
-					medTem = medTem + aor.get(i).tempOptima;
+				if (aor.get(i).position.x < ancho / 2) {
+					medTem = medTem + aor.get(i).optimalTemp;
 				}
 			}
 		}
@@ -820,8 +820,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x > ancho / 2) {
-					medTem = medTem + aor.get(i).tempOptima;
+				if (aor.get(i).position.x > ancho / 2) {
+					medTem = medTem + aor.get(i).optimalTemp;
 				}
 			}
 		}
@@ -837,7 +837,7 @@ public class World implements Serializable {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).carnivoro == true) {
+			if (aor.get(i).carnivore == true) {
 				cantidad = cantidad + 1;
 			}
 		}
@@ -848,8 +848,8 @@ public class World implements Serializable {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).posicion.x < ancho / 2
-					&& aor.get(i).carnivoro == true) {
+			if (aor.get(i).position.x < ancho / 2
+					&& aor.get(i).carnivore == true) {
 				cantidad = cantidad + 1;
 			}
 		}
@@ -860,8 +860,8 @@ public class World implements Serializable {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).posicion.x > ancho / 2
-					&& aor.get(i).carnivoro == true) {
+			if (aor.get(i).position.x > ancho / 2
+					&& aor.get(i).carnivore == true) {
 				cantidad = cantidad + 1;
 			}
 		}
@@ -872,7 +872,7 @@ public class World implements Serializable {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).resistenciaATB == true) {
+			if (aor.get(i).resistanceATB == true) {
 				cantidad = cantidad + 1;
 			}
 		}
@@ -883,8 +883,8 @@ public class World implements Serializable {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).posicion.x < ancho / 2
-					&& aor.get(i).resistenciaATB == true) {
+			if (aor.get(i).position.x < ancho / 2
+					&& aor.get(i).resistanceATB == true) {
 				cantidad = cantidad + 1;
 			}
 		}
@@ -895,8 +895,8 @@ public class World implements Serializable {
 		cantidad = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).posicion.x > ancho / 2
-					&& aor.get(i).resistenciaATB == true) {
+			if (aor.get(i).position.x > ancho / 2
+					&& aor.get(i).resistanceATB == true) {
 				cantidad = cantidad + 1;
 			}
 		}
@@ -925,7 +925,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x < ancho / 2) {
+				if (aor.get(i).position.x < ancho / 2) {
 					medSpeed = medSpeed + aor.get(i).speed;
 				}
 			}
@@ -944,7 +944,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x > ancho / 2) {
+				if (aor.get(i).position.x > ancho / 2) {
 					medSpeed = medSpeed + aor.get(i).speed;
 				}
 			}
@@ -963,7 +963,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				medMut = (int) (medMut + aor.get(i).tasaMut);
+				medMut = (int) (medMut + aor.get(i).mutationRate);
 			}
 		}
 		if (numero == 0 || numeroI == 0 || numeroD == 0) {
@@ -980,8 +980,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x < ancho / 2) {
-					medMut = (int) (medMut + aor.get(i).tasaMut);
+				if (aor.get(i).position.x < ancho / 2) {
+					medMut = (int) (medMut + aor.get(i).mutationRate);
 				}
 			}
 		}
@@ -999,8 +999,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x > ancho / 2) {
-					medMut = (int) (medMut + aor.get(i).tasaMut);
+				if (aor.get(i).position.x > ancho / 2) {
+					medMut = (int) (medMut + aor.get(i).mutationRate);
 				}
 			}
 		}
@@ -1018,7 +1018,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				medLon = (int) (medLon + aor.get(i).longevidad);
+				medLon = (int) (medLon + aor.get(i).longevity);
 			}
 		}
 		if (numero == 0 || numeroI == 0 || numeroD == 0) {
@@ -1035,8 +1035,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x < ancho / 2) {
-					medLon = (int) (medLon + aor.get(i).longevidad);
+				if (aor.get(i).position.x < ancho / 2) {
+					medLon = (int) (medLon + aor.get(i).longevity);
 				}
 			}
 		}
@@ -1054,8 +1054,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x > ancho / 2) {
-					medLon = (int) (medLon + aor.get(i).longevidad);
+				if (aor.get(i).position.x > ancho / 2) {
+					medLon = (int) (medLon + aor.get(i).longevity);
 				}
 			}
 		}
@@ -1090,7 +1090,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x > ancho / 2) {
+				if (aor.get(i).position.x > ancho / 2) {
 					salud = salud + aor.get(i).SaludCoefi;
 				}
 			}
@@ -1109,7 +1109,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x < ancho / 2) {
+				if (aor.get(i).position.x < ancho / 2) {
 					salud = salud + aor.get(i).SaludCoefi;
 				}
 			}
@@ -1128,7 +1128,7 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				medSize = medSize + aor.get(i).capacidad;
+				medSize = medSize + aor.get(i).capacity;
 			}
 		}
 		if (numero == 0 || numeroI == 0 || numeroD == 0) {
@@ -1145,8 +1145,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x < ancho / 2) {
-					medSize = medSize + aor.get(i).capacidad;
+				if (aor.get(i).position.x < ancho / 2) {
+					medSize = medSize + aor.get(i).capacity;
 				}
 			}
 		}
@@ -1164,8 +1164,8 @@ public class World implements Serializable {
 		numero = aor.size;
 		if (numero > 0) {
 			for (int i = numero - 1; i >= 0; i--) {
-				if (aor.get(i).posicion.x > ancho / 2) {
-					medSize = medSize + aor.get(i).capacidad;
+				if (aor.get(i).position.x > ancho / 2) {
+					medSize = medSize + aor.get(i).capacity;
 				}
 			}
 		}
@@ -1183,7 +1183,7 @@ public class World implements Serializable {
 		numero = aqe.size;
 		for (int i = numero - 1; i >= 0; i--) {
 			if (aqe.get(i).visible == true) {
-				materia = (int) (materia + aqe.get(i).masa);
+				materia = (int) (materia + aqe.get(i).mass);
 			}
 		}
 		return materia;
@@ -1193,8 +1193,8 @@ public class World implements Serializable {
 		int materia = 0;
 		numero = aqe.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aqe.get(i).posicion.x < ancho / 2 && aqe.get(i).visible == true) {
-				materia = (int) (materia + aqe.get(i).masa);
+			if (aqe.get(i).position.x < ancho / 2 && aqe.get(i).visible == true) {
+				materia = (int) (materia + aqe.get(i).mass);
 			}
 		}
 		return materia;
@@ -1204,8 +1204,8 @@ public class World implements Serializable {
 		int materia = 0;
 		numero = aqe.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aqe.get(i).posicion.x > ancho / 2 && aqe.get(i).visible == true) {
-				materia = (int) (materia + aqe.get(i).masa);
+			if (aqe.get(i).position.x > ancho / 2 && aqe.get(i).visible == true) {
+				materia = (int) (materia + aqe.get(i).mass);
 			}
 		}
 		return materia;
@@ -1215,7 +1215,7 @@ public class World implements Serializable {
 		int biomasaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			biomasaTotal = (int) (biomasaTotal + aor.get(i).biomasa);
+			biomasaTotal = (int) (biomasaTotal + aor.get(i).biomass);
 		}
 		return biomasaTotal;
 	}
@@ -1224,8 +1224,8 @@ public class World implements Serializable {
 		int biomasaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).posicion.x > ancho / 2) {
-				biomasaTotal = (int) (biomasaTotal + aor.get(i).biomasa);
+			if (aor.get(i).position.x > ancho / 2) {
+				biomasaTotal = (int) (biomasaTotal + aor.get(i).biomass);
 			}
 		}
 		return biomasaTotal;
@@ -1235,8 +1235,8 @@ public class World implements Serializable {
 		int biomasaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			if (aor.get(i).posicion.x < ancho / 2) {
-				biomasaTotal = (int) (biomasaTotal + aor.get(i).biomasa);
+			if (aor.get(i).position.x < ancho / 2) {
+				biomasaTotal = (int) (biomasaTotal + aor.get(i).biomass);
 			}
 		}
 		return biomasaTotal;
@@ -1246,7 +1246,7 @@ public class World implements Serializable {
 		int energiaTotal = 0;
 		numero = aor.size;
 		for (int i = numero - 1; i >= 0; i--) {
-			energiaTotal = (int) (energiaTotal + aor.get(i).energia);
+			energiaTotal = (int) (energiaTotal + aor.get(i).energy);
 		}
 		return energiaTotal;
 	}
@@ -1406,7 +1406,7 @@ public class World implements Serializable {
 			if (a > Qbiomasa) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1417,7 +1417,7 @@ public class World implements Serializable {
 			if (a > Qbiomasa) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1428,42 +1428,7 @@ public class World implements Serializable {
 			if (a > Qbiomasa) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
-							&& aqe.get(i).visible == false) {
-						aqe.get(i).visible = true;
-						i = 0;
-					}
-				}
-			}
-
-			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(organisms));
-
-			if (a > Qbiomasa) {
-				numero = aqe.size;
-				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
-							&& aqe.get(i).visible == false) {
-						aqe.get(i).visible = true;
-						i = 0;
-					}
-				}
-			}
-
-			if (a > Qbiomasa) {
-				numero = aqe.size;
-				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
-							&& aqe.get(i).visible == false) {
-						aqe.get(i).visible = true;
-						i = 0;
-					}
-				}
-			}
-
-			if (a > Qbiomasa) {
-				numero = aqe.size;
-				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1476,7 +1441,7 @@ public class World implements Serializable {
 			if (a > Qbiomasa) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1487,7 +1452,7 @@ public class World implements Serializable {
 			if (a > Qbiomasa) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1498,7 +1463,42 @@ public class World implements Serializable {
 			if (a > Qbiomasa) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
+							&& aqe.get(i).visible == false) {
+						aqe.get(i).visible = true;
+						i = 0;
+					}
+				}
+			}
+
+			a = MasatotalL - (MateriaLibreL() + BiomasaTotalI(organisms));
+
+			if (a > Qbiomasa) {
+				numero = aqe.size;
+				for (int i = numero - 1; i >= 0; i--) {
+					if (aqe.get(i).position.x < ancho / 2
+							&& aqe.get(i).visible == false) {
+						aqe.get(i).visible = true;
+						i = 0;
+					}
+				}
+			}
+
+			if (a > Qbiomasa) {
+				numero = aqe.size;
+				for (int i = numero - 1; i >= 0; i--) {
+					if (aqe.get(i).position.x < ancho / 2
+							&& aqe.get(i).visible == false) {
+						aqe.get(i).visible = true;
+						i = 0;
+					}
+				}
+			}
+
+			if (a > Qbiomasa) {
+				numero = aqe.size;
+				for (int i = numero - 1; i >= 0; i--) {
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1511,7 +1511,7 @@ public class World implements Serializable {
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -1522,7 +1522,7 @@ public class World implements Serializable {
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -1535,7 +1535,7 @@ public class World implements Serializable {
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -1546,7 +1546,7 @@ public class World implements Serializable {
 			if (a < Qbiomasa * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x < ancho / 2
+					if (aqe.get(i).position.x < ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -1561,7 +1561,7 @@ public class World implements Serializable {
 			if (b > QbiomasaR) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1572,7 +1572,7 @@ public class World implements Serializable {
 			if (b > QbiomasaR) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1583,42 +1583,7 @@ public class World implements Serializable {
 			if (b > QbiomasaR) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
-							&& aqe.get(i).visible == false) {
-						aqe.get(i).visible = true;
-						i = 0;
-					}
-				}
-			}
-
-			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(organisms));
-
-			if (b > QbiomasaR) {
-				numero = aqe.size;
-				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
-							&& aqe.get(i).visible == false) {
-						aqe.get(i).visible = true;
-						i = 0;
-					}
-				}
-			}
-
-			if (b > QbiomasaR) {
-				numero = aqe.size;
-				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
-							&& aqe.get(i).visible == false) {
-						aqe.get(i).visible = true;
-						i = 0;
-					}
-				}
-			}
-
-			if (b > QbiomasaR) {
-				numero = aqe.size;
-				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1631,7 +1596,7 @@ public class World implements Serializable {
 			if (b > QbiomasaR) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1642,7 +1607,7 @@ public class World implements Serializable {
 			if (b > QbiomasaR) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1653,7 +1618,42 @@ public class World implements Serializable {
 			if (b > QbiomasaR) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
+							&& aqe.get(i).visible == false) {
+						aqe.get(i).visible = true;
+						i = 0;
+					}
+				}
+			}
+
+			b = MasatotalR - (MateriaLibreR() + BiomasaTotalD(organisms));
+
+			if (b > QbiomasaR) {
+				numero = aqe.size;
+				for (int i = numero - 1; i >= 0; i--) {
+					if (aqe.get(i).position.x > ancho / 2
+							&& aqe.get(i).visible == false) {
+						aqe.get(i).visible = true;
+						i = 0;
+					}
+				}
+			}
+
+			if (b > QbiomasaR) {
+				numero = aqe.size;
+				for (int i = numero - 1; i >= 0; i--) {
+					if (aqe.get(i).position.x > ancho / 2
+							&& aqe.get(i).visible == false) {
+						aqe.get(i).visible = true;
+						i = 0;
+					}
+				}
+			}
+
+			if (b > QbiomasaR) {
+				numero = aqe.size;
+				for (int i = numero - 1; i >= 0; i--) {
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == false) {
 						aqe.get(i).visible = true;
 						i = 0;
@@ -1666,7 +1666,7 @@ public class World implements Serializable {
 			if (b < QbiomasaR * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -1677,7 +1677,7 @@ public class World implements Serializable {
 			if (b < QbiomasaR * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -1690,7 +1690,7 @@ public class World implements Serializable {
 			if (b < QbiomasaR * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -1701,7 +1701,7 @@ public class World implements Serializable {
 			if (b < QbiomasaR * (-1)) {
 				numero = aqe.size;
 				for (int i = numero - 1; i >= 0; i--) {
-					if (aqe.get(i).posicion.x > ancho / 2
+					if (aqe.get(i).position.x > ancho / 2
 							&& aqe.get(i).visible == true) {
 						aqe.get(i).visible = false;
 						i = 0;
@@ -2241,18 +2241,18 @@ public class World implements Serializable {
 
 			for (int e = indiceDer; e < organisms.size; e++) {
 
-				if (organisms.get(e).posicion.x > ancho / 2) {
+				if (organisms.get(e).position.x > ancho / 2) {
 
 					indiceDer++;
 
-					organisms.get(e).posicion.y = y;
-					organisms.get(e).posicion.x = x;
+					organisms.get(e).position.y = y;
+					organisms.get(e).position.x = x;
 
-					x = (int) (x + organisms.get(e).ancho * 4);
+					x = (int) (x + organisms.get(e).width * 4);
 
-					if (x > ancho - organisms.get(e).ancho * 4) {
+					if (x > ancho - organisms.get(e).width * 4) {
 						x = (ancho / 2) + 10;
-						y = y - organisms.get(e).alto * 6;
+						y = y - organisms.get(e).height * 6;
 					}
 
 					if (y <= 10) {
@@ -2271,17 +2271,17 @@ public class World implements Serializable {
 
 			for (int e = indiceIz; e < organisms.size; e++) {
 
-				if (organisms.get(e).posicion.x < ancho / 2) {
+				if (organisms.get(e).position.x < ancho / 2) {
 					indiceIz++;
 
-					organisms.get(e).posicion.y = y2;
-					organisms.get(e).posicion.x = x2;
+					organisms.get(e).position.y = y2;
+					organisms.get(e).position.x = x2;
 
-					x2 = (int) (x2 + organisms.get(e).ancho * 4);
+					x2 = (int) (x2 + organisms.get(e).width * 4);
 
-					if (x2 > (ancho / 2) - organisms.get(e).ancho * 4) {
+					if (x2 > (ancho / 2) - organisms.get(e).width * 4) {
 						x2 = 10;
-						y2 = y2 - organisms.get(e).alto * 6;
+						y2 = y2 - organisms.get(e).height * 6;
 					}
 
 					if (y2 <= 10) {
@@ -2335,12 +2335,12 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = agen.size;
 			for (int i = index - 1; i >= 0; i--) {
-				agen.get(i).cantidad = 1;
+				agen.get(i).quantity = 1;
 				agen.removeValue(agen.get(i), true);
 			}
 
-			aor.get(0).genotipo.cantidad = 0;
-			agen.add(aor.get(0).genotipo);// agrege el primer alelo
+			aor.get(0).genotype.quantity = 0;
+			agen.add(aor.get(0).genotype);// agrege el primer alelo
 
 			for (int i = 0; i < aor.size; i++) {
 
@@ -2348,15 +2348,15 @@ public class World implements Serializable {
 
 				for (int j = 0; j < agen.size; j++) {
 
-					if (agen.get(j).nombre.equals(aor.get(i).genotipo.nombre)) {
+					if (agen.get(j).name.equals(aor.get(i).genotype.name)) {
 
 						igual = true;
-						agen.get(j).cantidad++;
+						agen.get(j).quantity++;
 					}
 
 				}
 				if (igual == false) {
-					agen.add(aor.get(i).genotipo);
+					agen.add(aor.get(i).genotype);
 				}
 			}
 
@@ -2370,37 +2370,37 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = agen.size;
 			for (int i = index - 1; i >= 0; i--) {
-				agen.get(i).cantidad = 1;
+				agen.get(i).quantity = 1;
 				agen.removeValue(agen.get(i), true);
 			}
 
 			int pos = 0;
 			for (int i = 0; i < organisms.size; i++) {
-				if (organisms.get(i).posicion.x < ancho / 2) {
+				if (organisms.get(i).position.x < ancho / 2) {
 					pos = i;
 					i = organisms.size;
 				}
 			}
 
-			aor.get(pos).genotipo.cantidad = 0;
-			agen.add(aor.get(pos).genotipo);// agrege el primer alelo
+			aor.get(pos).genotype.quantity = 0;
+			agen.add(aor.get(pos).genotype);// agrege el primer alelo
 
 			for (int i = 0; i < aor.size; i++) {
 
 				boolean igual = false;
-				if (aor.get(i).posicion.x < ancho / 2) {
+				if (aor.get(i).position.x < ancho / 2) {
 					for (int j = 0; j < agen.size; j++) {
 
-						if (agen.get(j).nombre
-								.equals(aor.get(i).genotipo.nombre)) {
+						if (agen.get(j).name
+								.equals(aor.get(i).genotype.name)) {
 
 							igual = true;
-							agen.get(j).cantidad++;
+							agen.get(j).quantity++;
 						}
 
 					}
 					if (igual == false) {
-						agen.add(aor.get(i).genotipo);
+						agen.add(aor.get(i).genotype);
 					}
 				}
 			}
@@ -2414,37 +2414,37 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = agen.size;
 			for (int i = index - 1; i >= 0; i--) {
-				agen.get(i).cantidad = 1;
+				agen.get(i).quantity = 1;
 				agen.removeValue(agen.get(i), true);
 			}
 
 			int pos = 0;
 			for (int i = 0; i < organisms.size; i++) {
-				if (organisms.get(i).posicion.x > ancho / 2) {
+				if (organisms.get(i).position.x > ancho / 2) {
 					pos = i;
 					i = organisms.size;
 				}
 			}
 
-			aor.get(pos).genotipo.cantidad = 0;
-			agen.add(aor.get(pos).genotipo);// agrege el primer alelo
+			aor.get(pos).genotype.quantity = 0;
+			agen.add(aor.get(pos).genotype);// agrege el primer alelo
 
 			for (int i = 0; i < aor.size; i++) {
 
 				boolean igual = false;
-				if (aor.get(i).posicion.x > ancho / 2) {
+				if (aor.get(i).position.x > ancho / 2) {
 					for (int j = 0; j < agen.size; j++) {
 
-						if (agen.get(j).nombre
-								.equals(aor.get(i).genotipo.nombre)) {
+						if (agen.get(j).name
+								.equals(aor.get(i).genotype.name)) {
 
 							igual = true;
-							agen.get(j).cantidad++;
+							agen.get(j).quantity++;
 						}
 
 					}
 					if (igual == false) {
-						agen.add(aor.get(i).genotipo);
+						agen.add(aor.get(i).genotype);
 					}
 				}
 			}
@@ -2458,12 +2458,12 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = afen.size;
 			for (int i = index - 1; i >= 0; i--) {
-				afen.get(i).cantidad = 1;
+				afen.get(i).quantity = 1;
 				afen.removeValue(afen.get(i), true);
 			}
 
-			aor.get(0).fenotipo.cantidad = 0;
-			afen.add(aor.get(0).fenotipo);// agrege el primer alelo
+			aor.get(0).phenotype.quantity = 0;
+			afen.add(aor.get(0).phenotype);// agrege el primer alelo
 
 			for (int i = 0; i < aor.size; i++) {
 
@@ -2471,15 +2471,15 @@ public class World implements Serializable {
 
 				for (int j = 0; j < afen.size; j++) {
 
-					if (afen.get(j).nombre.equals(aor.get(i).fenotipo.nombre)) {
+					if (afen.get(j).name.equals(aor.get(i).phenotype.name)) {
 
 						igual = true;
-						afen.get(j).cantidad++;
+						afen.get(j).quantity++;
 					}
 
 				}
 				if (igual == false) {
-					afen.add(aor.get(i).fenotipo);
+					afen.add(aor.get(i).phenotype);
 				}
 			}
 
@@ -2493,37 +2493,37 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = afen.size;
 			for (int i = index - 1; i >= 0; i--) {
-				afen.get(i).cantidad = 1;
+				afen.get(i).quantity = 1;
 				afen.removeValue(afen.get(i), true);
 			}
 
 			int pos = 0;
 			for (int i = 0; i < organisms.size; i++) {
-				if (organisms.get(i).posicion.x < ancho / 2) {
+				if (organisms.get(i).position.x < ancho / 2) {
 					pos = i;
 					i = organisms.size;
 				}
 			}
 
-			aor.get(pos).fenotipo.cantidad = 0;
-			afen.add(aor.get(pos).fenotipo);// agrege el primer alelo
+			aor.get(pos).phenotype.quantity = 0;
+			afen.add(aor.get(pos).phenotype);// agrege el primer alelo
 
 			for (int i = 0; i < aor.size; i++) {
-				if (aor.get(i).posicion.x < ancho / 2) {
+				if (aor.get(i).position.x < ancho / 2) {
 					boolean igual = false;
 
 					for (int j = 0; j < afen.size; j++) {
 
-						if (afen.get(j).nombre
-								.equals(aor.get(i).fenotipo.nombre)) {
+						if (afen.get(j).name
+								.equals(aor.get(i).phenotype.name)) {
 
 							igual = true;
-							afen.get(j).cantidad++;
+							afen.get(j).quantity++;
 						}
 
 					}
 					if (igual == false) {
-						afen.add(aor.get(i).fenotipo);
+						afen.add(aor.get(i).phenotype);
 					}
 				}
 			}
@@ -2538,37 +2538,37 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = afen.size;
 			for (int i = index - 1; i >= 0; i--) {
-				afen.get(i).cantidad = 1;
+				afen.get(i).quantity = 1;
 				afen.removeValue(afen.get(i), true);
 			}
 
 			int pos = 0;
 			for (int i = 0; i < organisms.size; i++) {
-				if (organisms.get(i).posicion.x > ancho / 2) {
+				if (organisms.get(i).position.x > ancho / 2) {
 					pos = i;
 					i = organisms.size;
 				}
 			}
 
-			aor.get(pos).fenotipo.cantidad = 0;
-			afen.add(aor.get(pos).fenotipo);// agrege el primer alelo
+			aor.get(pos).phenotype.quantity = 0;
+			afen.add(aor.get(pos).phenotype);// agrege el primer alelo
 
 			for (int i = 0; i < aor.size; i++) {
-				if (aor.get(i).posicion.x > ancho / 2) {
+				if (aor.get(i).position.x > ancho / 2) {
 					boolean igual = false;
 
 					for (int j = 0; j < afen.size; j++) {
 
-						if (afen.get(j).nombre
-								.equals(aor.get(i).fenotipo.nombre)) {
+						if (afen.get(j).name
+								.equals(aor.get(i).phenotype.name)) {
 
 							igual = true;
-							afen.get(j).cantidad++;
+							afen.get(j).quantity++;
 						}
 
 					}
 					if (igual == false) {
-						afen.add(aor.get(i).fenotipo);
+						afen.add(aor.get(i).phenotype);
 					}
 				}
 			}
@@ -2582,13 +2582,13 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = aal.size;
 			for (int i = index - 1; i >= 0; i--) {
-				aal.get(i).cantidad = 1;
+				aal.get(i).quantity = 1;
 				aal.removeValue(aal.get(i), true);
 			}
 
-			for (int i = 0; i < aor.get(0).aAlelos.size; i = i + 2) {
+			for (int i = 0; i < aor.get(0).aAlleles.size; i = i + 2) {
 
-				Allele al = aor.get(0).aAlelos.get(i);
+				Allele al = aor.get(0).aAlleles.get(i);
 				al.quantity = 0;
 				aal.add(al);
 
@@ -2604,11 +2604,11 @@ public class World implements Serializable {
 					boolean igual = false;
 					for (int j = 0; j < aal.size; j++) {
 
-						if (aal.get(j).nombre.equals(al.name)
-								&& aal.get(j).identificador == al.identifier) {
+						if (aal.get(j).name.equals(al.name)
+								&& aal.get(j).identifier == al.identifier) {
 
 							igual = true;
-							aal.get(j).cantidad++;
+							aal.get(j).quantity++;
 						}
 
 					}
@@ -2628,21 +2628,21 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = aal.size;
 			for (int i = index - 1; i >= 0; i--) {
-				aal.get(i).cantidad = 1;
+				aal.get(i).quantity = 1;
 				aal.removeValue(aal.get(i), true);
 			}// limpia la lista
 
 			int pos = 0;
 			for (int i = 0; i < organisms.size; i++) {
-				if (organisms.get(i).posicion.x < ancho / 2) {
+				if (organisms.get(i).position.x < ancho / 2) {
 					pos = i;
 					i = organisms.size;
 				}
 			}
 
-			for (int i = 0; i < aor.get(pos).aAlelos.size; i = i + 2) {
+			for (int i = 0; i < aor.get(pos).aAlleles.size; i = i + 2) {
 
-				Allele al = aor.get(pos).aAlelos.get(i);
+				Allele al = aor.get(pos).aAlleles.get(i);
 				al.quantity = 0;
 				aal.add(al);
 			} // se agregan los alelos delprimer organismo
@@ -2657,11 +2657,11 @@ public class World implements Serializable {
 						boolean igual = false;
 						for (int j = 0; j < aal.size; j++) {
 
-							if (aal.get(j).nombre.equals(al.name)
-									&& aal.get(j).identificador == al.identifier) {
+							if (aal.get(j).name.equals(al.name)
+									&& aal.get(j).identifier == al.identifier) {
 
 								igual = true;
-								aal.get(j).cantidad++;
+								aal.get(j).quantity++;
 							}
 
 						}
@@ -2682,21 +2682,21 @@ public class World implements Serializable {
 		if (aor.size > 0) {
 			int index = aal.size;
 			for (int i = index - 1; i >= 0; i--) {
-				aal.get(i).cantidad = 1;
+				aal.get(i).quantity = 1;
 				aal.removeValue(aal.get(i), true);
 			}// limpia la lista
 
 			int pos = 0;
 			for (int i = 0; i < organisms.size; i++) {
-				if (organisms.get(i).posicion.x > ancho / 2) {
+				if (organisms.get(i).position.x > ancho / 2) {
 					pos = i;
 					i = organisms.size;
 				}
 			}
 
-			for (int i = 0; i < aor.get(pos).aAlelos.size; i = i + 2) {
+			for (int i = 0; i < aor.get(pos).aAlleles.size; i = i + 2) {
 
-				Allele al = aor.get(pos).aAlelos.get(i);
+				Allele al = aor.get(pos).aAlleles.get(i);
 				al.quantity = 0;
 				aal.add(al);
 			} // se agregan los alelos delprimer organismo
@@ -2711,11 +2711,11 @@ public class World implements Serializable {
 						boolean igual = false;
 						for (int j = 0; j < aal.size; j++) {
 
-							if (aal.get(j).nombre.equals(al.name)
-									&& aal.get(j).identificador == al.identifier) {
+							if (aal.get(j).name.equals(al.name)
+									&& aal.get(j).identifier == al.identifier) {
 
 								igual = true;
-								aal.get(j).cantidad++;
+								aal.get(j).quantity++;
 							}
 
 						}
@@ -3342,12 +3342,12 @@ public class World implements Serializable {
 
 		for (int i = 0; i < aor.size; i++) {
 			if (der == true) {
-				if (aor.get(i).posicion.x > ancho / 2) {
+				if (aor.get(i).position.x > ancho / 2) {
 					cuenta = cuenta + 1;
 				}
 			}
 			if (der == false) {
-				if (aor.get(i).posicion.x < ancho / 2) {
+				if (aor.get(i).position.x < ancho / 2) {
 					cuenta = cuenta + 1;
 				}
 			}
@@ -3717,9 +3717,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3739,9 +3739,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3761,9 +3761,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3783,9 +3783,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3805,9 +3805,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3827,9 +3827,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3849,9 +3849,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3871,9 +3871,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3893,9 +3893,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}
@@ -3914,9 +3914,9 @@ public class World implements Serializable {
 						if (se.visible == true) {
 							if (er.overlaps(tr) && or.energy < or.capacity) {
 								double delta = or.capacity - or.energy;
-								or.energy = or.energy + se.energia;
-								se.energia = se.energia - delta;
-								if (se.energia <= 0) {
+								or.energy = or.energy + se.energy;
+								se.energy = se.energy - delta;
+								if (se.energy <= 0) {
 									se.visible = false;
 								}
 							}

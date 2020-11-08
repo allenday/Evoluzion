@@ -364,8 +364,8 @@ public class Organism implements Comparable<Organism> {
 		if (!male) {
 
 			for (var i = 0; i < aAlleles.size; i = i + 2) {
-				n1 = aAlleles.get(i).identificador;
-				n2 = aAlleles.get(i + 1).identificador;
+				n1 = aAlleles.get(i).identifier;
+				n2 = aAlleles.get(i + 1).identifier;
 
 				if (n1 == n2) {
 					gen.append(";a").append(n1).append(" / a").append(n2);
@@ -386,12 +386,12 @@ public class Organism implements Comparable<Organism> {
 
 			for (var i = 0; i < aAlleles.size; i = i + salto) {
 
-				if (!aAlleles.get(i).nombre.equals(world.tx.color)
-						&& !aAlleles.get(i).nombre.equals(world.tx.longevidad)
-						&& !aAlleles.get(i).nombre.equals(world.tx.fidelidadADNpol)) {
+				if (!aAlleles.get(i).name.equals(world.tx.color)
+						&& !aAlleles.get(i).name.equals(world.tx.longevidad)
+						&& !aAlleles.get(i).name.equals(world.tx.fidelidadADNpol)) {
 
-					n1 = aAlleles.get(i).identificador;
-					n2 = aAlleles.get(i + 1).identificador;
+					n1 = aAlleles.get(i).identifier;
+					n2 = aAlleles.get(i + 1).identifier;
 
 					if (n1 == n2) {
 						gen.append(";a").append(n1).append(" / a").append(n2);
@@ -405,11 +405,11 @@ public class Organism implements Comparable<Organism> {
 
 				}
 
-				if (aAlleles.get(i).nombre.equals(world.tx.color)
-						|| aAlleles.get(i).nombre.equals(world.tx.longevidad)
-						|| aAlleles.get(i).nombre.equals(world.tx.fidelidadADNpol)) {
+				if (aAlleles.get(i).name.equals(world.tx.color)
+						|| aAlleles.get(i).name.equals(world.tx.longevidad)
+						|| aAlleles.get(i).name.equals(world.tx.fidelidadADNpol)) {
 
-					n1 = aAlleles.get(i).identificador;
+					n1 = aAlleles.get(i).identifier;
 
 					gen.append(";a").append(n1).append(" /");
 					salto = 1;
@@ -1200,7 +1200,7 @@ public class Organism implements Comparable<Organism> {
 
 	public void verMarcado(ShapeRenderer sr, SpriteBatch sb, BitmapFont f) {
 		if (mark == -1) {
-			sr.begin(ShapeType.Rectangle);
+			sr.begin(ShapeType.Filled);
 
 			sr.setColor(Color.GREEN);
 			sr.rect(border.x - 2, border.y - 2, border.width + 4, border.height + 4);
@@ -1222,7 +1222,7 @@ public class Organism implements Comparable<Organism> {
 
 	public void verBorde(ShapeRenderer sr) {
 
-		sr.begin(ShapeType.Rectangle);
+		sr.begin(ShapeType.Filled);
 
 		sr.setColor(Color.CYAN);
 		sr.rect(border.x, border.y, border.width, border.height);
