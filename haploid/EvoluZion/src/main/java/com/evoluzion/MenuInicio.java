@@ -34,7 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -57,7 +57,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.OrderedMap;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MenuInicio implements Screen, Serializable {
 
@@ -505,7 +508,7 @@ public class MenuInicio implements Screen, Serializable {
 	public void render(float delta) {
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// System.out.println(ingles);
 		camara.update();
@@ -572,7 +575,7 @@ public class MenuInicio implements Screen, Serializable {
 
 		batch.end();
 
-		rectangulo.begin(ShapeType.Rectangle);
+		rectangulo.begin(ShapeType.Filled);
 		rectangulo.setColor(Color.WHITE);
 		rectangulo.rect(20 + orX, 200 + orY, 350, 150); // panel genes mutar
 		rectangulo.rect(650 + orX, -140 + orY, 355, 490);
@@ -667,7 +670,9 @@ public class MenuInicio implements Screen, Serializable {
 			// eventos
 			// en este caso se us apara los botones
 
-			stage = new Stage(ancho, alto, true);
+			Viewport viewport = new ScreenViewport();
+			viewport.update((int) ancho, (int) alto, true);
+			stage = new Stage(viewport);
 			stage.clear();
 			Gdx.input.setInputProcessor(stage);
 
@@ -1687,8 +1692,7 @@ public class MenuInicio implements Screen, Serializable {
 	}
 
 	@Override
-	public void read(Json json, OrderedMap<String, Object> jsonData) {
-		// TODO Auto-generated method stub
+	public void read(Json json, JsonValue jsonValue) {
 
 	}
 

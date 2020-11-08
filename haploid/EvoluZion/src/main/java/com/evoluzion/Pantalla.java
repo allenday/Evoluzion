@@ -27,7 +27,7 @@ import com.badlogic.gdx.Input;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,6 +44,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Pantalla implements Screen {
 
@@ -161,7 +163,7 @@ public class Pantalla implements Screen {
 
 		// Game loop
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camara.update();
 		stage.act(delta);
@@ -255,17 +257,17 @@ public class Pantalla implements Screen {
 
 		if (m.verFrontera == true) {
 
-			frontera.begin(ShapeType.FilledRectangle);
+			frontera.begin(ShapeType.Filled);
 			frontera.setColor(Color.CYAN);
-			frontera.filledRect(m.frontera.x, m.frontera.y, m.frontera.width,
+			frontera.rect(m.frontera.x, m.frontera.y, m.frontera.width,
 					m.frontera.height);
 			frontera.end();
 		}
 
-		caja.begin(ShapeType.FilledRectangle);
+		caja.begin(ShapeType.Filled);
 
 		caja.setColor(Color.BLACK);
-		caja.filledRect(0, m.alto - 30, m.ancho, 30);
+		caja.rect(0, m.alto - 30, m.ancho, 30);
 		caja.end();
 		batch.begin();
 		fuente.draw(batch, "|h: " + m.horas + " |m: " + m.addCero2().toString()
@@ -285,9 +287,9 @@ public class Pantalla implements Screen {
 
 			if (m.pausaGame == -1) {
 
-				pausaCaja.begin(ShapeType.FilledRectangle);
+				pausaCaja.begin(ShapeType.Filled);
 				pausaCaja.setColor(Color.BLACK);
-				pausaCaja.filledRect((m.ancho / 2) - 100, (m.alto / 2) - 25,
+				pausaCaja.rect((m.ancho / 2) - 100, (m.alto / 2) - 25,
 						200, 50);
 				pausaCaja.end();
 
@@ -301,10 +303,10 @@ public class Pantalla implements Screen {
 
 				if (cb_verDatos.isChecked()) {
 
-					caja.begin(ShapeType.FilledRectangle);
+					caja.begin(ShapeType.Filled);
 					caja.setColor(Color.BLACK);
 
-					caja.filledRect(0, m.alto - 300, 180, 300);
+					caja.rect(0, m.alto - 300, 180, 300);
 					caja.end();
 
 					batch.begin();
@@ -363,10 +365,10 @@ public class Pantalla implements Screen {
 				// panel izquierdo
 				if (cb_verDatos.isChecked()) {
 
-					caja.begin(ShapeType.FilledRectangle);
+					caja.begin(ShapeType.Filled);
 					caja.setColor(Color.BLACK);
 
-					caja.filledRect(0, m.alto - 300, 180, 300);
+					caja.rect(0, m.alto - 300, 180, 300);
 					caja.end();
 
 					batch.begin();
@@ -425,10 +427,10 @@ public class Pantalla implements Screen {
 
 				if (cb_verDatos.isChecked()) {
 
-					caja.begin(ShapeType.FilledRectangle);
+					caja.begin(ShapeType.Filled);
 					caja.setColor(Color.BLACK);
 
-					caja.filledRect(840, m.alto - 300, 180, 300);
+					caja.rect(840, m.alto - 300, 180, 300);
 					caja.end();
 
 					batch.begin();
@@ -558,7 +560,9 @@ public class Pantalla implements Screen {
 			// eventos
 			// en este caso se us apara los botones
 
-			stage = new Stage(width, height, true);
+			Viewport viewport = new ScreenViewport();
+			viewport.update(width, height, true);
+			stage = new Stage(viewport);
 			stage.clear();
 			Gdx.input.setInputProcessor(stage);
 
