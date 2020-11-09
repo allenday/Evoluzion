@@ -122,7 +122,7 @@ public class Screen implements Screen {
 		}
 
 		camara = new OrthographicCamera();
-		camara.setToOrtho(false, world.ancho, world.alto);
+		camara.setToOrtho(false, world.width, world.height);
 
 		batch = new SpriteBatch();
 		caja = new ShapeRenderer();
@@ -206,7 +206,7 @@ public class Screen implements Screen {
 
 			for (count1 = quantity - 1; count1 >= 0; count1--) {
 				se = world.ase.get(count1);
-				se.verObjeto(batch);
+				se.viewObject(batch);
 			}
 		}
 		// dibujamos Qenergia
@@ -215,7 +215,7 @@ public class Screen implements Screen {
 
 			for (count2 = quantity2 - 1; count2 >= 0; count2--) {
 				qe = world.aqe.get(count2);
-				qe.verObjeto(batch);
+				qe.viewObject(batch);
 			}
 		}
 
@@ -246,7 +246,7 @@ public class Screen implements Screen {
 			}
 
 			for (Qenergy qe : world.aqe) {
-				qe.verBorde(borde);
+				qe.viewBorder(borde);
 			}
 		}
 
@@ -262,17 +262,17 @@ public class Screen implements Screen {
 		caja.begin(ShapeType.FilledRectangle);
 
 		caja.setColor(Color.BLACK);
-		caja.filledRect(0, world.alto - 30, world.ancho, 30);
+		caja.filledRect(0, world.height - 30, world.width, 30);
 		caja.end();
 		batch.begin();
-		fuente.draw(batch, "|h: " + world.horas + " |m: " + world.addCero2().toString()
-						+ world.minutos + " |s: " + world.addCero().toString() + world.seconds,
-				450, world.alto - 60);
+		fuente.draw(batch, "|h: " + world.hours + " |m: " + world.addCero2().toString()
+						+ world.minutes + " |s: " + world.addCero().toString() + world.seconds,
+				450, world.height - 60);
 
-		if (world.antibiotico == 1) {
-			fuente.draw(batch, tx.antibioticoON, 450, world.alto - 80);
+		if (world.antibiotic == 1) {
+			fuente.draw(batch, tx.antibioticoON, 450, world.height - 80);
 		} else {
-			fuente.draw(batch, tx.antibioticoOFF, 455, world.alto - 80);
+			fuente.draw(batch, tx.antibioticoOFF, 455, world.height - 80);
 		}
 
 		batch.end();
@@ -281,7 +281,7 @@ public class Screen implements Screen {
 
 			pausaCaja.begin(ShapeType.FilledRectangle);
 			pausaCaja.setColor(Color.BLACK);
-			pausaCaja.filledRect((world.ancho / 2) - 100, (world.alto / 2) - 25, 200,
+			pausaCaja.filledRect((world.width / 2) - 100, (world.height / 2) - 25, 200,
 					50);
 			pausaCaja.end();
 
@@ -298,47 +298,47 @@ public class Screen implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 300, 180, 300);
+				caja.filledRect(0, world.height - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
 
 				fuente.setColor(Color.WHITE);
-				fuente.draw(batch, tx.Organismos + world.organisms.size, 5, world.alto - 60);
+				fuente.draw(batch, tx.Organismos + world.organisms.size, 5, world.height - 60);
 
 				int masatotal = (int) (world.BiomasaTotal(world.organisms) + world
 						.MateriaLibre());
-				fuente.draw(batch, tx.masaTotal + masatotal, 5, world.alto - 80);
-				fuente.draw(batch, tx.masa + world.MateriaLibre(), 5, world.alto - 100);
+				fuente.draw(batch, tx.masaTotal + masatotal, 5, world.height - 80);
+				fuente.draw(batch, tx.masa + world.MateriaLibre(), 5, world.height - 100);
 				fuente.draw(batch, tx.biomasa + world.BiomasaTotal(world.organisms), 5,
-						world.alto - 120);
+						world.height - 120);
 				fuente.draw(
 						batch,
 						tx.velocidadMedia
 								+ format.format(world.velocidadMedia(world.organisms)), 5,
-						world.alto - 140);
+						world.height - 140);
 				fuente.draw(batch,
 						tx.tamanoMedi + format.format(world.tamanoMedio(world.organisms)),
-						5, world.alto - 160);
+						5, world.height - 160);
 				fuente.draw(
 						batch,
 						tx.tasaMutacionMedia
 								+ format2.format(world.tasaMutMedio(world.organisms)), 5,
-						world.alto - 180);
+						world.height - 180);
 				fuente.draw(batch,
 						tx.vidaMdia + format.format(world.longevidadMedio(world.organisms))
-								+ " (s)", 5, world.alto - 200);
+								+ " (s)", 5, world.height - 200);
 				fuente.draw(batch,
 						tx.resistensiaATB + world.cantidadResistentes(world.organisms), 5,
-						world.alto - 220);
+						world.height - 220);
 				fuente.draw(batch,
-						tx.temperatura + format.format(world.temperatura), 5,
-						world.alto - 240);
+						tx.temperatura + format.format(world.temperature), 5,
+						world.height - 240);
 				fuente.draw(
 						batch,
 						tx.temOptimaMedia
 								+ format.format(world.temOptimaMedia(world.organisms)), 5,
-						world.alto - 260);
+						world.height - 260);
 
 				batch.end();
 			}
@@ -348,20 +348,20 @@ public class Screen implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 540, 180, 250);
+				caja.filledRect(0, world.height - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
 
-				fuente.draw(batch, tx.alelo + "s:", 5, world.alto - 300);
+				fuente.draw(batch, tx.alelo + "s:", 5, world.height - 300);
 				// mostrar % de alelos
-				world.colectarAlelos(world.organisms, world.aAlelos);
+				world.colectarAlelos(world.organisms, world.alleles);
 
-				number = world.aAlelos.size;
-				float renglon = world.alto - 330;
+				number = world.alleles.size;
+				float renglon = world.height - 330;
 				for (int i = 0; i < number; i++) {
 
-					Allele al = world.aAlelos.get(i);
+					Allele al = world.alleles.get(i);
 
 					if (!al.name.equals(tx.color)
 							|| !al.name.equals(tx.longevidad)
@@ -406,49 +406,49 @@ public class Screen implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 300, 180, 300);
+				caja.filledRect(0, world.height - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
 
 				fuente.setColor(Color.WHITE);
 				fuente.draw(batch,
-						tx.Organismos + world.numeroI, 5,
-						world.alto - 60);
+						tx.Organismos + world.numberI, 5,
+						world.height - 60);
 
 				int masatotal = world.BiomasaTotalI(world.organisms) + world
 						.MateriaLibreL();
-				fuente.draw(batch, tx.masaTotal + masatotal, 5, world.alto - 80);
-				fuente.draw(batch, tx.masa + world.MateriaLibreL(), 5, world.alto - 100);
+				fuente.draw(batch, tx.masaTotal + masatotal, 5, world.height - 80);
+				fuente.draw(batch, tx.masa + world.MateriaLibreL(), 5, world.height - 100);
 				fuente.draw(batch, tx.biomasa + world.BiomasaTotalI(world.organisms), 5,
-						world.alto - 120);
+						world.height - 120);
 				fuente.draw(
 						batch,
 						tx.velocidadMedia
 								+ format.format(world.velocidadMediaI(world.organisms)), 5,
-						world.alto - 140);
+						world.height - 140);
 				fuente.draw(batch,
 						tx.tamanoMedi + format.format(world.tamanoMedioI(world.organisms)),
-						5, world.alto - 160);
+						5, world.height - 160);
 				fuente.draw(
 						batch,
 						tx.tasaMutacionMedia
 								+ format2.format(world.tasaMutMedioI(world.organisms)), 5,
-						world.alto - 180);
+						world.height - 180);
 				fuente.draw(batch,
 						tx.vidaMdia + format.format(world.longevidadMedioI(world.organisms))
-								+ " (s)", 5, world.alto - 200);
+								+ " (s)", 5, world.height - 200);
 				fuente.draw(batch,
 						tx.resistensiaATB + world.cantidadResistentesI(world.organisms), 5,
-						world.alto - 220);
+						world.height - 220);
 				fuente.draw(batch,
-						tx.temperatura + format.format(world.temperatura), 5,
-						world.alto - 240);
+						tx.temperatura + format.format(world.temperature), 5,
+						world.height - 240);
 				fuente.draw(
 						batch,
 						tx.temOptimaMedia
 								+ format.format(world.temOptimaMediaI(world.organisms)), 5,
-						world.alto - 260);
+						world.height - 260);
 
 				batch.end();
 			}
@@ -458,20 +458,20 @@ public class Screen implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 540, 180, 250);
+				caja.filledRect(0, world.height - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
 
-				fuente.draw(batch, tx.alelo + "s:", 5, world.alto - 300);
+				fuente.draw(batch, tx.alelo + "s:", 5, world.height - 300);
 				// mostrar % de alelos
-				world.colectarAlelosI(world.organisms, world.aAlelos);
+				world.colectarAlelosI(world.organisms, world.alleles);
 
-				number = world.aAlelos.size;
-				float renglon = world.alto - 330;
+				number = world.alleles.size;
+				float renglon = world.height - 330;
 				for (int i = number - 1; i >= 0; i--) {
 
-					Allele al = world.aAlelos.get(i);
+					Allele al = world.alleles.get(i);
 
 					if (!al.name.equals(tx.color)
 							|| !al.name.equals(tx.longevidad)
@@ -512,50 +512,50 @@ public class Screen implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(840, world.alto - 300, 180, 300);
+				caja.filledRect(840, world.height - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
 
 				fuente.setColor(Color.WHITE);
 				fuente.draw(batch,
-						tx.Organismos + world.numeroD, 840,
-						world.alto - 60);
+						tx.Organismos + world.numberD, 840,
+						world.height - 60);
 
 				int masatotalD = world.BiomasaTotalD(world.organisms) + world
 						.MateriaLibreR();
-				fuente.draw(batch, tx.masaTotal + masatotalD, 840, world.alto - 80);
+				fuente.draw(batch, tx.masaTotal + masatotalD, 840, world.height - 80);
 				fuente.draw(batch, tx.masa + world.MateriaLibreR(), 840,
-						world.alto - 100);
+						world.height - 100);
 				fuente.draw(batch, tx.biomasa + world.BiomasaTotalD(world.organisms), 840,
-						world.alto - 120);
+						world.height - 120);
 				fuente.draw(
 						batch,
 						tx.velocidadMedia
 								+ format.format(world.velocidadMediaD(world.organisms)),
-						840, world.alto - 140);
+						840, world.height - 140);
 				fuente.draw(batch,
 						tx.tamanoMedi + format.format(world.tamanoMedioD(world.organisms)),
-						840, world.alto - 160);
+						840, world.height - 160);
 				fuente.draw(
 						batch,
 						tx.tasaMutacionMedia
 								+ format2.format(world.tasaMutMedioD(world.organisms)), 840,
-						world.alto - 180);
+						world.height - 180);
 				fuente.draw(batch,
 						tx.vidaMdia + format.format(world.longevidadMedioD(world.organisms))
-								+ " (s)", 840, world.alto - 200);
+								+ " (s)", 840, world.height - 200);
 				fuente.draw(batch,
 						tx.resistensiaATB + world.cantidadResistentesD(world.organisms),
-						840, world.alto - 220);
+						840, world.height - 220);
 				fuente.draw(batch,
-						tx.temperatura + format.format(world.temperatura), 840,
-						world.alto - 240);
+						tx.temperatura + format.format(world.temperature), 840,
+						world.height - 240);
 				fuente.draw(
 						batch,
 						tx.temOptimaMedia
 								+ format.format(world.temOptimaMediaD(world.organisms)),
-						840, world.alto - 260);
+						840, world.height - 260);
 
 				batch.end();
 			}
@@ -565,20 +565,20 @@ public class Screen implements Screen {
 				caja.begin(ShapeType.FilledRectangle);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(840, world.alto - 540, 180, 250);
+				caja.filledRect(840, world.height - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
 
-				fuente.draw(batch, tx.alelo + "s:", 840, world.alto - 300);
+				fuente.draw(batch, tx.alelo + "s:", 840, world.height - 300);
 				// mostrar % de alelos
-				world.colectarAlelosD(world.organisms, world.aAlelos);
+				world.colectarAlelosD(world.organisms, world.alleles);
 
-				number = world.aAlelos.size;
-				float renglon = world.alto - 330;
+				number = world.alleles.size;
+				float renglon = world.height - 330;
 				for (int i = number - 1; i >= 0; i--) {
 
-					Allele al = world.aAlelos.get(i);
+					Allele al = world.alleles.get(i);
 
 					if (!al.name.equals(tx.color)
 							|| !al.name.equals(tx.longevidad)
@@ -716,80 +716,80 @@ public class Screen implements Screen {
 			bCollect.setHeight(20);
 			bCollect.setX(200);
 			bCollect.setX(0);
-			bCollect.setY(world.alto - 20);
+			bCollect.setY(world.height - 20);
 
 			b_guardar = new TextButton(tx.menuGuardar, estilo);
 			b_guardar.setWidth(130);
 			b_guardar.setHeight(20);
 			b_guardar.setX(130);
-			b_guardar.setY(world.alto - 20);
+			b_guardar.setY(world.height - 20);
 
 			b_colectarP = new TextButton(tx.guardarTodos, estilo);
 			b_colectarP.setWidth(130);
 			b_colectarP.setHeight(20);
 			b_colectarP.setX(130);
-			b_colectarP.setY(world.alto - 65);
+			b_colectarP.setY(world.height - 65);
 
 			b_colectarPM = new TextButton(tx.guardarMarcados, estilo);
 			b_colectarPM.setWidth(130);
 			b_colectarPM.setHeight(20);
 			b_colectarPM.setX(130);
-			b_colectarPM.setY(world.alto - 88);
+			b_colectarPM.setY(world.height - 88);
 
 			b_colectarPnM = new TextButton(tx.guardarNoMarcados, estilo);
 			b_colectarPnM.setWidth(130);
 			b_colectarPnM.setHeight(20);
 			b_colectarPnM.setX(130);
-			b_colectarPnM.setY(world.alto - 111);
+			b_colectarPnM.setY(world.height - 111);
 
 			bSelectAll = new TextButton(tx.marcarDesmarcar, estilo);
 			bSelectAll.setWidth(130);
 			bSelectAll.setHeight(20);
 			bSelectAll.setX(260);
-			bSelectAll.setY(world.alto - 20);
+			bSelectAll.setY(world.height - 20);
 
 			b_antibiotico = new TextButton(tx.antibiotico, estilo);
 			b_antibiotico.setWidth(130);
 			b_antibiotico.setHeight(20);
 			b_antibiotico.setX(390);
-			b_antibiotico.setY(world.alto - 20);
+			b_antibiotico.setY(world.height - 20);
 
 			b_frontera = new TextButton(tx.frontera, estilo);
 			b_frontera.setWidth(130);
 			b_frontera.setHeight(20);
 			b_frontera.setX(390);
-			b_frontera.setY(world.alto - 42);
+			b_frontera.setY(world.height - 42);
 
 			bCatastrophe = new TextButton(tx.catastrofe, estilo);
 			bCatastrophe.setWidth(140);
 			bCatastrophe.setHeight(20);
 			bCatastrophe.setX(520);
-			bCatastrophe.setY(world.alto - 20);
+			bCatastrophe.setY(world.height - 20);
 
 			b_stop = new TextButton(tx.parar, estilo);
 			b_stop.setWidth(130);
 			b_stop.setHeight(20);
 			b_stop.setX(660);
-			b_stop.setY(world.alto - 20);
+			b_stop.setY(world.height - 20);
 
 			bPause = new TextButton(tx.playPausa, estilo);
 			bPause.setWidth(130);
 			bPause.setHeight(20);
 			bPause.setX(770);
-			bPause.setY(world.alto - 20);
+			bPause.setY(world.height - 20);
 
 			b_ordenar = new TextButton(tx.ordenar, estilo);
 			b_ordenar.setVisible(false);
 			b_ordenar.setWidth(130);
 			b_ordenar.setHeight(35);
-			b_ordenar.setX((world.ancho / 2) - 130 / 2);
+			b_ordenar.setX((world.width / 2) - 130 / 2);
 			b_ordenar.setY(5);
 
 			bExit = new TextButton(tx.guardarYcerrar, estilo);
 			bExit.setWidth(130);
 			bExit.setHeight(20);
 			bExit.setX(900);
-			bExit.setY(world.alto - 20);
+			bExit.setY(world.height - 20);
 
 			CheckBoxStyle checkBoxStyle = new CheckBoxStyle();
 			checkBoxStyle.checkboxOff = sk_skin2.getDrawable("boxN0");
@@ -1088,7 +1088,7 @@ public class Screen implements Screen {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-					world.antibiotico = world.antibiotico * (-1);
+					world.antibiotic = world.antibiotic * (-1);
 
 					return true;
 				}
@@ -1151,25 +1151,25 @@ public class Screen implements Screen {
 						}
 					}
 					if (world.verFrontera == true) {
-						if (world.numeroD == world
-								.numeroI) {
-							if (world.indiceDer == world.numeroD) {
+						if (world.numberD == world
+								.numberI) {
+							if (world.indiceDer == world.numberD) {
 								world.indiceDer = 0;
 								world.indiceIz = 0;
 								b_ordenar.setText(tx.ordenar);
 							}
 						}
-						if (world.numeroD > world
-								.numeroI) {
-							if (world.indiceDer == world.numeroD) {
+						if (world.numberD > world
+								.numberI) {
+							if (world.indiceDer == world.numberD) {
 								world.indiceDer = 0;
 								world.indiceIz = 0;
 								b_ordenar.setText(tx.ordenar);
 							}
 						}
-						if (world.numeroD < world
-								.numeroI) {
-							if (world.indiceIz == world.numeroI) {
+						if (world.numberD < world
+								.numberI) {
+							if (world.indiceIz == world.numberI) {
 								world.indiceDer = 0;
 								world.indiceIz = 0;
 								b_ordenar.setText(tx.ordenar);

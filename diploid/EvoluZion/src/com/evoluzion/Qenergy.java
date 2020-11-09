@@ -29,7 +29,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Qenergy {
 
-	World m;
+	World world;
 
 	private final Sprite image;
 	double mass;
@@ -41,15 +41,15 @@ public class Qenergy {
 	Rectangle border;
 	boolean visible = true;
 
-	public Qenergy(Vector2 position, boolean move, int mass, World m) {
+	public Qenergy(Vector2 position, boolean move, int mass, World world) {
 
-		this.m = m;
+		this.world = world;
 		this.mass = mass;
 		this.position = position;
 		direction = new Vector2();
 
-		width = (width / m.zoom);
-		height = (height / m.zoom);
+		width = (width / world.zoom);
+		height = (height / world.zoom);
 
 		speed = 30;
 		border = new Rectangle();
@@ -65,13 +65,13 @@ public class Qenergy {
 		}
 		direction.x = 0;
 
-		image = new Sprite(m.organismTexture.getRegions().get(23));
+		image = new Sprite(world.organismTexture.getRegions().get(23));
 		image.setPosition(this.position.x, this.position.y);
 		image.setSize(width, height);
 
 	}
 
-	public void verObjeto(SpriteBatch sb) {
+	public void viewObject(SpriteBatch sb) {
 		if (visible == true) {
 			sb.begin();
 			image.draw(sb);
@@ -90,7 +90,7 @@ public class Qenergy {
 		}
 	}
 
-	public void verBorde(ShapeRenderer sr) {
+	public void viewBorder(ShapeRenderer sr) {
 
 		sr.begin(ShapeType.Rectangle);
 
@@ -112,10 +112,10 @@ public class Qenergy {
 		if (position.y < 0) {
 			reset1();
 		}
-		if (position.y > m.alto - 50 && direction.y == 0) {
+		if (position.y > world.height - 50 && direction.y == 0) {
 			reset1();
 		}
-		if (position.x < 0 || position.x > m.ancho) {
+		if (position.x < 0 || position.x > world.width) {
 			reset2();
 		}
 
@@ -123,19 +123,19 @@ public class Qenergy {
 
 	public void reset1() {
 		if (direction.y != 0) {
-			position.y = m.alto;
+			position.y = world.height;
 		}
 		if (direction.y == 0) {
-			position.y = (float) (Math.random() * m.alto);
+			position.y = (float) (Math.random() * world.height);
 		}
 	}
 
 	public void reset2() {
 
-		if (position.x < m.ancho / 2) {
-			position.x = (float) (Math.random() * m.ancho / 2);
+		if (position.x < world.width / 2) {
+			position.x = (float) (Math.random() * world.width / 2);
 		}
-		if (position.x > m.ancho / 2) {
+		if (position.x > world.width / 2) {
 			position.x = (float) Math.random() * (width - (width / 2)) + width
 					/ 2;
 		}
@@ -143,7 +143,7 @@ public class Qenergy {
 
 	public void reset3() {
 
-		position.x = m.ancho / 2;
+		position.x = world.width / 2;
 	}
 
 }

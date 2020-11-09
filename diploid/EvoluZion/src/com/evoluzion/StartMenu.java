@@ -1977,7 +1977,7 @@ public class StartMenu implements Screen, Serializable {
 					m.tiempoATB = tiempoATB;
 					m.maxTime = tiempoMaximo;
 					m.maximo = numOrgMax;
-					m.temperatura = Temperatura;
+					m.temperature = Temperatura;
 					m.minStar1 = Start1;
 					m.minStar2 = Start2;
 					m.deltaTime1 = DeltaTiempo1;
@@ -2111,10 +2111,10 @@ public class StartMenu implements Screen, Serializable {
 					m.setTiempo();
 
 					m.seconds = 0;
-					m.segundos2 = 0;
-					m.segundos3 = 0;
+					m.seconds2 = 0;
+					m.seconds3 = 0;
 					m.seconds4 = 0;
-					m.segundos5 = 0;
+					m.seconds5 = 0;
 
 					// m.colectorEspesiesTotales();
 

@@ -29,78 +29,78 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Senergy {
 
-	World m;
+	World world;
 
-	private final Sprite imagen;
+	private final Sprite image;
 	double energia;
-	float ancho = 7;
-	float alto = 7;
+	float width = 7;
+	float height = 7;
 	int speed;
-	Vector2 posicion;
-	Vector2 direccion;
-	Rectangle borde;
+	Vector2 position;
+	Vector2 direction;
+	Rectangle border;
 	boolean visible = true;
 
-	public Senergy(Vector2 posicion, World m) {
+	public Senergy(Vector2 position, World world) {
 
-		this.m = m;
-		// energia=m.Senergia;
-		this.posicion = posicion;
-		direccion = new Vector2();
+		this.world = world;
+		// energy=m.Senergy;
+		this.position = position;
+		direction = new Vector2();
 
-		ancho = (int) (ancho / m.zoom);
-		alto = (int) (alto / m.zoom);
+		width = (int) (width / world.zoom);
+		height = (int) (height / world.zoom);
 
 		speed = 30;
-		borde = new Rectangle();
+		border = new Rectangle();
 
-		borde.height = alto;
-		borde.width = ancho;
+		border.height = height;
+		border.width = width;
 
-		borde.x = posicion.x;
-		borde.y = posicion.y;
+		border.x = position.x;
+		border.y = position.y;
 
-		direccion.y = -1;
-		direccion.x = 0;
+		direction.y = -1;
+		direction.x = 0;
 
-		imagen = new Sprite(m.organismTexture.getRegions().get(24));
-		imagen.setPosition(this.posicion.x, this.posicion.y);
-		imagen.setSize(ancho, alto);
+		image = new Sprite(world.organismTexture.getRegions().get(24));
+		image.setPosition(this.position.x, this.position.y);
+		image.setSize(width, height);
 
 	}
 
-	public void verObjeto(SpriteBatch sb) {
+	public void viewObject(SpriteBatch sb) {
 		if (visible == true) {
 			sb.begin();
-			imagen.draw(sb);
+			image.draw(sb);
 			sb.end();
 		}
 
 	}
 
-	public void verBorde(ShapeRenderer sr) {
+	public void viewBorder(ShapeRenderer sr) {
 
 		sr.begin(ShapeType.Rectangle);
 
 		sr.setColor(Color.CYAN);
-		sr.rect(borde.x, borde.y, borde.width, borde.height);
+		sr.rect(border.x, border.y, border.width, border.height);
 		sr.end();
 
 	}
 
 	public void update() {
 
-		posicion.add(Gdx.graphics.getDeltaTime() * (direccion.x) * speed,
-				Gdx.graphics.getDeltaTime() * (direccion.y) * speed);
+		position.add(Gdx.graphics.getDeltaTime() * (direction.x) * speed,
+				Gdx.graphics.getDeltaTime() * (direction.y) * speed);
 
-		imagen.setPosition(posicion.x, posicion.y);
-		// imagen.setSize(ancho, alto);
-		borde.x = posicion.x;
-		borde.y = posicion.y;
-		// borde.height= alto;
-		// borde.width= ancho;
+		image.setPosition(position.x, position.y);
+		// image.setSize(width, height);
+		border.x = position.x;
+		border.y = position.y;
+		// border.height= height;
+		// border.width= width;
 
-		if (posicion.y < 0) {
+		if (position.y < 0) {
 			reset();
 		}
 
@@ -108,13 +108,13 @@ public class Senergy {
 
 	public void reset() {
 
-		// posicion.x= (float) (Math.random()*m.ancho);
-		posicion.y = m.alto + 10;
-		if (posicion.x > m.ancho / 2) {
-			energia = m.SenergiaR;
+		// position.x= (float) (Math.random()*m.width);
+		position.y = world.height + 10;
+		if (position.x > world.width / 2) {
+			energia = world.SenergiaR;
 		}
-		if (posicion.x < m.ancho / 2) {
-			energia = m.Senergia;
+		if (position.x < world.width / 2) {
+			energia = world.Senergia;
 		}
 
 		visible = true;

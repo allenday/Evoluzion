@@ -1279,14 +1279,14 @@ public class Organism implements Comparable<Organism> {
 		if (height > 1 && width > 1) {
 			// if(biomasa<=0){morir();}
 
-			if (toleranceTemp < world.temperatura) {
+			if (toleranceTemp < world.temperature) {
 				morir();
 			}
-			if (world.temperatura < toleranceTemp - 6) {
+			if (world.temperature < toleranceTemp - 6) {
 				morir();
 			}
 
-			if (world.antibiotico == 1) {
+			if (world.antibiotic == 1) {
 				if (!resistanceATB) {
 					intoxicado();
 				}
@@ -1366,10 +1366,10 @@ public class Organism implements Comparable<Organism> {
 			// (direccion.y*direccion.y));
 			if (!world.verFrontera) {
 				if (position.x < 0) {
-					position.x = world.ancho - width;
+					position.x = world.width - width;
 					//direccion.x = direccion.x * (-1);
 				}
-				if (position.x > world.ancho) {
+				if (position.x > world.width) {
 					position.x = 0 + width;
 					//direccion.x = direccion.x * (-1);
 				}
@@ -1379,17 +1379,17 @@ public class Organism implements Comparable<Organism> {
 					position.x = 1;
 					direction.x = direction.x * (-1);
 				}
-				if (position.x > world.ancho) {
-					position.x = world.ancho - width;
+				if (position.x > world.width) {
+					position.x = world.width - width;
 					direction.x = direction.x * (-1);
 				}
 			}
 
 			if (position.y < 0) {
-				position.y = world.alto - height;
+				position.y = world.height - height;
 				//direccion.y = direccion.y * (-1);
 			}
-			if (position.y > world.alto) {
+			if (position.y > world.height) {
 				position.y = 0 + height;
 				//direccion.y = direccion.y * (-1);
 			}
@@ -1407,8 +1407,8 @@ public class Organism implements Comparable<Organism> {
 
 			var movh = (float) Math.sqrt((movX * movX) + (movY * movY));
 
-			cuadradoTemp = (optimalTemp - world.temperatura)
-					* (optimalTemp - world.temperatura);
+			cuadradoTemp = (optimalTemp - world.temperature)
+					* (optimalTemp - world.temperature);
 
 			// System.out.println(cuadradoTemp);
 
@@ -1575,7 +1575,7 @@ public class Organism implements Comparable<Organism> {
 			if (world.verFrontera) {
 				// panel izquierdo
 
-				if (!carnivore && this.position.x < world.ancho / 2) { // si
+				if (!carnivore && this.position.x < world.width / 2) { // si
 					// el
 					// organismo
 					// esta
@@ -1585,7 +1585,7 @@ public class Organism implements Comparable<Organism> {
 
 					for (Qenergy qeI : world.aqe) {
 
-						if (qeI.position.x < world.ancho / 2 && qeI.visible) {
+						if (qeI.position.x < world.width / 2 && qeI.visible) {
 
 							float qX = qeI.position.x;
 							float qY = qeI.position.y;
@@ -1602,12 +1602,12 @@ public class Organism implements Comparable<Organism> {
 					}
 				}
 
-				if (carnivore && this.position.x < world.ancho / 2) {
+				if (carnivore && this.position.x < world.width / 2) {
 
 					for (var i = 0; i < world.organisms.size; i++) {
 						Organism or = world.organisms.get(i);
 
-						if (or.position.x < world.ancho / 2 && this != or
+						if (or.position.x < world.width / 2 && this != or
 								&& identifier != or.identifier
 								&& capacity > or.capacity) {
 
@@ -1634,7 +1634,7 @@ public class Organism implements Comparable<Organism> {
 
 				// panel Derecho
 
-				if (!carnivore && this.position.x > world.ancho / 2) { // si
+				if (!carnivore && this.position.x > world.width / 2) { // si
 					// el
 					// organismo
 					// esta
@@ -1644,7 +1644,7 @@ public class Organism implements Comparable<Organism> {
 
 					for (Qenergy qeD : world.aqe) {
 
-						if (qeD.position.x > world.ancho / 2 && qeD.visible) {
+						if (qeD.position.x > world.width / 2 && qeD.visible) {
 
 							float qX = qeD.position.x;
 							float qY = qeD.position.y;
@@ -1661,12 +1661,12 @@ public class Organism implements Comparable<Organism> {
 					}
 				}
 
-				if (carnivore && this.position.x > world.ancho / 2) {
+				if (carnivore && this.position.x > world.width / 2) {
 
 					for (var i = 0; i < world.organisms.size; i++) {
 						Organism or = world.organisms.get(i);
 
-						if (or.position.x > world.ancho / 2 && this != or
+						if (or.position.x > world.width / 2 && this != or
 								&& identifier != or.identifier
 								&& capacity > or.capacity) {
 
@@ -1864,14 +1864,14 @@ public class Organism implements Comparable<Organism> {
 
 			if (height > 1 && width > 1) {
 
-				if (position.x < world.ancho / 2) {// el organismo se encuentra en
+				if (position.x < world.width / 2) {// el organismo se encuentra en
 					// elpanel izquierdo
 
 					for (var i = 0; i < world.aqe.size; i++) {
 
 						Qenergy qe = world.aqe.get(i);
 
-						if (qe.position.x < world.ancho / 2 && !qe.visible) {
+						if (qe.position.x < world.width / 2 && !qe.visible) {
 
 							if (biomass > world.Qbiomasa) {
 
@@ -1899,14 +1899,14 @@ public class Organism implements Comparable<Organism> {
 					}
 				}
 
-				if (position.x > world.ancho / 2) {// el organismo se encuentra en
+				if (position.x > world.width / 2) {// el organismo se encuentra en
 					// el panel Derecho
 
 					for (var i = 0; i < world.aqe.size; i++) {
 
 						Qenergy qe = world.aqe.get(i);
 
-						if (qe.position.x > world.ancho / 2 && !qe.visible) {
+						if (qe.position.x > world.width / 2 && !qe.visible) {
 
 							if (biomass > world.QbiomasaR) {
 
@@ -1945,7 +1945,7 @@ public class Organism implements Comparable<Organism> {
 
 	public void intoxicado() {
 
-		if (world.antibiotico == 1 && !this.resistanceATB) {
+		if (world.antibiotic == 1 && !this.resistanceATB) {
 
 			intoxicated = true;
 		}
@@ -2659,7 +2659,7 @@ public class Organism implements Comparable<Organism> {
 		var masatotal = (int) (world.BiomasaTotal(world.organisms) + world.MateriaLibre());
 		if (o1.capacity > 1 && o2.capacity > 1
 				&& o1.carnivore == o2.carnivore && world.organisms.size < world.maximo
-				&& masatotal <= (world.Masatotal + 100)) {
+				&& masatotal <= (world.totalMass + 100)) {
 
 			if (o1.biomass > o1.capacity / 2 && o2.biomass > o2.capacity / 2) {
 
@@ -2791,7 +2791,7 @@ public class Organism implements Comparable<Organism> {
 		var masatotal = (int) (world.BiomasaTotal(world.organisms) + world.MateriaLibre());
 
 		if (o1.capacity > 1 && world.organisms.size < world.maximo
-				&& masatotal <= (world.Masatotal + 100)) {
+				&& masatotal <= (world.totalMass + 100)) {
 
 			if (o1.biomass > o1.capacity / 2) {
 
@@ -2852,7 +2852,7 @@ public class Organism implements Comparable<Organism> {
 		var masatotal = (int) (world.BiomasaTotal(world.organisms) + world.MateriaLibre());
 
 		if (o1.capacity > 1 && world.organisms.size < world.maximo
-				&& masatotal <= (world.Masatotal + 100)) {
+				&& masatotal <= (world.totalMass + 100)) {
 
 			if (o1.biomass > o1.capacity / 2) {
 
