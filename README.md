@@ -7,11 +7,16 @@ https://jevoluzion.jimdofree.com/descarga-download/
 
 `diploid/` was imported at version 2.5.5
 
+
+## Prerequisites
+
 ## Build and Install
 
-### Prerequisites
-
 ### Haploid
+
+#### Base library
+
+`mvn package install`
 
 #### Desktop
 
@@ -19,6 +24,11 @@ https://jevoluzion.jimdofree.com/descarga-download/
 
 ### Diploid
 
+#### Base library
+
+`mvn package install`
+
 #### Desktop
 
 #### Android
+
