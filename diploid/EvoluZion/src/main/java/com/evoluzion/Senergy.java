@@ -32,7 +32,7 @@ public class Senergy {
 	World m;
 
 	private final Sprite imagen;
-	double energia;
+	double energy;
 	float ancho = 7;
 	float alto = 7;
 	int speed;
@@ -80,7 +80,7 @@ public class Senergy {
 
 	public void verBorde(ShapeRenderer sr) {
 
-		sr.begin(ShapeType.Rectangle);
+		sr.begin(ShapeType.Filled);
 
 		sr.setColor(Color.CYAN);
 		sr.rect(borde.x, borde.y, borde.width, borde.height);
@@ -111,10 +111,10 @@ public class Senergy {
 		// posicion.x= (float) (Math.random()*m.ancho);
 		posicion.y = m.alto + 10;
 		if (posicion.x > m.ancho / 2) {
-			energia = m.SenergiaR;
+			energy = m.SenergiaR;
 		}
 		if (posicion.x < m.ancho / 2) {
-			energia = m.Senergia;
+			energy = m.Senergia;
 		}
 
 		visible = true;

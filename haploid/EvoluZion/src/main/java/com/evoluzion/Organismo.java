@@ -382,7 +382,7 @@ public class Organismo implements Comparable<Organismo> {
 
 	public void verMarcado(ShapeRenderer sr, SpriteBatch sb, BitmapFont f) {
 		if (marcado == -1) {
-			sr.begin(ShapeType.Rectangle);
+			sr.begin(ShapeType.Filled);
 
 			sr.setColor(Color.GREEN);
 			sr.rect(borde.x - 2, borde.y - 2, borde.width + 4, borde.height + 4);
@@ -404,7 +404,7 @@ public class Organismo implements Comparable<Organismo> {
 
 	public void verBorde(ShapeRenderer sr) {
 
-		sr.begin(ShapeType.Rectangle);
+		sr.begin(ShapeType.Filled);
 
 		sr.setColor(Color.CYAN);
 		sr.rect(borde.x, borde.y, borde.width, borde.height);

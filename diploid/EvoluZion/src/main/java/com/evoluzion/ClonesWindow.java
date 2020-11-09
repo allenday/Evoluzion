@@ -73,7 +73,7 @@ public class ClonesWindow extends JFrame implements ActionListener, Closeable,
 	public ClonesWindow(StartMenu mi, int type, String str, int color,
 						int width, int height, int sense, int optimalTemp, int pred, int speedG,
 						int huntG, int escape, int radius, int pheromone, int parte, int mutationRate,
-						int longevity, int toxRes, int sex) throws IOException {
+						int longevity, int toxRes, int sex) {
 
 		super(str);
 		setLayout(null);
@@ -552,10 +552,9 @@ public class ClonesWindow extends JFrame implements ActionListener, Closeable,
 	public void close() {
 	}
 
-	public void readPath() throws IOException {
-
-		FileReader fr2;
-		fr2 = new FileReader("evo_ruta.tmp");
+	public void readPath() {
+		try {
+		FileReader fr2 = new FileReader("evo_ruta.tmp");
 		BufferedReader br;
 		br = new BufferedReader(fr2);
 		String linea;
@@ -564,7 +563,9 @@ public class ClonesWindow extends JFrame implements ActionListener, Closeable,
 
 		br.close();
 		fr2.close();
-
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void readLanguage() {

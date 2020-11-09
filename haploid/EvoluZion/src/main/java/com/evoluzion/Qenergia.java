@@ -85,14 +85,14 @@ public class Qenergia {
 		if (visible == true) {
 			sr.setColor(Color.RED);
 
-			sr.filledCircle(posicion.x, posicion.y, ancho);
+			sr.circle(posicion.x, posicion.y, ancho);
 
 		}
 	}
 
 	public void verBorde(ShapeRenderer sr) {
 
-		sr.begin(ShapeType.Rectangle);
+		sr.begin(ShapeType.Filled);
 
 		sr.setColor(Color.CYAN);
 		sr.rect(borde.x, borde.y, borde.width, borde.height);

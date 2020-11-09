@@ -31,9 +31,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -56,9 +55,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.OrderedMap;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class StartMenu implements Screen, Serializable {
+public class StartMenu implements com.badlogic.gdx.Screen, Serializable {
 
 	Evoluzion ev;
 	Text tx;
@@ -688,7 +689,7 @@ public class StartMenu implements Screen, Serializable {
 	public void render(float delta) {
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// System.out.println(ingles);
 		camara.update();
@@ -797,7 +798,7 @@ public class StartMenu implements Screen, Serializable {
 
 		batch.end();
 
-		rectangulo.begin(ShapeType.Rectangle);
+		rectangulo.begin(ShapeType.Filled);
 		rectangulo.setColor(Color.WHITE);
 		rectangulo.rect(20 + orX, 200 + orY, 350, 150);
 		rectangulo.rect(650 + orX, -170 + orY, 365, 520);
@@ -980,7 +981,9 @@ public class StartMenu implements Screen, Serializable {
 			// eventos
 			// en este caso se us apara los botones
 
-			stage = new Stage(ancho, alto, true);
+			ScreenViewport viewport = new ScreenViewport();
+			viewport.update((int) ancho, (int) alto, true);
+			stage = new Stage(viewport);
 			stage.clear();
 			Gdx.input.setInputProcessor(stage);
 
@@ -1872,7 +1875,6 @@ public class StartMenu implements Screen, Serializable {
 						int pointer, int button) {
 					//
 					ev.setScreen(new StartMenu(ev));
-
 					// jf.dispose();
 				}
 
@@ -2311,7 +2313,7 @@ public class StartMenu implements Screen, Serializable {
 					m.archivarAlelos();
 					m.archivarGenotipo();
 
-					ev.setScreen(new Screen(ev, m));
+					ev.setScreen(new com.evoluzion.Screen(ev, m));
 					dispose();
 
 					return true;
@@ -2418,8 +2420,7 @@ public class StartMenu implements Screen, Serializable {
 	}
 
 	@Override
-	public void read(Json json, OrderedMap<String, Object> jsonData) {
-		// TODO Auto-generated method stub
+	public void read(Json json, JsonValue jsonValue) {
 
 	}
 

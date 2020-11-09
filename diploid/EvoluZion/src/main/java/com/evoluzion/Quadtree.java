@@ -116,7 +116,7 @@ public class Quadtree {
 
 			int i = 0;
 			while (i < objects.size) {
-				int index = getIndex(objects.get(i).borde);
+				int index = getIndex(objects.get(i).border);
 				if (index != -1) {
 					nodes[index].insert(objects.removeIndex(i));
 				} else {

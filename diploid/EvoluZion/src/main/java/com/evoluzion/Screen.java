@@ -24,10 +24,9 @@ import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,8 +43,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Screen implements Screen {
+public class Screen implements com.badlogic.gdx.Screen {
 
 	protected Evoluzion ev;
 	protected World world;
@@ -158,7 +159,7 @@ public class Screen implements Screen {
 
 		// Game loop
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		camara.update();
 		stage.act(delta);
@@ -252,17 +253,17 @@ public class Screen implements Screen {
 
 		if (world.verFrontera == true) {
 
-			frontera.begin(ShapeType.FilledRectangle);
+			frontera.begin(ShapeType.Filled);
 			frontera.setColor(Color.CYAN);
-			frontera.filledRect(world.frontera.x, world.frontera.y, world.frontera.width,
+			frontera.rect(world.frontera.x, world.frontera.y, world.frontera.width,
 					world.frontera.height);
 			frontera.end();
 		}
 
-		caja.begin(ShapeType.FilledRectangle);
+		caja.begin(ShapeType.Filled);
 
 		caja.setColor(Color.BLACK);
-		caja.filledRect(0, world.alto - 30, world.ancho, 30);
+		caja.rect(0, world.alto - 30, world.ancho, 30);
 		caja.end();
 		batch.begin();
 		fuente.draw(batch, "|h: " + world.horas + " |m: " + world.addCero2().toString()
@@ -279,9 +280,9 @@ public class Screen implements Screen {
 
 		if (world.pausaGame == -1) {
 
-			pausaCaja.begin(ShapeType.FilledRectangle);
+			pausaCaja.begin(ShapeType.Filled);
 			pausaCaja.setColor(Color.BLACK);
-			pausaCaja.filledRect((world.ancho / 2) - 100, (world.alto / 2) - 25, 200,
+			pausaCaja.rect((world.ancho / 2) - 100, (world.alto / 2) - 25, 200,
 					50);
 			pausaCaja.end();
 
@@ -295,10 +296,10 @@ public class Screen implements Screen {
 
 			if (cb_verDatos.isChecked()) {
 
-				caja.begin(ShapeType.FilledRectangle);
+				caja.begin(ShapeType.Filled);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 300, 180, 300);
+				caja.rect(0, world.alto - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
@@ -345,10 +346,10 @@ public class Screen implements Screen {
 
 			if (cb_viewAlleles.isChecked()) {
 
-				caja.begin(ShapeType.FilledRectangle);
+				caja.begin(ShapeType.Filled);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 540, 180, 250);
+				caja.rect(0, world.alto - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
@@ -403,10 +404,10 @@ public class Screen implements Screen {
 			// panel izquierdo
 			if (cb_verDatos.isChecked()) {
 
-				caja.begin(ShapeType.FilledRectangle);
+				caja.begin(ShapeType.Filled);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 300, 180, 300);
+				caja.rect(0, world.alto - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
@@ -455,10 +456,10 @@ public class Screen implements Screen {
 
 			if (cb_viewAlleles.isChecked()) {
 
-				caja.begin(ShapeType.FilledRectangle);
+				caja.begin(ShapeType.Filled);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(0, world.alto - 540, 180, 250);
+				caja.rect(0, world.alto - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
@@ -509,10 +510,10 @@ public class Screen implements Screen {
 
 			if (cb_verDatos.isChecked()) {
 
-				caja.begin(ShapeType.FilledRectangle);
+				caja.begin(ShapeType.Filled);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(840, world.alto - 300, 180, 300);
+				caja.rect(840, world.alto - 300, 180, 300);
 				caja.end();
 
 				batch.begin();
@@ -562,10 +563,10 @@ public class Screen implements Screen {
 
 			if (cb_viewAlleles.isChecked()) {
 
-				caja.begin(ShapeType.FilledRectangle);
+				caja.begin(ShapeType.Filled);
 				caja.setColor(Color.BLACK);
 
-				caja.filledRect(840, world.alto - 540, 180, 250);
+				caja.rect(840, world.alto - 540, 180, 250);
 				caja.end();
 
 				batch.begin();
@@ -697,7 +698,9 @@ public class Screen implements Screen {
 			// eventos
 			// en este caso se us apara los botones
 
-			stage = new Stage(width, height, true);
+			ScreenViewport viewport = new ScreenViewport();
+			viewport.update(height, width, true);
+			stage = new Stage(viewport);
 			stage.clear();
 			Gdx.input.setInputProcessor(stage);
 
@@ -1068,10 +1071,10 @@ public class Screen implements Screen {
 					for (int i = number - 1; i >= 0; i--) {
 
 						if (mark == 1) {
-							world.organisms.get(i).marcado = 1;
+							world.organisms.get(i).mark = 1;
 						}
 						if (mark == -1) {
-							world.organisms.get(i).marcado = -1;
+							world.organisms.get(i).mark = -1;
 						}
 					}
 
