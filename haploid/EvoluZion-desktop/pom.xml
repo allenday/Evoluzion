@@ -4,7 +4,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.javadev.evoluzion</groupId>
-  <artifactId>Evoluzion-haploid</artifactId>
+  <artifactId>Evoluzion-haploid-desktop</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>Evoluzion</name>
@@ -22,8 +22,13 @@
   <dependencies>
     <dependency>
       <groupId>com.badlogicgames.gdx</groupId>
-      <artifactId>gdx</artifactId>
-      <version>1.9.12</version>
+      <artifactId>gdx-backend-lwjgl</artifactId>
+      <version>0.9.9</version>
+    </dependency>
+    <dependency>
+      <groupId>com.javadev.evoluzion</groupId>
+      <artifactId>Evoluzion-haploid</artifactId>
+      <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
