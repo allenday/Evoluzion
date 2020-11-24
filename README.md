@@ -15,9 +15,21 @@ Use maven:
 ```xml
 <dependencies>
   <dependency>
-    <groupId>com.github.javadev</groupId>
-    <artifactId>underscore</artifactId>
-    <version>1.60</version>
+    <groupId>com.javadev.evoluzion</groupId>
+    <artifactId>Evoluzion-diploid</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </dependency>
+  ...
+</dependencies>
+
+or
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>com.javadev.evoluzion</groupId>
+    <artifactId>Evoluzion-haploid</artifactId>
+    <version>1.0-SNAPSHOT</version>
   </dependency>
   ...
 </dependencies>
