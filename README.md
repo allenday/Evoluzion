@@ -14,11 +14,12 @@ Use maven:
 <dependencies>
   <dependency>
     <groupId>com.javadev.evoluzion</groupId>
-    <artifactId>Evoluzion-diploid</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>Evoluzion-haploid</artifactId>
+    <version>1.7.4-SNAPSHOT</version>
   </dependency>
   ...
 </dependencies>
+```
 
 or
 
@@ -26,8 +27,8 @@ or
 <dependencies>
   <dependency>
     <groupId>com.javadev.evoluzion</groupId>
-    <artifactId>Evoluzion-haploid</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>Evoluzion-diploid</artifactId>
+    <version>2.5.5-SNAPSHOT</version>
   </dependency>
   ...
 </dependencies>
