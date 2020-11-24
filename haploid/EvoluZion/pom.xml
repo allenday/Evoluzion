@@ -6,7 +6,7 @@
   <groupId>com.javadev.evoluzion</groupId>
   <artifactId>Evoluzion-haploid</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.7.4-SNAPSHOT</version>
   <name>Evoluzion</name>
 
   <properties>
