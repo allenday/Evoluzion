@@ -7,7 +7,9 @@
   <artifactId>Evoluzion-haploid</artifactId>
   <packaging>jar</packaging>
   <version>1.7.4</version>
-  <name>Evoluzion</name>
+  <name>Evoluzion-haploid</name>
+  <description>The Evoluzion-haploid module</description>
+  <url>https://github.com/allenday/Evoluzion</url>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>

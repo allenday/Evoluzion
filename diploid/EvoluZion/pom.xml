@@ -7,7 +7,9 @@
   <artifactId>Evoluzion-diploid</artifactId>
   <packaging>jar</packaging>
   <version>2.5.5</version>
-  <name>Evoluzion</name>
+  <name>Evoluzion-diploid</name>
+  <description>The Evoluzion-diploid module</description>
+  <url>https://github.com/allenday/Evoluzion</url>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
