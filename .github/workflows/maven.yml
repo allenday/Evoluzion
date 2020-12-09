@@ -21,10 +21,10 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven diploid
-      run: mvn install --file diploid/EvoluZion/pom.xml -B
+      run: mvn install --file diploid/EvoluZion/pom.xml -B -Dgpg.skip
     - name: Build with Maven diploid desktop
       run: mvn package --file diploid/EvoluZion-desktop/pom.xml -B
     - name: Build with Maven haploid
-      run: mvn install --file haploid/EvoluZion/pom.xml -B
+      run: mvn install --file haploid/EvoluZion/pom.xml -B -Dgpg.skip
     - name: Build with Maven haploid desktop
       run: mvn package --file haploid/EvoluZion-desktop/pom.xml -B
