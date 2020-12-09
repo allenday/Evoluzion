@@ -19,6 +19,27 @@
 
   </properties>
 
+  <developers>
+    <developer>
+      <id>javadev</id>
+      <name>Valentyn Kolesnikov</name>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>http://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/allenday/Evoluzion.git</connection>
+    <developerConnection>scm:git:git://github.com/allenday/Evoluzion.git</developerConnection>
+    <url>https://github.com/allenday/Evoluzion</url>
+  </scm>
+
   <dependencies>
     <dependency>
       <groupId>com.badlogicgames.gdx</groupId>
