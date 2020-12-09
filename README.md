@@ -13,9 +13,9 @@ Use maven:
 ```xml
 <dependencies>
   <dependency>
-    <groupId>com.javadev.evoluzion</groupId>
+    <groupId>com.github.javadev</groupId>
     <artifactId>Evoluzion-haploid</artifactId>
-    <version>1.7.4-SNAPSHOT</version>
+    <version>1.7.4</version>
   </dependency>
   ...
 </dependencies>
@@ -26,9 +26,9 @@ or
 ```xml
 <dependencies>
   <dependency>
-    <groupId>com.javadev.evoluzion</groupId>
+    <groupId>com.github.javadev</groupId>
     <artifactId>Evoluzion-diploid</artifactId>
-    <version>2.5.5-SNAPSHOT</version>
+    <version>2.5.5</version>
   </dependency>
   ...
 </dependencies>
